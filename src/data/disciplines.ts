@@ -22,7 +22,7 @@ export const disciplines = [
     slug: "math",
     routeSlug: "mathematics",
     name: "数学",
-    en: "MATHEMATICS",
+    en: "MATH",
     color: "#F71C1C",
     colorKey: "math",
     summary: "从条件概率、拓扑与娱乐数学出发，探索反直觉问题与数学思想的发展。",
