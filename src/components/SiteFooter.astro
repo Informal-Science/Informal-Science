@@ -2,10 +2,12 @@
 import { withBase } from '../utils/paths';
 
 const footerLinks = [
+  { href: '/', label: '首页' },
+  { href: '/questions-answers', label: '问题-答案' },
   { href: '/2026', label: '2026 年刊' },
   { href: '/disciplines', label: '七大板块' },
   { href: '/history', label: '往期精彩' },
-  { href: '/standards/colors', label: '颜色标准' },
+  { href: '/standards', label: '视觉设计规范' },
   { href: '/about', label: '关于我们' },
 ];
 ---
@@ -13,11 +15,9 @@ const footerLinks = [
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
-      <a class="footer-brand" href={withBase('/')}>
-        <img src={withBase('/images/brand/logo-mark.svg')} alt="" width="39" height="39" />
-        <strong>非正式科学</strong>
+      <a class="footer-brand" href={withBase('/')} aria-label="非正式科学首页">
+        <img src={withBase('/images/brand/logo-mark.svg')} alt="" width="160" height="160" />
       </a>
-      <p class="footer-note">解所未曾释<br />Solve the Unsolved</p>
     </div>
 
     <nav class="footer-nav" aria-label="页脚导航">
@@ -25,7 +25,6 @@ const footerLinks = [
     </nav>
 
     <div class="footer-meta">
-      <p>2026 年刊 · 总第 6 期</p>
       <p>福州第一中学基础科学社团联盟</p>
       <p>内容与图片版权归相应作者所有</p>
     </div>
@@ -52,27 +51,17 @@ const footerLinks = [
   }
 
   .footer-brand img {
-    width: 36px;
-    height: 36px;
-  }
-
-  .footer-brand strong {
-    font-family: var(--font-editorial);
-    font-size: 1.25rem;
-    font-weight: 900;
-  }
-
-  .footer-note {
-    margin: 24px 0 0;
-    color: rgba(255, 255, 255, 0.48);
-    font-size: 0.82rem;
-    letter-spacing: 0.05em;
+    width: clamp(120px, 11vw, 160px);
+    height: auto;
   }
 
   .footer-nav {
     display: grid;
+    grid-template-rows: repeat(4, min-content);
+    grid-auto-columns: max-content;
+    grid-auto-flow: column;
+    gap: 9px clamp(26px, 4vw, 58px);
     align-content: start;
-    gap: 9px;
   }
 
   .footer-nav a {
@@ -116,6 +105,10 @@ const footerLinks = [
 
     .footer-meta {
       grid-column: auto;
+    }
+
+    .footer-nav {
+      column-gap: 20px;
     }
   }
 </style>

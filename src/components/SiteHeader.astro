@@ -9,12 +9,12 @@ const { currentPath = '/' } = Astro.props;
 
 const primaryLinks = [
   { href: '/', label: '首页' },
-  { href: '/2026', label: '2026 年刊' },
+  { href: '/questions-answers', label: '问题-答案' },
 ];
 
 const disciplineLinks = [
   { href: '/disciplines/astronomy', label: '天文' },
-  { href: '/disciplines/mathematics', label: '数学' },
+  { href: '/disciplines/math', label: '数学' },
   { href: '/disciplines/geography', label: '地理' },
   { href: '/disciplines/physics', label: '物理' },
   { href: '/disciplines/engineering', label: '工程' },
@@ -23,9 +23,10 @@ const disciplineLinks = [
 ];
 
 const secondaryLinks = [
+  { href: '/2026', label: '2026 年刊' },
   { href: '/history', label: '往期精彩' },
-  { href: '/standards/colors', label: '颜色标准' },
-  { href: '/about', label: '关于' },
+  { href: '/standards', label: '视觉设计规范' },
+  { href: '/about', label: '关于我们' },
 ];
 
 const isCurrent = (href: string) => {
@@ -35,10 +36,6 @@ const isCurrent = (href: string) => {
 ---
 
 <header class="site-header" data-site-header>
-  <div class="edition-bar">
-    <span>《非正式科学》2026 年刊 · 总第 6 期</span>
-  </div>
-
   <nav class="global-nav" aria-label="全站导航">
     <div class="global-nav__inner">
       <a class="brand-mark" href={withBase('/')} aria-label="非正式科学首页">
@@ -203,20 +200,6 @@ const isCurrent = (href: string) => {
     width: 100%;
   }
 
-  .edition-bar {
-    display: flex;
-    height: 22px;
-    align-items: center;
-    justify-content: center;
-    padding-right: max(12px, var(--safe-right));
-    padding-left: max(12px, var(--safe-left));
-    color: rgba(17, 18, 20, 0.66);
-    background: #ececee;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-  }
-
   .global-nav {
     position: relative;
     z-index: 2;
@@ -339,7 +322,7 @@ const isCurrent = (href: string) => {
   .mobile-menu {
     position: fixed;
     z-index: 1;
-    inset: 70px 0 0;
+    inset: var(--nav-height) 0 0;
     overflow-y: auto;
     color: var(--ink);
     background: rgba(247, 247, 245, 0.98);
@@ -409,11 +392,6 @@ const isCurrent = (href: string) => {
   }
 
   @media (max-width: 480px) {
-    .edition-bar {
-      justify-content: flex-start;
-      padding-left: max(16px, var(--safe-left));
-    }
-
     .global-nav__inner {
       width: 100%;
       padding-right: max(14px, var(--safe-right));
@@ -423,18 +401,6 @@ const isCurrent = (href: string) => {
 
   /* 手机与小尺寸平板横屏：保留完整导航，同时压缩纵向占用。 */
   @media (orientation: landscape) and (max-width: 1079px) {
-    .edition-bar {
-      height: 18px;
-    }
-
-    .global-nav {
-      height: 44px;
-    }
-
-    .mobile-menu {
-      inset: 62px 0 0;
-    }
-
     .mobile-menu__inner {
       display: grid;
       width: min(960px, 100%);

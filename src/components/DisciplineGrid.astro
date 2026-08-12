@@ -1,5 +1,5 @@
 ---
-import { disciplines, articles } from '../data';
+import { disciplines, articles, historicalDisciplines } from '../data';
 import { disciplineUiColor, disciplineUiTextColor } from '../utils/colors';
 import { withBase } from '../utils/paths';
 
@@ -21,14 +21,25 @@ const { compact = false } = Astro.props;
       >
         <span class="discipline-card__number">{String(index + 1).padStart(2, '0')}</span>
         <div>
-          <p class="discipline-card__en">{discipline.en}</p>
           {compact ? <h3>{discipline.name}</h3> : <h2>{discipline.name}</h2>}
         </div>
         {!compact && <p class="discipline-card__summary">{discipline.summary}</p>}
-        <span class="discipline-card__meta">{articleCount} 篇导读 <b aria-hidden="true">↗</b></span>
+        <span class="discipline-card__meta">6 期 · {articleCount} 篇导读 <b aria-hidden="true">↗</b></span>
       </a>
     );
   })}
+  {!compact && (
+    <a
+      class="discipline-card discipline-card--historical"
+      href={withBase('/disciplines/other')}
+      style="--discipline-color: #666666; --discipline-ink: #ffffff"
+    >
+      <span class="discipline-card__number">08</span>
+      <div><h2>其他</h2></div>
+      <p class="discipline-card__summary">回看曾参与构建《非正式科学》的内容体系，但现已离开的历史板块。</p>
+      <span class="discipline-card__meta">{historicalDisciplines.length} 个历史板块 <b aria-hidden="true">↗</b></span>
+    </a>
+  )}
 </div>
 
 <style>
@@ -84,13 +95,6 @@ const { compact = false } = Astro.props;
   .discipline-card:hover .discipline-card__number,
   .discipline-card:focus-visible .discipline-card__number {
     color: var(--discipline-ink);
-  }
-
-  .discipline-card__en {
-    margin: 0 0 3px;
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
   }
 
   .discipline-card h2,

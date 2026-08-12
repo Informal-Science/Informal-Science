@@ -5,7 +5,9 @@ export type DisciplineSlug =
   | "physics"
   | "engineering"
   | "biology"
-  | "chemistry";
+  | "chemistry"
+  | "brain-neuroscience"
+  | "electronic";
 
 export type ReviewStatus = "verified-from-source" | "review-needed";
 
@@ -26,12 +28,13 @@ export interface Reviewable {
 
 export type DisciplineRouteSlug =
   | "astronomy"
-  | "mathematics"
+  | "math"
   | "geography"
   | "physics"
   | "engineering"
   | "biology"
-  | "chemistry";
+  | "chemistry"
+  | "other";
 
 export interface SiteMeta extends Reviewable {
   title: string;
@@ -50,7 +53,7 @@ export interface SiteMeta extends Reviewable {
     attribution: string;
     reviewNeeded: boolean;
   };
-  featuredArticleSlugs: readonly string[];
+  coverFocusArticleSlugs: readonly string[];
   editorialNote: {
     paragraphs: readonly string[];
     signature: string;
@@ -65,7 +68,7 @@ export interface SiteMeta extends Reviewable {
 
 export interface Discipline {
   slug: DisciplineSlug;
-  /** Public URL segment; differs from the LaTeX key only for math → mathematics. */
+  /** Stable public URL segment, aligned with the discipline data key. */
   routeSlug: DisciplineRouteSlug;
   name: string;
   en: string;
@@ -74,6 +77,11 @@ export interface Discipline {
   summary: string;
   order: number;
   source: SourceReference;
+}
+
+export interface HistoricalDiscipline extends Omit<Discipline, "source"> {
+  cmyk: CmykColor;
+  webHex: string;
 }
 
 export type ArticleStatus = "directory-only" | "full-text";
@@ -85,7 +93,12 @@ export interface ArticleAvailability {
 }
 
 export interface Article extends Reviewable {
+  /** Unique annual record identifier, composed from year and catalogSlug. */
   slug: string;
+  /** Stable identifier of the reused catalog entry across annual issues. */
+  catalogSlug: string;
+  year: number;
+  issueNumber: number;
   title: string;
   author: string;
   disciplineSlug: DisciplineSlug;
@@ -104,6 +117,10 @@ export interface Issue extends Reviewable {
   number: number;
   slug: string;
   coverAsset: string;
+  editorialCredit: {
+    role: "主编" | "设计";
+    name: string;
+  };
   status: IssueStatus;
   description: string;
   draft: boolean;

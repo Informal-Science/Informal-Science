@@ -2,11 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookMarker from '../components/BookMarker.astro';
 import DisciplineGrid from '../components/DisciplineGrid.astro';
+import IssueHeroBackground from '../components/IssueHeroBackground.astro';
 import { siteMeta, articles, disciplines, issues } from '../data';
 import { disciplineUiColor } from '../utils/colors';
 import { withBase } from '../utils/paths';
-const featuredArticles = siteMeta.featuredArticleSlugs
-  .map((slug) => articles.find((article) => article.slug === slug))
+const featuredArticles = siteMeta.coverFocusArticleSlugs
+  .map((slug) => articles.find((article) => article.year === 2026 && article.catalogSlug === slug))
   .filter((article): article is (typeof articles)[number] => Boolean(article))
   .slice(0, 3);
 
@@ -15,28 +16,7 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
 
 <BaseLayout image="/images/hero/hero-2026-1920.webp">
   <section class="home-hero" aria-labelledby="hero-title">
-    <picture class="home-hero__media" aria-hidden="true">
-      <source
-        media="(orientation: portrait)"
-        type="image/webp"
-        srcset={`${withBase('/images/hero/cover-2026-640.webp')} 640w, ${withBase('/images/hero/cover-2026-1280.webp')} 1280w, ${withBase('/images/hero/cover-2026-1920.webp')} 1920w, ${withBase('/images/hero/cover-2026-2880.webp')} 2880w`}
-        sizes="50vw"
-      />
-      <source
-        media="(orientation: landscape)"
-        type="image/webp"
-        srcset={`${withBase('/images/hero/hero-2026-640.webp')} 640w, ${withBase('/images/hero/hero-2026-1280.webp')} 1280w, ${withBase('/images/hero/hero-2026-1920.webp')} 1920w, ${withBase('/images/hero/hero-2026-3840.webp')} 3840w`}
-        sizes="50vw"
-      />
-      <img
-        src={withBase('/images/hero/hero-2026-1920.webp')}
-        alt=""
-        width="1920"
-        height="1280"
-        fetchpriority="high"
-        decoding="async"
-      />
-    </picture>
+    <IssueHeroBackground eager />
     <div class="home-hero__veil"></div>
 
     <div class="container home-hero__content">
@@ -104,7 +84,7 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
       </div>
       <div class="section-heading__action">
         <p>从完整目录中选择三个入口。网站首版提供经书籍工程整理的目录导读。</p>
-        <a class="text-link" href={withBase('/2026#directory')}>浏览完整目录</a>
+        <a class="text-link" href={withBase('/history/2026#directory')}>浏览本期文章</a>
       </div>
     </div>
 
@@ -124,7 +104,10 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
               foreground="white"
               background="var(--card-color)"
             />
-            <p>{discipline.name} / {discipline.en}</p>
+            <p class="featured-card__labels">
+              <span>{discipline.name} / {discipline.en}</span>
+              <span>{article.year}年刊 · 总第{article.issueNumber}期</span>
+            </p>
             <h3>{article.title}</h3>
             <div>
               <span>撰文 {article.author}</span>
@@ -161,31 +144,17 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
 <style>
   .home-hero {
     position: relative;
-    min-height: calc(100svh - 70px);
+    min-height: calc(100svh - var(--nav-height));
     color: white;
     background: #111722;
     overflow: hidden;
   }
 
-  .home-hero__media,
-  .home-hero__media img,
   .home-hero__veil {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-  }
-
-  .home-hero__media img {
-    max-width: none;
-    object-fit: cover;
-    object-position: 50% 48%;
-  }
-
-  @media (orientation: portrait) {
-    .home-hero__media img {
-      object-position: 50% 50%;
-    }
   }
 
   .home-hero__veil {
@@ -198,7 +167,7 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
     position: relative;
     z-index: 1;
     display: grid;
-    min-height: calc(100svh - 70px);
+    min-height: calc(100svh - var(--nav-height));
     grid-template-rows: 1fr auto;
     padding: clamp(48px, 7vh, 72px) 0 clamp(44px, 7vh, 78px);
   }
@@ -407,6 +376,18 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
   .featured-card:hover > p,
   .featured-card:focus-visible > p {
     color: var(--ink);
+  }
+
+  .featured-card__labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .featured-card__labels span {
+    padding: 3px 6px;
+    border: 1px solid currentColor;
+    line-height: 1;
   }
 
   .featured-card h3 {

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import ArticleDirectory from '../../components/ArticleDirectory.astro';
+import { articles, contentDisciplines, issues } from '../../data';
+---
+
+<BaseLayout
+  title="问题-答案"
+  description="跨年份搜索《非正式科学》2021 至 2026 年刊的文章题名、作者与摘要。"
+>
+  <PageIntro
+    eyebrow="Questions & Answers / 2021—2026"
+    title="问题-答案"
+    description="从历年的问题出发，在题名、作者与摘要中寻找线索。可同时按学科与年份（期次）缩小范围。"
+    aside={`当前收录 ${issues.length} 期、${articles.length} 条年度文章导读。各年原始目录尚未齐备，现阶段按编辑要求复用已提供的 2025 目录，待资料补齐后逐期替换。`}
+  />
+
+  <section class="search-archive" id="search">
+    <div class="container search-archive__heading">
+      <div>
+        <p class="eyebrow">Article Finder</p>
+        <h2 class="section-title">六期问题，一处检索。</h2>
+      </div>
+      <p>搜索会同时匹配题名、作者、摘要、年份与期数；学科与年份（期次）条件可叠加使用。</p>
+    </div>
+    <div class="container">
+      <ArticleDirectory
+        entries={articles}
+        disciplines={contentDisciplines}
+        searchable
+        showFilter
+        showIssueFilter
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .search-archive {
+    padding: clamp(76px, 11vw, 150px) 0;
+    background: var(--surface);
+  }
+
+  .search-archive__heading {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 0.38fr);
+    gap: 40px;
+    align-items: end;
+    margin-bottom: 54px;
+  }
+
+  .search-archive__heading > p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 760px) {
+    .search-archive__heading {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

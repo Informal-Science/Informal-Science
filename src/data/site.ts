@@ -37,7 +37,7 @@ export const siteMeta = {
     attribution: "天体生物学家 卡洛琳·波尔科",
     reviewNeeded: true,
   },
-  featuredArticleSlugs: [
+  coverFocusArticleSlugs: [
     "where-do-stars-come-from",
     "monty-hall-problem",
     "geography-through-tuxun",

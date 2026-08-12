@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageIntro from '../../components/PageIntro.astro';
-import { issues } from '../../data';
+import { articles, issues } from '../../data';
 import { withBase } from '../../utils/paths';
 
 const historyTexture = withBase('/images/textures/history-collage.webp');
@@ -9,19 +9,21 @@ const historyTexture = withBase('/images/textures/history-collage.webp');
 
 <BaseLayout
   title="往期精彩"
-  description="回顾《非正式科学》2021 至 2026 年刊的往期面貌。"
+  description="回顾《非正式科学》2021 至 2026 年刊的封面、版本信息与各期文章导读。"
 >
   <PageIntro
     eyebrow="Past Issues / 2021—2026"
     title="往期精彩"
-    description="六期刊物，六种年度面貌。点击封面进入对应年份的子页面，回看每一年的提问与表达。"
-    aside="当前往期页面以封面和版本信息为主；正式 PDF 获得公开授权并完成校对后，再开放在线阅读与下载。"
+    description="六期刊物，六种年度面貌。点击封面进入对应年份，回看本期版本信息与文章导读。"
+    aside="各年原始目录尚未齐备，现阶段六期统一复用已提供的 2025 目录；待资料补齐后逐期替换。跨年搜索请使用“问题-答案”。"
     editorial
   />
 
   <section class="archive-section" style={`--history-texture: url(${historyTexture})`}>
     <div class="container archive-grid">
-      {issues.map((issue) => (
+      {issues.map((issue) => {
+        const articleCount = articles.filter((article) => article.year === issue.year).length;
+        return (
         <a class="issue-card" href={withBase(`/history/${issue.year}`)}>
           <div class="issue-card__cover">
             <img
@@ -34,11 +36,12 @@ const historyTexture = withBase('/images/textures/history-collage.webp');
           </div>
           <div class="issue-card__meta">
             <span>{issue.year}</span>
-            <p>总第 {issue.number} 期</p>
+            <p>总第 {issue.number} 期 · {articleCount} 篇</p>
             <b aria-hidden="true">↗</b>
           </div>
         </a>
-      ))}
+        );
+      })}
     </div>
   </section>
 

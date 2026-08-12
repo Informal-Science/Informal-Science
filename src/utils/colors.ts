@@ -13,6 +13,8 @@ const disciplineUiHex = {
   engineering: '#752d7a',
   biology: '#217943',
   chemistry: '#916000',
+  'brain-neuroscience': '#9c176f',
+  electronic: '#08727d',
 } as const;
 
 const relativeLuminance = (hex: string) => {

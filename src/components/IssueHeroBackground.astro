@@ -1,0 +1,55 @@
+---
+import { withBase } from '../utils/paths';
+
+interface Props {
+  eager?: boolean;
+}
+
+const { eager = false } = Astro.props;
+---
+
+<picture class="issue-hero-background" aria-hidden="true">
+  <source
+    media="(orientation: portrait)"
+    type="image/webp"
+    srcset={`${withBase('/images/hero/cover-2026-640.webp')} 640w, ${withBase('/images/hero/cover-2026-1280.webp')} 1280w, ${withBase('/images/hero/cover-2026-1920.webp')} 1920w, ${withBase('/images/hero/cover-2026-2880.webp')} 2880w`}
+    sizes="100vw"
+  />
+  <source
+    media="(orientation: landscape)"
+    type="image/webp"
+    srcset={`${withBase('/images/hero/hero-2026-640.webp')} 640w, ${withBase('/images/hero/hero-2026-1280.webp')} 1280w, ${withBase('/images/hero/hero-2026-1920.webp')} 1920w, ${withBase('/images/hero/hero-2026-3840.webp')} 3840w`}
+    sizes="100vw"
+  />
+  <img
+    src={withBase('/images/hero/hero-2026-1920.webp')}
+    alt=""
+    width="1920"
+    height="1280"
+    fetchpriority={eager ? 'high' : 'auto'}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+  />
+</picture>
+
+<style>
+  .issue-hero-background,
+  .issue-hero-background img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .issue-hero-background img {
+    max-width: none;
+    object-fit: cover;
+    object-position: 50% 48%;
+  }
+
+  @media (orientation: portrait) {
+    .issue-hero-background img {
+      object-position: 50% 50%;
+    }
+  }
+</style>

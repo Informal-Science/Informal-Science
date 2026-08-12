@@ -1,0 +1,136 @@
+---
+import BookMarker from './BookMarker.astro';
+
+interface Props {
+  name: string;
+  summary: string;
+  sequence: string;
+  articleCount: number;
+  articleLabel?: string;
+  secondaryCount: number;
+  secondaryLabel: string;
+  color: string;
+  ink: string;
+}
+
+const {
+  name,
+  summary,
+  sequence,
+  articleCount,
+  articleLabel = '篇跨年导读',
+  secondaryCount,
+  secondaryLabel,
+  color,
+  ink,
+} = Astro.props;
+---
+
+<header
+  class="discipline-hero"
+  style={`--discipline-color: ${color}; --discipline-ink: ${ink}`}
+>
+  <div class="container discipline-hero__grid">
+    <div class="discipline-code">
+      <BookMarker
+        kind="logo"
+        value="iS"
+        size="64px"
+        foreground="var(--discipline-color)"
+        background="var(--discipline-ink)"
+        decorative
+      />
+      <p>{sequence}</p>
+    </div>
+    <div>
+      <h1>{name}</h1>
+      <p class="discipline-hero__summary">{summary}</p>
+    </div>
+    <dl>
+      <div><dt>{articleCount}</dt><dd>{articleLabel}</dd></div>
+      <div><dt>{secondaryCount}</dt><dd>{secondaryLabel}</dd></div>
+    </dl>
+  </div>
+</header>
+
+<style>
+  .discipline-hero {
+    position: relative;
+    padding: clamp(86px, 12vw, 170px) 0 clamp(72px, 10vw, 140px);
+    color: var(--discipline-ink);
+    background: var(--discipline-color);
+    overflow: hidden;
+  }
+
+  .discipline-hero::before {
+    position: absolute;
+    inset: 24px;
+    border: 1px solid var(--discipline-ink);
+    border-color: color-mix(in srgb, var(--discipline-ink) 42%, transparent);
+    content: '';
+    pointer-events: none;
+  }
+
+  .discipline-hero__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.25fr 1fr 0.32fr;
+    gap: clamp(28px, 7vw, 100px);
+    align-items: end;
+  }
+
+  .discipline-code p {
+    margin: 14px 0 0;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .discipline-hero h1 {
+    margin: 0;
+    font-size: clamp(5rem, 15vw, 15rem);
+    font-weight: 500;
+    line-height: 0.82;
+    letter-spacing: 0.08em;
+  }
+
+  .discipline-hero__summary {
+    max-width: 670px;
+    margin: 38px 0 0;
+    color: var(--discipline-ink);
+    color: color-mix(in srgb, var(--discipline-ink) 82%, transparent);
+    font-size: clamp(1rem, 1.7vw, 1.25rem);
+  }
+
+  .discipline-hero dl {
+    display: grid;
+    gap: 24px;
+    margin: 0;
+  }
+
+  .discipline-hero dl div {
+    padding-top: 10px;
+    border-top: 1px solid var(--discipline-ink);
+    border-color: color-mix(in srgb, var(--discipline-ink) 56%, transparent);
+  }
+
+  .discipline-hero dt {
+    font-size: 2rem;
+    font-weight: 300;
+  }
+
+  .discipline-hero dd {
+    margin: 3px 0 0;
+    font-size: 0.72rem;
+  }
+
+  @media (max-width: 800px) {
+    .discipline-hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .discipline-hero dl {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

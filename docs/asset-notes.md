@@ -77,6 +77,6 @@ HarmonyOS 原始字体位于 `Resources/Font_Resources/HarmonyOS_Sans_SC/`，其
 
 ## 未交付素材
 
-- `History/QR-code.jpg`：二维码目标尚未核验，因此没有进入网页交付目录。
+- `History/QR-code.jpg`：编辑方确认为 QQ 空间订阅二维码，原样复制到 `public/images/subscribe/qq-space-qr.jpg`；二维码图像不重采样，避免影响识别。
 - `History/Cover_Issue-6.png`：与第五期文件逐字节相同，且图面标注“2025 年刊 总第 5 期”，因此没有作为第六期封面使用。
 - `.ai` 源、整套字体、投稿文件和整本 PDF：网页不需要，未复制。

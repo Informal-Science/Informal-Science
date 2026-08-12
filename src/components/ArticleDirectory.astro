@@ -1,34 +1,64 @@
 ---
 import BookMarker from './BookMarker.astro';
-import type { Article, Discipline } from '../data';
+import type { Article, Discipline, HistoricalDiscipline } from '../data';
 import { disciplineUiColor } from '../utils/colors';
 
 interface Props {
   entries: readonly Article[];
-  disciplines: readonly Discipline[];
+  disciplines: readonly (Discipline | HistoricalDiscipline)[];
   searchable?: boolean;
   showFilter?: boolean;
+  showIssueFilter?: boolean;
+  emptyMessage?: string;
 }
 
-const { entries, disciplines, searchable = false, showFilter = false } = Astro.props;
+const {
+  entries,
+  disciplines,
+  searchable = false,
+  showFilter = false,
+  showIssueFilter = false,
+  emptyMessage = '暂无已整理的文章导读。',
+} = Astro.props;
 const disciplineMap = new Map(disciplines.map((discipline) => [discipline.slug, discipline]));
+const availableIssues = [
+  ...new Map(
+    entries.map((article) => [
+      `${article.year}-${article.issueNumber}`,
+      { year: article.year, issueNumber: article.issueNumber },
+    ]),
+  ).values(),
+].sort((a, b) => b.year - a.year || b.issueNumber - a.issueNumber);
 ---
 
 <section class="article-directory" data-article-directory>
-  {(searchable || showFilter) && (
-    <div class="directory-tools">
+  {(searchable || showFilter || showIssueFilter) && (
+    <div class:list={['directory-tools', { 'directory-tools--with-issue': showIssueFilter }]}>
       {searchable && (
         <label class="search-field">
           <span>搜索文章</span>
-          <input type="search" placeholder="题名、作者或摘要" data-directory-search />
+          <input type="search" placeholder="题名、作者、摘要、年份或期数" data-directory-search />
         </label>
       )}
       {showFilter && (
         <label class="filter-field">
           <span>学科</span>
-          <select data-directory-filter>
+          <select data-directory-discipline>
             <option value="all">全部学科</option>
             {disciplines.map((discipline) => <option value={discipline.slug}>{discipline.name}</option>)}
+          </select>
+        </label>
+      )}
+      {showIssueFilter && (
+        <label class="filter-field">
+          <span>年份（期次）</span>
+          <select data-directory-issue>
+            <option value="all">全部年刊</option>
+            {availableIssues.map((issue) => (
+              <option value={`${issue.year}-${issue.issueNumber}`}>
+                {issue.year}年 总第{issue.issueNumber}期
+              </option>
+            ))}
           </select>
         </label>
       )}
@@ -41,10 +71,13 @@ const disciplineMap = new Map(disciplines.map((discipline) => [discipline.slug, 
       const discipline = disciplineMap.get(article.disciplineSlug);
       return (
         <article
+          id={article.slug}
           class="article-row"
           data-article-row
           data-discipline={article.disciplineSlug}
-          data-search={`${article.title} ${article.author} ${article.summary}`.toLowerCase()}
+          data-year={article.year}
+          data-issue={`${article.year}-${article.issueNumber}`}
+          data-search={`${article.title} ${article.author} ${article.summary} ${article.year} 总第 ${article.issueNumber} 期`.toLowerCase()}
           style={`--article-color: ${discipline ? disciplineUiColor(discipline.colorKey) : 'var(--theme)'}`}
         >
           <div class="article-row__page">
@@ -58,7 +91,10 @@ const disciplineMap = new Map(disciplines.map((discipline) => [discipline.slug, 
             <em>PAGE</em>
           </div>
           <div class="article-row__content">
-            <p class="article-row__discipline">iS {discipline?.name} {discipline?.en}</p>
+            <div class="article-row__labels">
+              <span>{article.year}年刊 · 总第{article.issueNumber}期</span>
+              <span>{discipline?.name} / {discipline?.en}</span>
+            </div>
             <h2>{article.title}</h2>
             <p>{article.summary}</p>
           </div>
@@ -72,28 +108,31 @@ const disciplineMap = new Map(disciplines.map((discipline) => [discipline.slug, 
     })}
   </div>
 
-  <p class="empty-state" data-empty-state hidden>没有找到符合条件的文章。</p>
+  <p class="empty-state" data-empty-state hidden={entries.length > 0}>{emptyMessage}</p>
 </section>
 
-{(searchable || showFilter) && (
+{(searchable || showFilter || showIssueFilter) && (
   <script>
     document.querySelectorAll('[data-article-directory]').forEach((directory) => {
       const search = directory.querySelector('[data-directory-search]');
-      const filter = directory.querySelector('[data-directory-filter]');
+      const disciplineFilter = directory.querySelector('[data-directory-discipline]');
+      const issueFilter = directory.querySelector('[data-directory-issue]');
       const rows = [...directory.querySelectorAll('[data-article-row]')];
       const count = directory.querySelector('[data-directory-count]');
       const empty = directory.querySelector('[data-empty-state]');
 
       const update = () => {
         const query = search instanceof HTMLInputElement ? search.value.trim().toLowerCase() : '';
-        const discipline = filter instanceof HTMLSelectElement ? filter.value : 'all';
+        const discipline = disciplineFilter instanceof HTMLSelectElement ? disciplineFilter.value : 'all';
+        const issue = issueFilter instanceof HTMLSelectElement ? issueFilter.value : 'all';
         let visible = 0;
 
         rows.forEach((row) => {
           if (!(row instanceof HTMLElement)) return;
           const matchesSearch = !query || row.dataset.search?.includes(query);
           const matchesFilter = discipline === 'all' || row.dataset.discipline === discipline;
-          row.hidden = !(matchesSearch && matchesFilter);
+          const matchesIssue = issue === 'all' || row.dataset.issue === issue;
+          row.hidden = !(matchesSearch && matchesFilter && matchesIssue);
           if (!row.hidden) visible += 1;
         });
 
@@ -102,7 +141,8 @@ const disciplineMap = new Map(disciplines.map((discipline) => [discipline.slug, 
       };
 
       search?.addEventListener('input', update);
-      filter?.addEventListener('change', update);
+      disciplineFilter?.addEventListener('change', update);
+      issueFilter?.addEventListener('change', update);
     });
   </script>
 )}
@@ -115,6 +155,10 @@ const disciplineMap = new Map(disciplines.map((discipline) => [discipline.slug, 
     align-items: end;
     padding: 26px 0;
     border-bottom: 1px solid var(--line-strong);
+  }
+
+  .directory-tools--with-issue {
+    grid-template-columns: minmax(220px, 1fr) repeat(2, minmax(140px, 0.3fr)) auto;
   }
 
   .search-field,
@@ -203,12 +247,21 @@ const disciplineMap = new Map(disciplines.map((discipline) => [discipline.slug, 
     letter-spacing: 0.12em;
   }
 
-  .article-row__discipline {
-    margin: 0 0 9px !important;
-    color: var(--article-color) !important;
-    font-size: 0.68rem !important;
+  .article-row__labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .article-row__labels span {
+    padding: 3px 7px;
+    border: 1px solid var(--article-color);
+    color: var(--article-color);
+    font-size: 0.62rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    line-height: 1;
+    letter-spacing: 0.05em;
   }
 
   .article-row__content h2 {

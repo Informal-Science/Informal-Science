@@ -64,6 +64,18 @@ pnpm preview
 4. 将 `draft` 或 `availability` 改为公开状态前，要同时确认文章、PDF、图片、引语和署名的发布授权。
 5. 运行检查与构建，在本地逐页核对标题、作者、学科、摘要、链接和移动端版式。
 
+### 年度文章资料
+
+`src/data/articles.ts` 将“文章目录母版”与“年度记录”分开维护。当前已确认收到的 24 篇目录实际属于 2025 年；在 2021—2026 各期原始目录补齐前，网站按编辑要求将这份目录复用于六期，并为每条年度记录生成独立的 `year`、`issueNumber` 和 `slug`。不要在页面组件里复制文章数据。
+
+- `/questions-answers/` 是跨年份检索入口，可同时按关键词、学科和年份（期次）筛选。
+- `/history/YYYY/` 只读取对应年份的 24 篇记录。
+- `/disciplines/<slug>/` 汇总该学科在六期中的年度记录；数学使用稳定路由 `/disciplines/math/`。
+- `/disciplines/other/` 聚合 `historical-disciplines.ts` 中的历史板块及其文章；`content-disciplines.ts` 是现行与历史板块的统一检索表。
+- `/2026/` 只承担本期定位和编辑方向，不再承载文章搜索。
+
+取得某一年的真实目录后，应在数据层替换该年度的目录来源，并保留年份、期数、学科、来源和审核字段；脑神经科学与电子文章分别使用 `brain-neuroscience`、`electronic` 学科键。问题-答案、往期详情和“其他”页会自动收录，页面路由与组件无需改写。
+
 站内路由和资源 URL 必须兼容 GitHub Pages 的 `/Informal-Science` 子路径。在 Astro 代码中使用 `src/utils/paths.ts` 的 `withBase()` 或 `assetPath()`，不要硬编码以 `/images/...` 开头的站点根路径。
 
 ## 更新图片与其他资源

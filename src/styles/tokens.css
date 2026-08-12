@@ -19,6 +19,8 @@
   --engineering: #752d7a;
   --biology: #217943;
   --chemistry: #916000;
+  --brain-neuroscience: #9c176f;
+  --electronic: #08727d;
 
   --content: min(1180px, calc(100vw - 48px));
   --reading: min(760px, calc(100vw - 48px));
