@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import BookMarker from '../components/BookMarker.astro';
 import DisciplineGrid from '../components/DisciplineGrid.astro';
 import { siteMeta, articles, disciplines, issues } from '../data';
 import { disciplineUiColor } from '../utils/colors';
@@ -116,7 +117,13 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
             href={withBase(`/disciplines/${discipline.routeSlug}`)}
             style={`--card-color: ${disciplineUiColor(discipline.colorKey)}`}
           >
-            <span class="featured-card__index">0{index + 1}</span>
+            <BookMarker
+              kind="toc-number"
+              value={String(index + 1)}
+              size="2.25rem"
+              foreground="white"
+              background="var(--card-color)"
+            />
             <p>{discipline.name} / {discipline.en}</p>
             <h3>{article.title}</h3>
             <div>
@@ -386,15 +393,6 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
   .featured-card:focus-visible {
     color: var(--ink);
     background: var(--card-color);
-  }
-
-  .featured-card__index {
-    width: fit-content;
-    padding: 4px 8px;
-    color: white;
-    background: var(--card-color);
-    font-size: 0.7rem;
-    font-weight: 700;
   }
 
   .featured-card > p {

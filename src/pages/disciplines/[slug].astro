@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleDirectory from '../../components/ArticleDirectory.astro';
+import BookMarker from '../../components/BookMarker.astro';
 import { disciplines, articles } from '../../data';
 import { disciplineUiColor, disciplineUiTextColor } from '../../utils/colors';
 import { withBase } from '../../utils/paths';
@@ -34,7 +35,14 @@ const nextDiscipline = disciplines[(currentIndex + 1) % disciplines.length];
   >
     <div class="container discipline-hero__grid">
       <div class="discipline-code">
-        <span>iS</span>
+        <BookMarker
+          kind="logo"
+          value="iS"
+          size="64px"
+          foreground="var(--discipline-color)"
+          background="var(--discipline-ink)"
+          decorative
+        />
         <p>{String(discipline.order).padStart(2, '0')} / 07</p>
       </div>
       <div>
@@ -99,17 +107,6 @@ const nextDiscipline = disciplines[(currentIndex + 1) % disciplines.length];
     grid-template-columns: 0.25fr 1fr 0.32fr;
     gap: clamp(28px, 7vw, 100px);
     align-items: end;
-  }
-
-  .discipline-code span {
-    display: grid;
-    width: 64px;
-    height: 64px;
-    place-items: center;
-    color: var(--discipline-color);
-    background: var(--discipline-ink);
-    font-size: 32px;
-    font-weight: 700;
   }
 
   .discipline-code p {

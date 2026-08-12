@@ -1,4 +1,5 @@
 ---
+import BookMarker from './BookMarker.astro';
 import type { Article, Discipline } from '../data';
 import { disciplineUiColor } from '../utils/colors';
 
@@ -47,7 +48,13 @@ const disciplineMap = new Map(disciplines.map((discipline) => [discipline.slug, 
           style={`--article-color: ${discipline ? disciplineUiColor(discipline.colorKey) : 'var(--theme)'}`}
         >
           <div class="article-row__page">
-            <span>{String(article.page).padStart(2, '0')}</span>
+            <BookMarker
+              kind="toc-number"
+              value={String(article.page)}
+              size="clamp(44px, 5vw, 56px)"
+              foreground="white"
+              background="var(--article-color)"
+            />
             <em>PAGE</em>
           </div>
           <div class="article-row__content">
@@ -186,13 +193,6 @@ const disciplineMap = new Map(disciplines.map((discipline) => [discipline.slug, 
   .article-row__page {
     display: grid;
     align-content: start;
-  }
-
-  .article-row__page span {
-    color: var(--article-color);
-    font-size: 1.65rem;
-    font-weight: 700;
-    line-height: 1;
   }
 
   .article-row__page em {

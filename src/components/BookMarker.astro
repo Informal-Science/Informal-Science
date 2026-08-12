@@ -1,0 +1,91 @@
+---
+interface Props {
+  kind: 'logo' | 'toc-number';
+  value: string;
+  size: string;
+  foreground?: string;
+  background?: string;
+  decorative?: boolean;
+}
+
+const {
+  kind,
+  value,
+  size,
+  foreground = 'currentColor',
+  background = 'transparent',
+  decorative = false,
+} = Astro.props;
+
+const markerStyle = [
+  `--book-marker-size: ${size}`,
+  `--book-marker-foreground: ${foreground}`,
+  `--book-marker-background: ${background}`,
+].join('; ');
+---
+
+<span
+  class:list={['book-marker', `book-marker--${kind}`]}
+  style={markerStyle}
+  aria-hidden={decorative ? 'true' : undefined}
+>
+  <span>{value}</span>
+</span>
+
+<style>
+  .book-marker {
+    display: inline-grid;
+    flex: none;
+    box-sizing: border-box;
+    place-items: center;
+    color: var(--book-marker-foreground);
+    background: var(--book-marker-background);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    font-synthesis: none;
+  }
+
+  /*
+   * Logo source: a 500 pt iS mark centered in a 600 px square.
+   * The Illustrator document treats these design units proportionally,
+   * so the intended font/square ratio is 500/600 = 5/6.
+   */
+  .book-marker--logo {
+    inline-size: var(--book-marker-size);
+    block-size: var(--book-marker-size);
+    font-size: calc(var(--book-marker-size) * 0.8333333333);
+  }
+
+  /*
+   * Keep the Illustrator text object's horizontal center exactly on the
+   * square's center line. Only compensate for the browser baseline vertically.
+   */
+  .book-marker--logo > span {
+    display: block;
+    inline-size: 100%;
+    line-height: 1;
+    text-align: center;
+    transform: translateY(0.021875em);
+  }
+
+  /*
+   * isbook-toc.cls: article numbers use a 7.6 mm × 4.5 mm box and
+   * 10 pt HarmonyOS Sans SC Bold type. The ratios below preserve that
+   * construction at every responsive size.
+   */
+  .book-marker--toc-number {
+    inline-size: var(--book-marker-size);
+    block-size: calc(var(--book-marker-size) * 0.5921052632);
+    font-size: calc(var(--book-marker-size) * 0.462447);
+  }
+
+  .book-marker--toc-number > span {
+    display: block;
+    inline-size: 100%;
+    line-height: 1;
+    text-align: center;
+    transform: translateY(0.025em);
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookMarker from '../../components/BookMarker.astro';
 import PageIntro from '../../components/PageIntro.astro';
 import { colorStandards } from '../../data';
 import { shouldUseDarkText } from '../../utils/colors';
@@ -37,7 +38,9 @@ const formatCmyk = (color: (typeof colorStandards)[number]) => {
         <article class:list={['swatch', { 'swatch--light': shouldUseDarkText(color.webHex) }]} style={`--swatch: ${color.webHex}`}>
           <div class="swatch__color">
             <span>{String(index).padStart(2, '0')}</span>
-            <strong>iS</strong>
+            <div class="swatch__mark">
+              <BookMarker kind="logo" value="iS" size="3.84rem" decorative />
+            </div>
           </div>
           <div class="swatch__copy">
             <p>{color.key.toUpperCase()}</p>
@@ -140,10 +143,8 @@ const formatCmyk = (color: (typeof colorStandards)[number]) => {
     font-weight: 500;
   }
 
-  .swatch__color strong {
+  .swatch__mark {
     align-self: end;
-    font-size: 3.2rem;
-    line-height: 1;
   }
 
   .swatch__copy {
