@@ -4,7 +4,7 @@ export default defineConfig({
   site: 'https://informal-science.github.io',
   base: '/Informal-Science',
   output: 'static',
-  trailingSlash: 'never',
+  trailingSlash: 'always',
   build: {
     format: 'directory',
   },
