@@ -4,7 +4,7 @@
 
 网站预期部署在：
 
-`https://basic-science-club-alliance-of-fzyz.github.io/Informal-Science/`
+`https://informal-science.github.io/Informal-Science/`
 
 > 书籍工程是编辑源，网站仓库是发布副本。网站构建不会在 CI 中读取相邻的书籍仓库，以保证任何人克隆本仓库后都能重现构建。
 
@@ -108,7 +108,7 @@ pnpm preview
 1. 确认 GitHub 组织中的远程仓库名为 `Informal-Science`，并将本地 `origin` 指向 SSH 443 端口：
 
    ```bash
-   git remote set-url origin ssh://git@ssh.github.com:443/Basic-Science-Club-Alliance-of-FZYZ/Informal-Science.git
+   git remote set-url origin ssh://git@ssh.github.com:443/Informal-Science/Informal-Science.git
    ```
 
 2. 在仓库 **Settings → Pages → Build and deployment** 中将 Source 设为 **GitHub Actions**。
