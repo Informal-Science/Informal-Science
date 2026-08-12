@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import { issues } from '../../data';
+import { withBase } from '../../utils/paths';
+
+const historyTexture = withBase('/images/textures/history-collage.webp');
+---
+
+<BaseLayout
+  title="往期精彩"
+  description="回顾《非正式科学》2021 至 2026 年刊的往期面貌。"
+>
+  <PageIntro
+    eyebrow="Past Issues / 2021—2026"
+    title="往期精彩"
+    description="六期刊物，六种年度面貌。点击封面进入对应年份的子页面，回看每一年的提问与表达。"
+    aside="当前往期页面以封面和版本信息为主；正式 PDF 获得公开授权并完成校对后，再开放在线阅读与下载。"
+    editorial
+  />
+
+  <section class="archive-section" style={`--history-texture: url(${historyTexture})`}>
+    <div class="container archive-grid">
+      {issues.map((issue) => (
+        <a class="issue-card" href={withBase(`/history/${issue.year}`)}>
+          <div class="issue-card__cover">
+            <img
+              src={withBase(issue.coverAsset)}
+              alt={`《非正式科学》${issue.year} 年刊封面`}
+              width="900"
+              height="1273"
+              loading={issue.year === 2026 ? 'eager' : 'lazy'}
+            />
+          </div>
+          <div class="issue-card__meta">
+            <span>{issue.year}</span>
+            <p>总第 {issue.number} 期</p>
+            <b aria-hidden="true">↗</b>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="archive-note">
+    <div class="reading-width">
+      <p class="eyebrow">Five Years of Making</p>
+      <blockquote>每一期青涩的《非正式科学》，都伴随着所有参与者的成长和努力。</blockquote>
+      <p>从撰写、编辑、设计到印刷与宣发，这份学生刊物在一届又一届的协作中持续完善。</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .archive-section {
+    padding: clamp(70px, 10vw, 140px) 0;
+    background:
+      linear-gradient(rgba(247, 247, 245, 0.92), rgba(247, 247, 245, 0.96)),
+      var(--history-texture) center / cover fixed;
+  }
+
+  .archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(40px, 7vw, 92px) clamp(26px, 5vw, 68px);
+  }
+
+  .issue-card {
+    display: grid;
+    gap: 18px;
+  }
+
+  .issue-card__cover {
+    position: relative;
+    aspect-ratio: 210 / 297;
+    background: #dededb;
+    box-shadow: 0 30px 66px rgba(17, 18, 20, 0.14);
+    overflow: hidden;
+  }
+
+  .issue-card__cover::after {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(17, 18, 20, 0.16);
+    content: '';
+  }
+
+  .issue-card__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 350ms ease;
+  }
+
+  .issue-card:hover .issue-card__cover img {
+    transform: scale(1.018);
+  }
+
+  .issue-card__meta {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    align-items: end;
+    padding-top: 12px;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .issue-card__meta span {
+    font-size: clamp(2rem, 4vw, 4.3rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.06em;
+  }
+
+  .issue-card__meta p,
+  .issue-card__meta b {
+    margin: 0;
+    font-size: 0.72rem;
+  }
+
+  .archive-note {
+    padding: clamp(90px, 13vw, 180px) 0;
+    color: white;
+    background: #11151b;
+  }
+
+  .archive-note blockquote {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-size: clamp(2.2rem, 5.5vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: -0.055em;
+  }
+
+  .archive-note > div > p:last-child {
+    max-width: 520px;
+    margin: 34px 0 0 auto;
+    color: rgba(255, 255, 255, 0.58);
+  }
+
+  @media (max-width: 760px) {
+    .archive-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 48px 20px;
+    }
+  }
+
+  @media (max-width: 470px) {
+    .archive-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

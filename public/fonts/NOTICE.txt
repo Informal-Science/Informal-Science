@@ -1,0 +1,22 @@
+Font notices for Web of Informal Science
+
+This website uses HarmonyOS Sans SC.
+Copyright 2021 Huawei Device Co., Ltd. All Rights Reserved.
+HarmonyOS Sans Fonts Software is licensed under the HarmonyOS Sans Fonts License Agreement:
+https://github.com/openharmony/global_system_resources/blob/master/LICENSE_Fonts
+
+This website uses Noto Serif CJK SC.
+Copyright 2017-2024 Adobe.
+Licensed under the SIL Open Font License, Version 1.1:
+https://github.com/notofonts/noto-cjk/blob/main/Serif/LICENSE
+
+This website uses STIX Two Math.
+Copyright 2001-2021 The STIX Fonts Project Authors.
+Licensed under the SIL Open Font License, Version 1.1:
+https://github.com/stipub/stixfonts/blob/master/OFL.txt
+
+The HarmonyOS Sans files served by this website are unmodified TTF copies of the
+book-production weights used by the interface. Noto Serif CJK SC and STIX
+Two Math are WOFF2 subsets permitted by their SIL Open Font License terms.
+
+See docs/asset-notes.md in the source repository for provenance and processing details.

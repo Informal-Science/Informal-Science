@@ -1,0 +1,182 @@
+---
+import { disciplines, articles } from '../data';
+import { disciplineUiColor, disciplineUiTextColor } from '../utils/colors';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<div class:list={['discipline-grid', { 'discipline-grid--compact': compact }]}>
+  {disciplines.map((discipline, index) => {
+    const articleCount = articles.filter((article) => article.disciplineSlug === discipline.slug).length;
+    return (
+      <a
+        class="discipline-card"
+        href={withBase(`/disciplines/${discipline.routeSlug}`)}
+        style={`--discipline-color: ${disciplineUiColor(discipline.colorKey)}; --discipline-ink: ${disciplineUiTextColor(discipline.colorKey)}`}
+      >
+        <span class="discipline-card__number">{String(index + 1).padStart(2, '0')}</span>
+        <div>
+          <p class="discipline-card__en">{discipline.en}</p>
+          {compact ? <h3>{discipline.name}</h3> : <h2>{discipline.name}</h2>}
+        </div>
+        {!compact && <p class="discipline-card__summary">{discipline.summary}</p>}
+        <span class="discipline-card__meta">{articleCount} 篇导读 <b aria-hidden="true">↗</b></span>
+      </a>
+    );
+  })}
+</div>
+
+<style>
+  .discipline-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .discipline-card {
+    position: relative;
+    display: grid;
+    min-height: 320px;
+    grid-template-columns: 54px 1fr;
+    gap: 18px;
+    align-content: start;
+    padding: clamp(26px, 4vw, 48px);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    transition: color 220ms ease, background 220ms ease;
+  }
+
+  .discipline-card::before {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 5px;
+    background: var(--discipline-color);
+    content: '';
+    transform: scaleX(0.2);
+    transform-origin: left;
+    transition: transform 260ms ease;
+  }
+
+  .discipline-card:hover,
+  .discipline-card:focus-visible {
+    color: var(--discipline-ink);
+    background: var(--discipline-color);
+  }
+
+  .discipline-card:hover::before,
+  .discipline-card:focus-visible::before {
+    transform: scaleX(1);
+  }
+
+  .discipline-card__number {
+    color: var(--discipline-color);
+    font-size: 0.72rem;
+    font-weight: 500;
+    transition: color 220ms ease;
+  }
+
+  .discipline-card:hover .discipline-card__number,
+  .discipline-card:focus-visible .discipline-card__number {
+    color: var(--discipline-ink);
+  }
+
+  .discipline-card__en {
+    margin: 0 0 3px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+  }
+
+  .discipline-card h2,
+  .discipline-card h3 {
+    margin: 0;
+    font-size: clamp(2.2rem, 5vw, 4.6rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.06em;
+  }
+
+  .discipline-card__summary {
+    grid-column: 2;
+    max-width: 34rem;
+    margin: 30px 0 0;
+    color: var(--ink-soft);
+    transition: color 220ms ease;
+  }
+
+  .discipline-card:hover .discipline-card__summary,
+  .discipline-card:focus-visible .discipline-card__summary {
+    color: var(--discipline-ink);
+    color: color-mix(in srgb, var(--discipline-ink) 82%, transparent);
+  }
+
+  .discipline-card__meta {
+    position: absolute;
+    right: clamp(26px, 4vw, 48px);
+    bottom: 26px;
+    font-size: 0.76rem;
+    font-weight: 500;
+  }
+
+  .discipline-card__meta b {
+    margin-left: 5px;
+  }
+
+  .discipline-grid--compact {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .discipline-grid--compact .discipline-card {
+    min-height: 250px;
+    grid-template-columns: 1fr;
+    padding: 26px 18px;
+  }
+
+  .discipline-grid--compact .discipline-card h3 {
+    font-size: clamp(1.5rem, 2.8vw, 3rem);
+  }
+
+  .discipline-grid--compact .discipline-card__meta {
+    right: 18px;
+    bottom: 20px;
+    left: 18px;
+  }
+
+  @media (max-width: 1080px) {
+    .discipline-grid--compact {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .discipline-grid,
+    .discipline-grid--compact {
+      grid-template-columns: 1fr;
+    }
+
+    .discipline-card,
+    .discipline-grid--compact .discipline-card {
+      min-height: 220px;
+      grid-template-columns: 44px 1fr;
+      padding: 28px 20px;
+    }
+
+    .discipline-card__summary {
+      grid-column: 2;
+      margin-top: 18px;
+    }
+
+    .discipline-card__meta,
+    .discipline-grid--compact .discipline-card__meta {
+      right: 20px;
+      bottom: 18px;
+      left: auto;
+    }
+  }
+</style>

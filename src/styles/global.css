@@ -1,0 +1,235 @@
+@import './fonts.css';
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-sans-body);
+  font-weight: 300;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-synthesis: none;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--ink);
+}
+
+::selection {
+  color: white;
+  background: var(--theme);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 8px;
+  left: 12px;
+  padding: 8px 12px;
+  color: white;
+  background: var(--ink);
+  transform: translateY(-160%);
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.container {
+  width: min(var(--content), calc(100vw - 48px - var(--safe-left) - var(--safe-right)));
+  margin-inline: auto;
+}
+
+.reading-width {
+  width: min(var(--reading), calc(100vw - 48px - var(--safe-left) - var(--safe-right)));
+  margin-inline: auto;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.display-title {
+  margin: 0;
+  font-family: var(--font-editorial);
+  font-size: clamp(2.8rem, 8vw, 7.5rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.section-title {
+  margin: 0;
+  font-size: clamp(2rem, 4.8vw, 4.8rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.editorial-title {
+  font-family: var(--font-editorial);
+  font-weight: 900;
+}
+
+.lede {
+  max-width: 48rem;
+  margin: 18px 0 0;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  line-height: 1.8;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  font-weight: 500;
+}
+
+.text-link::after {
+  content: '↗';
+  transition: transform 180ms ease;
+}
+
+.text-link:hover::after {
+  transform: translate(3px, -3px);
+}
+
+.button-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 19px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.button-link:hover {
+  color: var(--surface);
+  background: var(--ink);
+  transform: translateY(-2px);
+}
+
+.page-shell {
+  min-height: 70vh;
+}
+
+.page-intro {
+  padding: clamp(86px, 11vw, 160px) 0 clamp(64px, 9vw, 120px);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-intro__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+  gap: clamp(32px, 7vw, 96px);
+  align-items: end;
+}
+
+.page-intro__aside {
+  margin: 0 0 0 auto;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.rule-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rule-label::before {
+  width: 38px;
+  height: 1px;
+  background: currentColor;
+  content: '';
+}
+
+@media (max-width: 760px) {
+  .page-intro__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-intro__aside {
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid Highlight;
+    box-shadow: none;
+  }
+}

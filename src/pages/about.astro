@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { contributors } from '../data';
+import { withBase } from '../utils/paths';
+
+const roleLabels: Record<string, string> = {
+  publisher: '主办单位',
+  'contributing-organization': '供稿单位',
+  'chief-editor': '主编',
+  'contributing-author': '供稿人员',
+  'visual-designer': '视觉设计',
+  'cover-designer': '封面设计',
+  'afterword-author': '后记署名',
+};
+
+const organizations = contributors.filter((item) => item.kind === 'organization');
+const people = contributors.filter((item) => item.kind === 'person');
+const visiblePeople = people.filter((item) => ['chief-editor', 'visual-designer', 'cover-designer'].includes(item.role));
+---
+
+<BaseLayout title="关于我们" description="关于《非正式科学》学生科学年刊与 2026 年刊制作团队。">
+  <PageIntro
+    eyebrow="About Informal Science"
+    title="关于我们"
+    description="《非正式科学》是一份由学生共同撰写、编辑、设计与传承的科学年刊。我们从未把「非正式」理解为不严谨，而是把它视为一种敢于发问的姿态。"
+    aside="网站内容以 2026 年刊工程为来源。团队名单仍在最终校对中，仅展示目前明确的主办、供稿与设计信息。"
+    editorial
+  />
+
+  <section class="about-manifesto">
+    <div class="container manifesto-grid">
+      <p class="eyebrow">Our Approach</p>
+      <blockquote>把复杂的问题讲得清楚，<br />把尚未解决的问题继续留下。</blockquote>
+      <p>从选题、写作与审稿，到版式、封面与印刷，一本年刊的形成是一项跨社团、跨学科的协作工程。网站延续这套结构，让内容能够被持续整理、修订与更新。</p>
+    </div>
+  </section>
+
+  <section class="timeline-section">
+    <div class="container">
+      <p class="eyebrow">Continuity / 2021—2026</p>
+      <div class="timeline">
+        <article><span>2021</span><h2>创刊</h2><p>第一期《非正式科学》诞生。</p></article>
+        <article><span>2022</span><h2>设计</h2><p>刊物逐步形成完整 IP 与视觉规范。</p></article>
+        <article><span>2023</span><h2>排版</h2><p>排版工具与制作流程继续更新。</p></article>
+        <article><span>2024—25</span><h2>传承</h2><p>多届同学持续组织、写作、设计与发行。</p></article>
+        <article><span>2026</span><h2>数字化</h2><p>总第六期与独立网站共同建设。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="credits-section">
+    <div class="container credits-heading">
+      <p class="eyebrow">Credits / 2026</p>
+      <h2 class="section-title">共同完成</h2>
+    </div>
+    <div class="container credits-grid">
+      <div class="credits-group">
+        <h3>主办与供稿单位</h3>
+        {organizations.map((item) => (
+          <article>
+            <span>{roleLabels[item.role]}</span>
+            <strong>{item.name}</strong>
+            {item.englishName && <p>{item.englishName}</p>}
+          </article>
+        ))}
+      </div>
+      <div class="credits-group">
+        <h3>编辑与设计</h3>
+        {visiblePeople.map((item) => (
+          <article>
+            <span>{roleLabels[item.role]}</span>
+            <strong>{item.name}</strong>
+            {item.affiliation && <p>{item.affiliation}</p>}
+          </article>
+        ))}
+        <p class="credits-review">完整作者与贡献者名单将在书籍工程完成最终校对后同步更新。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-next">
+    <div class="container about-next__inner">
+      <div>
+        <p class="eyebrow">Read the Issue</p>
+        <h2>从 2026 年刊继续。</h2>
+      </div>
+      <a class="button-link" href={withBase('/2026')}>进入本期目录</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-manifesto {
+    padding: clamp(90px, 13vw, 180px) 0;
+  }
+
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 0.3fr 1fr;
+    gap: clamp(32px, 8vw, 120px);
+  }
+
+  .manifesto-grid blockquote {
+    margin: 0;
+    font-size: clamp(2.5rem, 6.8vw, 7.2rem);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.065em;
+  }
+
+  .manifesto-grid > p:last-child {
+    grid-column: 2;
+    max-width: 650px;
+    margin: 10px 0 0;
+    color: var(--ink-soft);
+  }
+
+  .timeline-section {
+    padding: clamp(70px, 10vw, 130px) 0;
+    background: var(--surface);
+  }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin-top: 48px;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .timeline article {
+    min-height: 230px;
+    padding: 24px 20px;
+    border-right: 1px solid var(--line);
+  }
+
+  .timeline span {
+    color: var(--theme);
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+
+  .timeline h2 {
+    margin: 38px 0 12px;
+    font-size: 2rem;
+    font-weight: 500;
+  }
+
+  .timeline p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+  }
+
+  .credits-section {
+    padding: clamp(90px, 12vw, 170px) 0;
+  }
+
+  .credits-heading {
+    margin-bottom: 60px;
+  }
+
+  .credits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 8vw, 120px);
+  }
+
+  .credits-group {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .credits-group > h3 {
+    margin: 0;
+    padding: 18px 0 34px;
+    font-size: 0.84rem;
+    font-weight: 500;
+  }
+
+  .credits-group article {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .credits-group article span {
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+  }
+
+  .credits-group article strong {
+    font-weight: 500;
+  }
+
+  .credits-group article p {
+    grid-column: 2;
+    margin: 2px 0 0;
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+  }
+
+  .credits-review {
+    margin: 28px 0 0;
+    color: var(--ink-soft);
+    font-size: 0.72rem;
+  }
+
+  .about-next {
+    padding: clamp(70px, 10vw, 130px) 0;
+    color: white;
+    background: var(--theme);
+  }
+
+  .about-next__inner {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 30px;
+  }
+
+  .about-next h2 {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .about-next .button-link:hover {
+    color: var(--theme);
+    background: white;
+  }
+
+  @media (max-width: 800px) {
+    .manifesto-grid,
+    .credits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .manifesto-grid > p:last-child {
+      grid-column: 1;
+    }
+
+    .timeline {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-next__inner {
+      display: grid;
+    }
+  }
+</style>

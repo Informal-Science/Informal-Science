@@ -1,0 +1,121 @@
+---
+import { withBase } from '../utils/paths';
+
+const footerLinks = [
+  { href: '/2026', label: '2026 年刊' },
+  { href: '/disciplines', label: '七大板块' },
+  { href: '/history', label: '往期精彩' },
+  { href: '/standards/colors', label: '颜色标准' },
+  { href: '/about', label: '关于我们' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="footer-brand" href={withBase('/')}>
+        <img src={withBase('/images/brand/logo-mark.svg')} alt="" width="39" height="39" />
+        <strong>非正式科学</strong>
+      </a>
+      <p class="footer-note">解所未曾释<br />Solve the Unsolved</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="页脚导航">
+      {footerLinks.map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
+    </nav>
+
+    <div class="footer-meta">
+      <p>2026 年刊 · 总第 6 期</p>
+      <p>福州第一中学基础科学社团联盟</p>
+      <p>内容与图片版权归相应作者所有</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: clamp(64px, 9vw, 120px) 0 34px;
+    color: rgba(255, 255, 255, 0.82);
+    background: #101216;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.75fr 1fr;
+    gap: 48px;
+  }
+
+  .footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-brand img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .footer-brand strong {
+    font-family: var(--font-editorial);
+    font-size: 1.25rem;
+    font-weight: 900;
+  }
+
+  .footer-note {
+    margin: 24px 0 0;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-nav {
+    display: grid;
+    align-content: start;
+    gap: 9px;
+  }
+
+  .footer-nav a {
+    width: fit-content;
+    border-bottom: 1px solid transparent;
+    font-size: 0.9rem;
+  }
+
+  .footer-nav a:hover {
+    border-bottom-color: currentColor;
+  }
+
+  .footer-meta {
+    align-self: end;
+    color: rgba(255, 255, 255, 0.46);
+    font-size: 0.72rem;
+    text-align: right;
+  }
+
+  .footer-meta p {
+    margin: 4px 0;
+  }
+
+  @media (max-width: 760px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-meta {
+      grid-column: 1 / -1;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-meta {
+      grid-column: auto;
+    }
+  }
+</style>

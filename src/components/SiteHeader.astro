@@ -1,0 +1,480 @@
+---
+import { withBase } from '../utils/paths';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const primaryLinks = [
+  { href: '/', label: '首页' },
+  { href: '/2026', label: '2026 年刊' },
+];
+
+const disciplineLinks = [
+  { href: '/disciplines/astronomy', label: '天文' },
+  { href: '/disciplines/mathematics', label: '数学' },
+  { href: '/disciplines/geography', label: '地理' },
+  { href: '/disciplines/physics', label: '物理' },
+  { href: '/disciplines/engineering', label: '工程' },
+  { href: '/disciplines/biology', label: '生物' },
+  { href: '/disciplines/chemistry', label: '化学' },
+];
+
+const secondaryLinks = [
+  { href: '/history', label: '往期精彩' },
+  { href: '/standards/colors', label: '颜色标准' },
+  { href: '/about', label: '关于' },
+];
+
+const isCurrent = (href: string) => {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+};
+---
+
+<header class="site-header" data-site-header>
+  <div class="edition-bar">
+    <span>《非正式科学》2026 年刊 · 总第 6 期</span>
+  </div>
+
+  <nav class="global-nav" aria-label="全站导航">
+    <div class="global-nav__inner">
+      <a class="brand-mark" href={withBase('/')} aria-label="非正式科学首页">
+        <img
+          class="brand-mark__lockup"
+          src={withBase('/images/brand/logo-lockup.svg')}
+          alt=""
+          width="187"
+          height="39"
+        />
+      </a>
+
+      <div class="desktop-links">
+        {primaryLinks.map((item) => (
+          <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
+
+        <span class="nav-separator" aria-hidden="true"></span>
+
+        {disciplineLinks.map((item) => (
+          <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
+
+        <span class="nav-separator" aria-hidden="true"></span>
+
+        {secondaryLinks.map((item) => (
+          <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
+      </div>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="打开导航菜单"
+        data-menu-toggle
+      >
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="移动端导航" data-mobile-menu hidden>
+    <div class="mobile-menu__inner">
+      <p class="mobile-menu__label">导航 / Navigation</p>
+      <div class="mobile-menu__primary">
+        {[...primaryLinks, { href: '/disciplines', label: '七大板块' }, ...secondaryLinks].map((item) => (
+          <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            {item.label}<span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+      <p class="mobile-menu__label">七大板块 / Seven Fields</p>
+      <div class="mobile-menu__disciplines">
+        {disciplineLinks.map((item, index) => (
+          <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            <span>{String(index + 1).padStart(2, '0')}</span>{item.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const header = document.querySelector('[data-site-header]');
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const menu = document.querySelector('[data-mobile-menu]');
+  const main = document.querySelector('main');
+  const footer = document.querySelector('footer');
+
+  const focusableSelector =
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
+  let returnFocus: HTMLElement | null = null;
+
+  const setPageInert = (inert: boolean) => {
+    [main, footer].forEach((region) => {
+      if (!(region instanceof HTMLElement)) return;
+      if (inert) region.setAttribute('inert', '');
+      else region.removeAttribute('inert');
+    });
+  };
+
+  const openMenu = () => {
+    if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
+    returnFocus = toggle;
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', '关闭导航菜单');
+    menu.hidden = false;
+    document.body.classList.add('menu-open');
+    header?.classList.add('is-open');
+    setPageInert(true);
+
+    requestAnimationFrame(() => {
+      const firstLink = menu.querySelector(focusableSelector);
+      if (firstLink instanceof HTMLElement) firstLink.focus();
+    });
+  };
+
+  const closeMenu = ({ restoreFocus = true }: { restoreFocus?: boolean } = {}) => {
+    if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
+    const focusTarget = returnFocus;
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', '打开导航菜单');
+    menu.hidden = true;
+    document.body.classList.remove('menu-open');
+    header?.classList.remove('is-open');
+    setPageInert(false);
+    returnFocus = null;
+
+    if (restoreFocus && focusTarget?.isConnected) focusTarget.focus();
+  };
+
+  toggle?.addEventListener('click', () => {
+    if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    if (open) closeMenu();
+    else openMenu();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && toggle instanceof HTMLButtonElement && toggle.getAttribute('aria-expanded') === 'true') {
+      closeMenu();
+      return;
+    }
+
+    if (event.key !== 'Tab' || !(menu instanceof HTMLElement) || menu.hidden) return;
+    const focusable = [toggle, ...menu.querySelectorAll(focusableSelector)].filter(
+      (element): element is HTMLElement => element instanceof HTMLElement && !element.hasAttribute('disabled'),
+    );
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1080 && toggle instanceof HTMLButtonElement && toggle.getAttribute('aria-expanded') === 'true') {
+      closeMenu({ restoreFocus: false });
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 100;
+    width: 100%;
+  }
+
+  .edition-bar {
+    display: flex;
+    height: 22px;
+    align-items: center;
+    justify-content: center;
+    padding-right: max(12px, var(--safe-right));
+    padding-left: max(12px, var(--safe-left));
+    color: rgba(17, 18, 20, 0.66);
+    background: #ececee;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
+
+  .global-nav {
+    position: relative;
+    z-index: 2;
+    height: var(--nav-height);
+    border-bottom: 1px solid rgba(17, 18, 20, 0.08);
+    background: var(--glass);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  .global-nav__inner {
+    display: flex;
+    width: min(1360px, 100%);
+    height: 100%;
+    align-items: center;
+    margin-inline: auto;
+    padding-right: max(20px, var(--safe-right));
+    padding-left: max(20px, var(--safe-left));
+  }
+
+  .brand-mark {
+    display: inline-flex;
+    flex: none;
+    min-height: 44px;
+    align-items: center;
+    margin-right: clamp(20px, 3vw, 46px);
+  }
+
+  .brand-mark__lockup {
+    width: auto;
+    height: 26px;
+    flex: none;
+  }
+
+  .desktop-links {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(7px, 1.2vw, 20px);
+  }
+
+  .desktop-links a {
+    position: relative;
+    color: rgba(17, 18, 20, 0.78);
+    font-size: clamp(10px, 0.82vw, 12px);
+    font-weight: 400;
+    line-height: 48px;
+    white-space: nowrap;
+    transition: color 160ms ease;
+  }
+
+  .desktop-links a::after {
+    position: absolute;
+    right: 0;
+    bottom: 8px;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    content: '';
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 180ms ease;
+  }
+
+  .desktop-links a:hover,
+  .desktop-links a[aria-current='page'] {
+    color: var(--ink);
+  }
+
+  .desktop-links a:hover::after,
+  .desktop-links a[aria-current='page']::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .nav-separator {
+    width: 1px;
+    height: 14px;
+    background: var(--line);
+  }
+
+  .menu-toggle {
+    position: relative;
+    display: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .menu-toggle span {
+    position: absolute;
+    width: 18px;
+    height: 1px;
+    background: var(--ink);
+    transition: transform 180ms ease;
+  }
+
+  .menu-toggle span:first-child {
+    transform: translateY(-4px);
+  }
+
+  .menu-toggle span:last-child {
+    transform: translateY(4px);
+  }
+
+  .menu-toggle[aria-expanded='true'] span:first-child {
+    transform: rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded='true'] span:last-child {
+    transform: rotate(-45deg);
+  }
+
+  .mobile-menu {
+    position: fixed;
+    z-index: 1;
+    inset: 70px 0 0;
+    overflow-y: auto;
+    color: var(--ink);
+    background: rgba(247, 247, 245, 0.98);
+    backdrop-filter: blur(22px);
+  }
+
+  .mobile-menu__inner {
+    width: min(680px, 100%);
+    margin-inline: auto;
+    padding-top: 42px;
+    padding-right: max(20px, var(--safe-right));
+    padding-bottom: max(80px, var(--safe-bottom));
+    padding-left: max(20px, var(--safe-left));
+  }
+
+  .mobile-menu__label {
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu__primary {
+    display: grid;
+    margin-bottom: 42px;
+  }
+
+  .mobile-menu__primary a {
+    display: flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--line);
+    font-size: 1.35rem;
+    font-weight: 500;
+  }
+
+  .mobile-menu__disciplines {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+  }
+
+  .mobile-menu__disciplines a {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .mobile-menu__disciplines span {
+    color: var(--ink-soft);
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 1079px) {
+    .desktop-links {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .edition-bar {
+      justify-content: flex-start;
+      padding-left: max(16px, var(--safe-left));
+    }
+
+    .global-nav__inner {
+      width: 100%;
+      padding-right: max(14px, var(--safe-right));
+      padding-left: max(14px, var(--safe-left));
+    }
+  }
+
+  /* 手机与小尺寸平板横屏：保留完整导航，同时压缩纵向占用。 */
+  @media (orientation: landscape) and (max-width: 1079px) {
+    .edition-bar {
+      height: 18px;
+    }
+
+    .global-nav {
+      height: 44px;
+    }
+
+    .mobile-menu {
+      inset: 62px 0 0;
+    }
+
+    .mobile-menu__inner {
+      display: grid;
+      width: min(960px, 100%);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      grid-template-rows: auto 1fr;
+      gap: 8px 42px;
+      padding-top: 20px;
+      padding-right: max(20px, var(--safe-right));
+      padding-bottom: max(28px, var(--safe-bottom));
+      padding-left: max(20px, var(--safe-left));
+    }
+
+    .mobile-menu__label:nth-of-type(1) {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .mobile-menu__primary {
+      grid-column: 1;
+      grid-row: 2;
+      margin-bottom: 0;
+    }
+
+    .mobile-menu__label:nth-of-type(2) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .mobile-menu__disciplines {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .mobile-menu__primary a {
+      min-height: 44px;
+      font-size: 1rem;
+    }
+
+    .mobile-menu__disciplines a {
+      min-height: 44px;
+    }
+  }
+</style>

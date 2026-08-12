@@ -1,0 +1,269 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import { colorStandards } from '../../data';
+import { shouldUseDarkText } from '../../utils/colors';
+
+const formatCmyk = (color: (typeof colorStandards)[number]) => {
+  const { c, m, y, k } = color.cmyk;
+  return `C ${Math.round(c * 100)} · M ${Math.round(m * 100)} · Y ${Math.round(y * 100)} · K ${Math.round(k * 100)}`;
+};
+---
+
+<BaseLayout
+  title="颜色标准"
+  description="《非正式科学》2026 品牌主题色与七大学科 CMYK 颜色标准。"
+>
+  <PageIntro
+    eyebrow="Visual Standards / Color System"
+    title="颜色标准"
+    description="一套颜色，连接印刷书刊与数字网站。CMYK 数值来自 2026 书籍模板，是印刷侧的权威定义；网页色用于屏幕近似呈现。"
+    aside="学科色用于章节标签、目录编号、导航与局部强调。为保证正文可读性，不将高饱和颜色大面积用于小字号文本。"
+  />
+
+  <section class="color-overview">
+    <div class="container color-overview__grid">
+      <div>
+        <p class="eyebrow">System Logic</p>
+        <h2>一色一学科，<br />一眼找到方向。</h2>
+      </div>
+      <p>书籍采用 CMYK 输出；网站在保留色相识别的前提下，使用适合屏幕的 sRGB 近似值。两者承担的功能一致，但不应将网页 HEX 反向作为印刷标准。</p>
+    </div>
+  </section>
+
+  <section class="swatch-section">
+    <div class="container swatch-grid">
+      {colorStandards.map((color, index) => (
+        <article class:list={['swatch', { 'swatch--light': shouldUseDarkText(color.webHex) }]} style={`--swatch: ${color.webHex}`}>
+          <div class="swatch__color">
+            <span>{String(index).padStart(2, '0')}</span>
+            <strong>iS</strong>
+          </div>
+          <div class="swatch__copy">
+            <p>{color.key.toUpperCase()}</p>
+            <h2>{color.name}</h2>
+            <dl>
+              <div><dt>PRINT</dt><dd>{formatCmyk(color)}</dd></div>
+              <div><dt>SCREEN</dt><dd>{color.webHex}</dd></div>
+            </dl>
+            <p class="swatch__usage">{color.usage}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="type-standard">
+    <div class="container type-standard__grid">
+      <div>
+        <p class="eyebrow">Typography / 字体分工</p>
+        <h2>三种声音，<br />各司其职。</h2>
+      </div>
+      <div class="type-samples">
+        <article class="type-sample type-sample--sans">
+          <span>01 · INFORMATION</span>
+          <h3>HarmonyOS Sans SC</h3>
+          <p>用于正文、导航、目录、摘要、作者信息、数字和界面组件。轻体承担正文，Medium 与 Bold 建立信息层级。</p>
+        </article>
+        <article class="type-sample type-sample--serif">
+          <span>02 · EDITORIAL</span>
+          <h3>非正式科学</h3>
+          <p>Noto Serif CJK SC 用于刊名、封面式大标题、重点引语和少量编辑性强调。</p>
+        </article>
+        <article class="type-sample type-sample--math">
+          <span>03 · MATHEMATICS</span>
+          <h3>∫₀¹ x² dx = ⅓</h3>
+          <p>STIX Two Math 只用于数学公式、变量、运算符、上下标和公式编号，不进入普通正文。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .color-overview {
+    padding: clamp(75px, 10vw, 140px) 0;
+  }
+
+  .color-overview__grid {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 0.44fr);
+    gap: clamp(40px, 8vw, 120px);
+    align-items: end;
+  }
+
+  .color-overview h2,
+  .type-standard h2 {
+    margin: 0;
+    font-size: clamp(2.6rem, 6vw, 6.4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.065em;
+  }
+
+  .color-overview__grid > p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+
+  .swatch-section {
+    padding-bottom: clamp(80px, 12vw, 160px);
+  }
+
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .swatch {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .swatch__color {
+    display: flex;
+    min-height: 250px;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px;
+    color: white;
+    background: var(--swatch);
+  }
+
+  .swatch--light .swatch__color {
+    color: var(--ink);
+  }
+
+  .swatch__color span {
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+
+  .swatch__color strong {
+    align-self: end;
+    font-size: 3.2rem;
+    line-height: 1;
+  }
+
+  .swatch__copy {
+    min-height: 280px;
+    padding: 26px;
+    background: var(--surface);
+  }
+
+  .swatch__copy > p:first-child {
+    margin: 0 0 4px;
+    color: var(--ink-soft);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+  }
+
+  .swatch__copy h2 {
+    margin: 0 0 30px;
+    font-size: 2rem;
+    font-weight: 500;
+  }
+
+  .swatch dl {
+    margin: 0;
+  }
+
+  .swatch dl div {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    padding: 7px 0;
+    border-top: 1px solid var(--line);
+    font-size: 0.72rem;
+  }
+
+  .swatch dt {
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+
+  .swatch dd {
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .swatch__usage {
+    margin: 24px 0 0;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+  }
+
+  .type-standard {
+    padding: clamp(90px, 13vw, 180px) 0;
+    color: white;
+    background: #11151b;
+  }
+
+  .type-standard__grid {
+    display: grid;
+    grid-template-columns: 0.7fr 1fr;
+    gap: clamp(60px, 10vw, 140px);
+  }
+
+  .type-samples {
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .type-sample {
+    padding: 34px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .type-sample span {
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.67rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+  }
+
+  .type-sample h3 {
+    margin: 13px 0;
+    font-size: clamp(1.7rem, 3.5vw, 3.6rem);
+    line-height: 1.15;
+  }
+
+  .type-sample p {
+    max-width: 590px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.86rem;
+  }
+
+  .type-sample--sans h3 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+
+  .type-sample--serif h3 {
+    font-family: var(--font-editorial);
+    font-weight: 900;
+  }
+
+  .type-sample--math h3 {
+    font-family: var(--font-math);
+    font-weight: 400;
+  }
+
+  @media (max-width: 840px) {
+    .swatch-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .color-overview__grid,
+    .type-standard__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .swatch-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

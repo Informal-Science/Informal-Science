@@ -1,0 +1,230 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleDirectory from '../../components/ArticleDirectory.astro';
+import { disciplines, articles } from '../../data';
+import { disciplineUiColor, disciplineUiTextColor } from '../../utils/colors';
+import { withBase } from '../../utils/paths';
+
+export function getStaticPaths() {
+  return disciplines.map((discipline) => ({
+    params: { slug: discipline.routeSlug },
+    props: { discipline },
+  }));
+}
+
+type Discipline = (typeof disciplines)[number];
+
+interface Props {
+  discipline: Discipline;
+}
+
+const { discipline } = Astro.props;
+const disciplineArticles = articles.filter((article) => article.disciplineSlug === discipline.slug);
+const currentIndex = disciplines.findIndex((item) => item.slug === discipline.slug);
+const nextDiscipline = disciplines[(currentIndex + 1) % disciplines.length];
+---
+
+<BaseLayout
+  title={`${discipline.name} · ${discipline.en}`}
+  description={`《非正式科学》2026 ${discipline.name}板块：${discipline.summary}`}
+>
+  <header
+    class="discipline-hero"
+    style={`--discipline-color: ${disciplineUiColor(discipline.colorKey)}; --discipline-ink: ${disciplineUiTextColor(discipline.colorKey)}`}
+  >
+    <div class="container discipline-hero__grid">
+      <div class="discipline-code">
+        <span>iS</span>
+        <p>{String(discipline.order).padStart(2, '0')} / 07</p>
+      </div>
+      <div>
+        <p class="discipline-hero__en">{discipline.en}</p>
+        <h1>{discipline.name}</h1>
+        <p class="discipline-hero__summary">{discipline.summary}</p>
+      </div>
+      <dl>
+        <div><dt>{disciplineArticles.length}</dt><dd>篇目录导读</dd></div>
+        <div><dt>2026</dt><dd>本期年刊</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <section class="discipline-directory">
+    <div class="container discipline-directory__heading">
+      <div>
+        <p class="eyebrow">Contents / {discipline.en}</p>
+        <h2 class="section-title">文章目录</h2>
+      </div>
+      <p>首版展示书籍目录中的题名、作者与摘要。正文发布状态与书籍工程保持同步。</p>
+    </div>
+    <div class="container">
+      <ArticleDirectory entries={disciplineArticles} disciplines={disciplines} />
+    </div>
+  </section>
+
+  <a
+    class="next-discipline"
+    href={withBase(`/disciplines/${nextDiscipline.routeSlug}`)}
+    style={`--next-color: ${disciplineUiColor(nextDiscipline.colorKey)}; --next-ink: ${disciplineUiTextColor(nextDiscipline.colorKey)}`}
+  >
+    <div class="container next-discipline__inner">
+      <span>下一个板块 / NEXT</span>
+      <strong>{nextDiscipline.name}</strong>
+      <em>{nextDiscipline.en} ↗</em>
+    </div>
+  </a>
+</BaseLayout>
+
+<style>
+  .discipline-hero {
+    position: relative;
+    padding: clamp(86px, 12vw, 170px) 0 clamp(72px, 10vw, 140px);
+    color: var(--discipline-ink);
+    background: var(--discipline-color);
+    overflow: hidden;
+  }
+
+  .discipline-hero::before {
+    position: absolute;
+    inset: 24px;
+    border: 1px solid var(--discipline-ink);
+    border-color: color-mix(in srgb, var(--discipline-ink) 42%, transparent);
+    content: '';
+    pointer-events: none;
+  }
+
+  .discipline-hero__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.25fr 1fr 0.32fr;
+    gap: clamp(28px, 7vw, 100px);
+    align-items: end;
+  }
+
+  .discipline-code span {
+    display: grid;
+    width: 64px;
+    height: 64px;
+    place-items: center;
+    color: var(--discipline-color);
+    background: var(--discipline-ink);
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .discipline-code p {
+    margin: 14px 0 0;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .discipline-hero__en {
+    margin: 0 0 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+  }
+
+  .discipline-hero h1 {
+    margin: 0;
+    font-size: clamp(5rem, 15vw, 15rem);
+    font-weight: 500;
+    line-height: 0.82;
+    letter-spacing: -0.1em;
+  }
+
+  .discipline-hero__summary {
+    max-width: 670px;
+    margin: 38px 0 0;
+    color: var(--discipline-ink);
+    color: color-mix(in srgb, var(--discipline-ink) 82%, transparent);
+    font-size: clamp(1rem, 1.7vw, 1.25rem);
+  }
+
+  .discipline-hero dl {
+    display: grid;
+    gap: 24px;
+    margin: 0;
+  }
+
+  .discipline-hero dl div {
+    padding-top: 10px;
+    border-top: 1px solid var(--discipline-ink);
+    border-color: color-mix(in srgb, var(--discipline-ink) 56%, transparent);
+  }
+
+  .discipline-hero dt {
+    font-size: 2rem;
+    font-weight: 300;
+  }
+
+  .discipline-hero dd {
+    margin: 3px 0 0;
+    font-size: 0.72rem;
+  }
+
+  .discipline-directory {
+    padding: clamp(76px, 11vw, 150px) 0;
+    background: var(--surface);
+  }
+
+  .discipline-directory__heading {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 0.35fr);
+    gap: 40px;
+    align-items: end;
+    margin-bottom: 60px;
+  }
+
+  .discipline-directory__heading > p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+
+  .next-discipline {
+    display: block;
+    padding: clamp(54px, 8vw, 100px) 0;
+    color: var(--next-ink);
+    background: var(--next-color);
+  }
+
+  .next-discipline__inner {
+    display: grid;
+    grid-template-columns: 0.35fr 1fr auto;
+    gap: 30px;
+    align-items: end;
+  }
+
+  .next-discipline span,
+  .next-discipline em {
+    font-size: 0.72rem;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  .next-discipline strong {
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.08em;
+  }
+
+  @media (max-width: 800px) {
+    .discipline-hero__grid,
+    .discipline-directory__heading,
+    .next-discipline__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .discipline-hero dl {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .next-discipline em {
+      justify-self: start;
+    }
+  }
+</style>

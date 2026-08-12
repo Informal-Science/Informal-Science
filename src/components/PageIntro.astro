@@ -1,0 +1,22 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  aside?: string;
+  editorial?: boolean;
+}
+
+const { eyebrow, title, description, aside, editorial = false } = Astro.props;
+---
+
+<header class="page-intro">
+  <div class="container page-intro__grid">
+    <div>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1 class:list={['section-title', { 'editorial-title': editorial }]}>{title}</h1>
+      <p class="lede">{description}</p>
+    </div>
+    {aside && <p class="page-intro__aside">{aside}</p>}
+  </div>
+</header>
