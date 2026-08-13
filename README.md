@@ -66,10 +66,10 @@ pnpm preview
 
 ### 年度文章资料
 
-`src/data/articles.ts` 将“文章目录母版”与“年度记录”分开维护。当前已确认收到的 24 篇目录实际属于 2025 年；在 2021—2026 各期原始目录补齐前，网站按编辑要求将这份目录复用于六期，并为每条年度记录生成独立的 `year`、`issueNumber` 和 `slug`。不要在页面组件里复制文章数据。
+`src/data/articles.ts` 将“文章目录母版”与“年度记录”分开维护。2021—2024 年目录依据 `Resources/2024-2021年 目录.pdf` 逐项录入，2025 年使用已确认的目录；2026 年在本期原始目录补齐前暂复用 2025 年目录。每条年度记录均生成独立的 `year`、`issueNumber` 和 `slug`。不要在页面组件里复制文章数据。
 
 - `/questions-answers/` 是跨年份检索入口，可同时按关键词、学科和年份（期次）筛选。
-- `/history/YYYY/` 只读取对应年份的 24 篇记录。
+- `/history/YYYY/` 只读取对应年份的目录记录。
 - `/disciplines/<slug>/` 汇总该学科在六期中的年度记录；数学使用稳定路由 `/disciplines/math/`。
 - `/disciplines/other/` 聚合 `historical-disciplines.ts` 中的历史板块及其文章；`content-disciplines.ts` 是现行与历史板块的统一检索表。
 - `/2026/` 只承担本期定位和编辑方向，不再承载文章搜索。

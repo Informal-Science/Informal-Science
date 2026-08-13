@@ -72,7 +72,7 @@ const availableIssues = [
       return (
         <article
           id={article.slug}
-          class="article-row"
+          class:list={['article-row', { 'article-row--without-author': !article.author }]}
           data-article-row
           data-discipline={article.disciplineSlug}
           data-year={article.year}
@@ -96,13 +96,15 @@ const availableIssues = [
               <span>{discipline?.name} / {discipline?.en}</span>
             </div>
             <h2>{article.title}</h2>
-            <p>{article.summary}</p>
+            {article.summary && <p>{article.summary}</p>}
           </div>
-          <div class="article-row__author">
-            <span>撰文</span>
-            <strong>{article.author}</strong>
-            <em>目录导读</em>
-          </div>
+          {article.author && (
+            <div class="article-row__author">
+              <span>撰文</span>
+              <strong>{article.author}</strong>
+              <em>目录导读</em>
+            </div>
+          )}
         </article>
       );
     })}
@@ -212,6 +214,10 @@ const availableIssues = [
     gap: clamp(20px, 4vw, 56px);
     padding: clamp(28px, 4vw, 50px) 0;
     border-bottom: 1px solid var(--line);
+  }
+
+  .article-row--without-author {
+    grid-template-columns: 72px minmax(0, 1fr);
   }
 
   .article-row::before {

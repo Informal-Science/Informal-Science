@@ -15,52 +15,60 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
 ---
 
 <BaseLayout image="/images/hero/hero-2026-1920.webp">
-  <section class="home-hero" aria-labelledby="hero-title">
-    <IssueHeroBackground eager />
-    <div class="home-hero__veil"></div>
-
-    <div class="container home-hero__content">
-      <div class="home-hero__masthead">
-        <p class="home-hero__tagline" aria-label={`${siteMeta.tagline.zh} · ${siteMeta.tagline.en}`}>
-          <span aria-hidden="true">解</span>
-          <span class="home-hero__soft" aria-hidden="true">所未曾释</span>
-          <span class="home-hero__soft" aria-hidden="true">·</span>
-          <span aria-hidden="true">Solve</span>
-          <span class="home-hero__soft" aria-hidden="true">the Unsolved</span>
-        </p>
-        <h1 id="hero-title" class="display-title">非正式科学</h1>
-        <p class="home-hero__english" aria-label="INFORMAL SCIENCE">
-          <span class="home-hero__english-initial" aria-hidden="true">I</span><span aria-hidden="true">NFORMAL</span>
-          <span class="home-hero__english-gap" aria-hidden="true"> </span>
-          <span class="home-hero__english-initial" aria-hidden="true">S</span><span aria-hidden="true">CIENCE</span>
-        </p>
-        <div class="home-hero__publication" aria-label="基础科学社团联盟独家刊物，七大社团联袂献上，2026 年刊总第 6 期">
-          <p>基础科学社团联盟 独家刊物</p>
-          <p>七大社团 联袂献上</p>
-          <p>2026年刊<span class="home-hero__quad">总第6期</span></p>
-        </div>
-      </div>
-
-      <div class="home-hero__bottom">
-        <div>
-          <p>本期主题 / 2026 THEME</p>
-          <strong>在未解之处，继续发问。</strong>
-        </div>
-        <a href={withBase('/2026')}>进入本期 <span aria-hidden="true">↓</span></a>
-      </div>
+  <div class="home-intro">
+    <div class="home-intro__backdrop">
+      <IssueHeroBackground eager />
+      <div class="home-intro__veil" aria-hidden="true"></div>
     </div>
-  </section>
 
-  <section class="home-statement">
-    <div class="container statement-grid">
-      <p class="eyebrow">2026 / ISSUE NO. 06</p>
-      <div>
-        <h2>一本由学生写作、编辑与设计的科学年刊。</h2>
-        <p>从宇宙尺度到分子结构，从城市肌理到飞行机械。七个学科方向，二十四篇目录导读，记录青年对世界的好奇。</p>
-        <a class="text-link" href={withBase('/2026')}>查看 2026 年刊</a>
-      </div>
+    <div class="home-intro__foreground">
+      <section class="home-hero" aria-labelledby="hero-title">
+        <div class="container home-hero__content">
+          <div class="home-hero__masthead">
+            <p class="home-hero__tagline" aria-label={`${siteMeta.tagline.zh} · ${siteMeta.tagline.en}`}>
+              <span aria-hidden="true">解</span>
+              <span class="home-hero__soft" aria-hidden="true">所未曾释</span>
+              <span class="home-hero__soft" aria-hidden="true">·</span>
+              <span aria-hidden="true">Solve</span>
+              <span class="home-hero__soft" aria-hidden="true">the Unsolved</span>
+            </p>
+            <h1 id="hero-title" class="display-title">非正式科学</h1>
+            <p class="home-hero__english" aria-label="INFORMAL SCIENCE">
+              <span class="home-hero__english-initial" aria-hidden="true">I</span><span aria-hidden="true">NFORMAL</span>
+              <span class="home-hero__english-gap" aria-hidden="true"> </span>
+              <span class="home-hero__english-initial" aria-hidden="true">S</span><span aria-hidden="true">CIENCE</span>
+            </p>
+            <div class="home-hero__publication" aria-label="基础科学社团联盟独家刊物，七大社团联袂献上，2026 年刊总第 6 期">
+              <p>基础科学社团联盟 独家刊物</p>
+              <p>七大社团 联袂献上</p>
+              <p>2026年刊<span class="home-hero__quad">总第6期</span></p>
+            </div>
+          </div>
+
+          <div class="home-hero__bottom">
+            <div>
+              <strong>在未解之处，继续发问。</strong>
+            </div>
+            <nav class="home-hero__actions" aria-label="本期入口">
+              <a class="button-link button-link--hero" href={withBase('/2026')}>进入本期</a>
+              <a class="button-link button-link--hero" href={withBase('/2026#subscribe')}>立即订阅</a>
+            </nav>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-statement">
+        <div class="container statement-grid">
+          <p class="eyebrow">2026 / ISSUE NO. 06</p>
+          <div>
+            <h2>一本由学生写作、编辑与设计的科学年刊。</h2>
+            <p>从宇宙尺度到分子结构，从城市肌理到飞行机械。七个学科方向，二十四篇目录导读，记录青年对世界的好奇。</p>
+            <a class="text-link" href={withBase('/2026')}>查看 2026 年刊</a>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
 
   <section class="home-section home-section--disciplines">
     <div class="container section-heading">
@@ -94,7 +102,7 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
         return (
           <a
             class="featured-card"
-            href={withBase(`/disciplines/${discipline.routeSlug}`)}
+            href={withBase(`/history/2026#${article.slug}`)}
             style={`--card-color: ${disciplineUiColor(discipline.colorKey)}`}
           >
             <BookMarker
@@ -142,25 +150,50 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
 </BaseLayout>
 
 <style>
-  .home-hero {
+  .home-intro {
     position: relative;
-    min-height: calc(100svh - var(--nav-height));
+    display: grid;
+    isolation: isolate;
     color: white;
     background: #111722;
-    overflow: hidden;
   }
 
-  .home-hero__veil {
+  .home-intro__backdrop,
+  .home-intro__foreground {
+    min-width: 0;
+    grid-area: 1 / 1;
+  }
+
+  .home-intro__backdrop {
+    position: sticky;
+    z-index: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    align-self: start;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .home-intro__foreground {
+    position: relative;
+    z-index: 1;
+  }
+
+  .home-intro__veil {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    background:
+      linear-gradient(90deg, rgba(2, 5, 10, 0.72) 0%, rgba(2, 5, 10, 0.34) 48%, rgba(2, 5, 10, 0.48) 100%),
+      linear-gradient(0deg, rgba(2, 5, 10, 0.72) 0%, rgba(2, 5, 10, 0.08) 48%, rgba(2, 5, 10, 0.2) 100%);
   }
 
-  .home-hero__veil {
-    background:
-      linear-gradient(90deg, rgba(2, 5, 10, 0.72) 0%, rgba(2, 5, 10, 0.22) 48%, rgba(2, 5, 10, 0.35) 100%),
-      linear-gradient(0deg, rgba(2, 5, 10, 0.72) 0%, transparent 48%);
+  .home-hero {
+    position: relative;
+    z-index: 1;
+    min-height: calc(100svh - var(--nav-height));
+    overflow: hidden;
   }
 
   .home-hero__content {
@@ -266,28 +299,35 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
     gap: 32px;
   }
 
-  .home-hero__bottom p {
-    margin: 0 0 5px;
-    font-size: 0.67rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-  }
-
   .home-hero__bottom strong {
     font-size: clamp(1.1rem, 2.1vw, 1.8rem);
     font-weight: 400;
   }
 
-  .home-hero__bottom a {
-    display: inline-flex;
-    align-items: center;
+  .home-hero__actions {
+    display: grid;
+    width: max-content;
     gap: 12px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid currentColor;
-    font-weight: 500;
+  }
+
+  .home-hero__actions .button-link:hover {
+    color: var(--ink);
+    background: white;
+  }
+
+  .home-hero__actions .button-link--hero {
+    min-width: 210px;
+    min-height: 62px;
+    padding-inline: 34px;
+    font-size: 1.15rem;
   }
 
   .home-statement {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    min-height: 100svh;
+    align-items: center;
     padding: clamp(90px, 14vw, 190px) 0;
   }
 
@@ -309,8 +349,12 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
   .statement-grid > div > p {
     max-width: 620px;
     margin: 30px 0;
-    color: var(--ink-soft);
+    color: rgba(255, 255, 255, 0.72);
     font-size: clamp(1rem, 1.5vw, 1.2rem);
+  }
+
+  .home-statement .eyebrow {
+    color: rgba(255, 255, 255, 0.68);
   }
 
   .home-section {
@@ -319,7 +363,10 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
   }
 
   .home-section--disciplines {
+    position: relative;
+    z-index: 1;
     padding-bottom: 0;
+    background: var(--paper);
   }
 
   .section-heading {
@@ -510,7 +557,7 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
       display: grid;
     }
 
-    .home-hero__bottom a {
+    .home-hero__actions {
       width: fit-content;
     }
   }
@@ -519,6 +566,10 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
   @media (orientation: landscape) and (max-height: 560px) {
     .home-hero,
     .home-hero__content {
+      min-height: max(280px, calc(100svh - var(--nav-height)));
+    }
+
+    .home-statement {
       min-height: max(330px, calc(100svh - 62px));
     }
 
@@ -548,10 +599,24 @@ const currentIssue = issues.find((issue) => issue.year === 2026)!;
     }
 
     .home-hero__bottom {
+      display: grid;
       align-items: end;
+      gap: 8px;
     }
 
     .home-hero__bottom strong {
+      font-size: 1rem;
+    }
+
+    .home-hero__actions {
+      grid-template-columns: repeat(2, 170px);
+      justify-self: end;
+    }
+
+    .home-hero__actions .button-link--hero {
+      min-width: 170px;
+      min-height: 50px;
+      padding-inline: 24px;
       font-size: 1rem;
     }
 

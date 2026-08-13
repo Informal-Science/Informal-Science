@@ -39,6 +39,10 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
 
       <p class="annual-hero__issue" aria-label="总第六期">06</p>
 
+      <div class="annual-hero__actions">
+        <a class="button-link button-link--hero annual-hero__subscribe" href="#subscribe">立即订阅</a>
+      </div>
+
       <div class="annual-hero__bottom">
         <dl>
           <div><dt>7</dt><dd>学科板块</dd></div>
@@ -126,14 +130,17 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
     container-type: inline-size;
     min-height: calc(100svh - var(--nav-height));
     grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: 1fr auto;
-    gap: 50px;
+    grid-template-rows: minmax(0, 1fr) auto auto;
+    column-gap: 50px;
+    row-gap: 0;
     padding-top: clamp(54px, 8vh, 90px);
     padding-bottom: clamp(42px, 7vh, 76px);
   }
 
   .annual-hero__copy {
+    min-width: 0;
     align-self: center;
+    transform: translateY(clamp(30px, 4vh, 40px));
   }
 
   .annual-hero__eyebrow {
@@ -199,11 +206,21 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
     opacity: 0.28;
   }
 
-  .annual-hero__bottom {
-    display: flex;
+  .annual-hero__actions {
+    display: grid;
+    min-width: 0;
     grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    margin-top: 16px;
+    padding-bottom: clamp(28px, 4vh, 38px);
+  }
+
+  .annual-hero__bottom {
+    display: grid;
+    min-width: 0;
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
-    justify-content: space-between;
     gap: 40px;
     padding-top: 28px;
     border-top: 1px solid rgba(255, 255, 255, 0.48);
@@ -233,15 +250,27 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
 
   .annual-hero__bottom nav {
     display: flex;
+    width: max-content;
+    max-width: 100%;
     flex-wrap: wrap;
     gap: 12px 26px;
     justify-content: end;
   }
 
-  .annual-hero__bottom a {
+  .annual-hero__bottom nav a {
     padding-bottom: 4px;
     border-bottom: 1px solid currentColor;
     font-weight: 500;
+  }
+
+  .annual-hero__subscribe {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .annual-hero__subscribe:hover {
+    color: var(--ink);
+    background: white;
   }
 
   .cover-focus {
@@ -425,7 +454,16 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
     }
 
     .annual-hero__bottom {
-      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .annual-hero__actions {
+      grid-template-columns: minmax(0, 340px);
+      justify-content: start;
+    }
+
+    .annual-hero__subscribe {
+      grid-column: 1;
     }
 
     .annual-hero__bottom nav {
@@ -458,6 +496,17 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
       gap: 18px;
     }
 
+    .annual-hero__actions {
+      grid-template-columns: minmax(0, 1fr);
+      margin-top: 40px;
+    }
+
+    .annual-hero__bottom nav {
+      width: 100%;
+      justify-self: center;
+      justify-content: center;
+    }
+
     .cover-focus__list a {
       grid-template-columns: 36px minmax(0, 1fr) auto;
       gap: 12px;
@@ -481,6 +530,10 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
       padding-bottom: 24px;
     }
 
+    .annual-hero__copy {
+      transform: none;
+    }
+
     .annual-hero h1 {
       font-size: clamp(2.9rem, 13vh, 5.2rem);
     }
@@ -492,6 +545,11 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
 
     .annual-hero__issue {
       font-size: 5rem;
+    }
+
+    .annual-hero__actions {
+      margin-top: 16px;
+      padding-bottom: 20px;
     }
   }
 </style>

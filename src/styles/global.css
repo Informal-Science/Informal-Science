@@ -10,6 +10,7 @@
 html {
   color-scheme: light;
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 16px);
   background: var(--paper);
 }
 
@@ -161,6 +162,22 @@ a {
   color: var(--surface);
   background: var(--ink);
   transform: translateY(-2px);
+}
+
+.button-link--hero {
+  min-width: 240px;
+  min-height: 72px;
+  padding-inline: 44px;
+  font-size: 1.45rem;
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .button-link--hero {
+    min-width: 190px;
+    min-height: 56px;
+    padding-inline: 30px;
+    font-size: 1.15rem;
+  }
 }
 
 .page-shell {

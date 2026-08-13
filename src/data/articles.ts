@@ -1,4 +1,4 @@
-import type { Article } from "./types";
+import type { Article, SourceReference } from "./types";
 import { issues } from "./issues";
 
 type DirectoryArticle = Pick<
@@ -8,22 +8,22 @@ type DirectoryArticle = Pick<
 
 interface AnnualCatalog {
   sourceYear: number;
+  source: SourceReference;
   entries: readonly DirectoryArticle[];
 }
 
-const directoryReviewNotes = (year: number, sourceYear: number) => [
-  "当前书籍工程的对应学科正文仍是占位内容，网站首版只可发布目录导读。",
-  "页码来自 TOC.tex 的人工录入，需在正式 PDF 完成后复核。",
-  ...(year === sourceYear
-    ? []
-    : [`当前 ${year} 年目录临时复用已确认的 ${sourceYear} 年目录，待本年原始目录提供后替换。`]),
+const directoryReviewNotes = (year: number, catalog: AnnualCatalog) => [
+  "当前网站仅发布目录信息，全文尚未开放。",
+  ...(year === catalog.sourceYear
+    ? ["目录已依据本期提供的原始资料逐项录入。"]
+    : [`当前 ${year} 年目录临时复用已确认的 ${catalog.sourceYear} 年目录，待本年原始目录提供后替换。`]),
 ] as const;
 
 const directoryArticle = (
   entry: DirectoryArticle,
   year: number,
   issueNumber: number,
-  sourceYear: number,
+  catalog: AnnualCatalog,
 ): Article => ({
   ...entry,
   slug: `${year}-${entry.slug}`,
@@ -33,18 +33,26 @@ const directoryArticle = (
   status: "directory-only",
   draft: true,
   availability: { summary: true, fullText: false, pdf: false },
-  reviewNeeded: true,
-  reviewStatus: "review-needed",
-  reviewNotes: directoryReviewNotes(year, sourceYear),
+  reviewNeeded: year !== catalog.sourceYear,
+  reviewStatus: year === catalog.sourceYear ? "verified-from-source" : "review-needed",
+  reviewNotes: directoryReviewNotes(year, catalog),
   source: {
-    repository: "Informal-Science-2026",
-    path: "Resources/TOC/TOC.tex",
-    locator:
-      year === sourceYear
-        ? `tocitem: ${entry.title}; assigned to ${year} issue`
-        : `tocitem: ${entry.title}; ${sourceYear} catalog reused for ${year} issue`,
+    ...catalog.source,
+    locator: `${catalog.source.locator}；${entry.title}`,
   },
 });
+
+const catalogScanSource = (year: number, page: string): SourceReference => ({
+  repository: "Informal-Science-2026",
+  path: "Resources/2024-2021年 目录.pdf",
+  locator: `第 ${page} 页：${year} 年刊目录`,
+});
+
+const catalog2025Source: SourceReference = {
+  repository: "Informal-Science-2026",
+  path: "Resources/TOC/TOC.tex",
+  locator: "已确认的 2025 年目录",
+};
 
 const suppliedCatalog2025 = [
   {
@@ -265,27 +273,856 @@ const suppliedCatalog2025 = [
   },
 ] as const satisfies readonly DirectoryArticle[];
 
-/**
- * Add a year's verified catalog here as soon as its source material arrives.
- * Missing years deliberately fall back to the supplied 2025 catalog below.
- */
+const catalog2021 = [
+  {
+    slug: "fermat-last-theorem-history",
+    title: "费马大定理背后的数学史",
+    author: "付嘉辰",
+    disciplineSlug: "math",
+    summary: "",
+    page: 1,
+  },
+  {
+    slug: "rubber-geometry",
+    title: "橡皮几何学",
+    author: "肖佳翎",
+    disciplineSlug: "math",
+    summary: "",
+    page: 3,
+  },
+  {
+    slug: "relativity",
+    title: "一切都是相对的——来说说相对论",
+    author: "郭珈",
+    disciplineSlug: "physics",
+    summary: "",
+    page: 5,
+  },
+  {
+    slug: "semiconductor-with-personality",
+    title: "芯片世界——有个性的半导体",
+    author: "林安诗、郭珈伊",
+    disciplineSlug: "physics",
+    summary: "",
+    page: 10,
+  },
+  {
+    slug: "quantum-mechanics-schrodingers-cat",
+    title: "量子力学——从薛定谔的猫说起",
+    author: "卫天翔",
+    disciplineSlug: "physics",
+    summary: "",
+    page: 12,
+  },
+  {
+    slug: "nobel-chemistry-prize-facts",
+    title: "诺贝尔化学奖小知识",
+    author: "福州一中化学社",
+    disciplineSlug: "chemistry",
+    summary: "",
+    page: 15,
+  },
+  {
+    slug: "chemistry-in-daily-life",
+    title: "生活中的化学",
+    author: "福州一中化学社",
+    disciplineSlug: "chemistry",
+    summary: "",
+    page: 16,
+  },
+  {
+    slug: "elephant-toothpaste",
+    title: "实验栏目——大象牙膏",
+    author: "福州一中化学社",
+    disciplineSlug: "chemistry",
+    summary: "",
+    page: 17,
+  },
+  {
+    slug: "why-am-i-getting-fatter",
+    title: "为什么我会越来越胖",
+    author: "陈晗",
+    disciplineSlug: "biology",
+    summary: "",
+    page: 18,
+  },
+  {
+    slug: "biology-weight-loss",
+    title: "生物减肥，秤表倒转",
+    author: "陈昱鑫",
+    disciplineSlug: "biology",
+    summary: "",
+    page: 20,
+  },
+  {
+    slug: "vaccination-upper-arm",
+    title: "接种疫苗为什么选择上臂",
+    author: "陈晗",
+    disciplineSlug: "biology",
+    summary: "",
+    page: 21,
+  },
+  {
+    slug: "fluorescent-lake",
+    title: "地理科普-荧光湖",
+    author: "赵文昊",
+    disciplineSlug: "geography",
+    summary: "",
+    page: 23,
+  },
+  {
+    slug: "club-president-talks-qingteng-geography",
+    title: "社长谈青藤地理社",
+    author: "王博森",
+    disciplineSlug: "geography",
+    summary: "",
+    page: 24,
+  },
+  {
+    slug: "first-person-geography-club",
+    title: "第一人称看懂地理社活动",
+    author: "刘新、池骋、林翔烨",
+    disciplineSlug: "geography",
+    summary: "",
+    page: 25,
+  },
+  {
+    slug: "ai-history-and-outlook",
+    title: "科学探索之路——人工智能发展历程与前景",
+    author: "张亦驰、吴尔轩",
+    disciplineSlug: "electronic",
+    summary: "",
+    page: 26,
+  },
+  {
+    slug: "spark-gap-tesla-coil",
+    title: "人造闪电——火花间隙特斯拉线圈",
+    author: "吴尔轩",
+    disciplineSlug: "electronic",
+    summary: "",
+    page: 28,
+  },
+  {
+    slug: "smart-iot-home-assistant",
+    title: "智联生活——家庭智能物联网助手",
+    author: "吴尔轩",
+    disciplineSlug: "electronic",
+    summary: "",
+    page: 30,
+  },
+  {
+    slug: "neuroscience-of-learning",
+    title: "学习中的脑神经科学",
+    author: "李妍雅",
+    disciplineSlug: "brain-neuroscience",
+    summary: "",
+    page: 31,
+  },
+  {
+    slug: "connecting-virtual-and-reality",
+    title: "连接虚拟与现实",
+    author: "李妍雅",
+    disciplineSlug: "brain-neuroscience",
+    summary: "",
+    page: 33,
+  },
+  {
+    slug: "mind-uploading",
+    title: "意识上传是否可行？",
+    author: "林安诗、李妍雅",
+    disciplineSlug: "brain-neuroscience",
+    summary: "",
+    page: 35,
+  },
+  {
+    slug: "brown-dwarfs",
+    title: "探寻褐矮星",
+    author: "陈尚楷",
+    disciplineSlug: "astronomy",
+    summary: "",
+    page: 38,
+  },
+  {
+    slug: "astronomy-in-harry-potter",
+    title: "《哈利波特》中的天文梗",
+    author: "陈尚楷",
+    disciplineSlug: "astronomy",
+    summary: "",
+    page: 40,
+  },
+  {
+    slug: "stars-near-horizon",
+    title: "地平线附近的星星都去哪了？",
+    author: "陈尚楷",
+    disciplineSlug: "astronomy",
+    summary: "",
+    page: 42,
+  },
+] as const satisfies readonly DirectoryArticle[];
+
+const catalog2022 = [
+  {
+    slug: "star-colors",
+    title: "为什么恒星有不同的颜色",
+    author: "",
+    disciplineSlug: "astronomy",
+    summary:
+      "天狼星是白色的，心宿二是红色的，老人星是黄色的……为什么恒星有不同的颜色？人们对夜空中闪烁着的不同颜色的恒星的认识，经历了一个漫长而深刻的过程。",
+    page: 1,
+  },
+  {
+    slug: "deep-space-asteroid-defense",
+    title: "深空探测助力小行星防御",
+    author: "",
+    disciplineSlug: "astronomy",
+    summary:
+      "很多新闻很可能存在夸大和误传，往往还造成了不必要的恐慌。我们还是应该相信靠谱的新闻媒体，通过翔实、准确的数据去了解小行星撞击地球的风险。",
+    page: 2,
+  },
+  {
+    slug: "why-is-space-black",
+    title: "为什么太空是黑的",
+    author: "",
+    disciplineSlug: "astronomy",
+    summary:
+      "太空的黑暗与宇宙的结构有什么关系呢？这要从牛顿的宇宙模型谈起。太空的黑暗说明牛顿的宇宙学说并不成立，而大爆炸宇宙学是更加合理的。",
+    page: 3,
+  },
+  {
+    slug: "iron-wire-oxygen-products",
+    title: "为什么铁丝在充满氧气的广口瓶里燃烧的产物是 Fe₃O₄ 而不是 Fe₂O₃ 或 FeO?",
+    author: "",
+    disciplineSlug: "chemistry",
+    summary:
+      "初中化学一开始有一实验——铁丝在充满氧气的广口瓶里燃烧，火花四溅，激动人心。本文是利用大一化学水平的化学热力学基础知识对同时存在几个反应的系统进行分析的典型例子，具普遍意义。",
+    page: 4,
+  },
+  {
+    slug: "synthetic-starch",
+    title: "人类终于开始和植物「抢生意」了",
+    author: "",
+    disciplineSlug: "chemistry",
+    summary:
+      "一条消息引爆了社交网络：中国科学家首次实现了用二氧化碳人工合成淀粉的重大实验成果。该成果目前尚处于实验室阶段，离实际应用还有相当长的距离。",
+    page: 6,
+  },
+  {
+    slug: "chemistry-behind-memes",
+    title: "表情包背后的化学知识",
+    author: "",
+    disciplineSlug: "chemistry",
+    summary:
+      "学术表情包千千万，化学表情包独树一帜。怀着科普的精神，笔者就和大家聊聊化学表情包背后的化学原理。毕竟能从表情包里获得知识，多是一件美事啊。",
+    page: 7,
+  },
+  {
+    slug: "lucid-dream",
+    title: "意识到自己在做梦",
+    author: "",
+    disciplineSlug: "brain-neuroscience",
+    summary:
+      "事实表明，有许多人在他们一生中至少经历过一次意识到自己在做梦，我们称它为「清醒梦」。研究仍在继续，有些方法可以在家里尝试，但要小心，它们不一定有科学依据支撑。",
+    page: 8,
+  },
+  {
+    slug: "chronic-sleep-deprivation",
+    title: "长期睡眠不足可不是一件小事",
+    author: "",
+    disciplineSlug: "brain-neuroscience",
+    summary:
+      "如今的学生在繁重学业的压力下，熬夜成为常态，难以保证充足的睡眠。熬夜可能让时间充裕了，但长期压缩睡眠时间，对身体有极大的影响，其中对大脑的影响更是不可忽视的。",
+    page: 9,
+  },
+  {
+    slug: "exercise-your-brain",
+    title: "你的大脑需要你锻炼一下",
+    author: "",
+    disciplineSlug: "brain-neuroscience",
+    summary:
+      "研究人员宣布了一系列颠覆神经科学原则的发现。锻炼对人类的大脑有一定的积极影响，特别是随着年龄的增长，锻炼甚至可能有助于降低阿尔茨海默氏症和其他退行性疾病的风险。",
+    page: 13,
+  },
+  {
+    slug: "fuzhou-teacher-residence-distribution",
+    title: "探究福州一中教师住址分布及其影响因素",
+    author: "",
+    disciplineSlug: "geography",
+    summary:
+      "本世纪初以来，不少中学、大学建设新校区，教师的居住问题成了新校区建设不可避免的问题。对于当今福州市「东进南扩」的发展战略，加强新区的基础设施建设，发展第三产业是必要之举。",
+    page: 14,
+  },
+  {
+    slug: "little-girl-big-energy",
+    title: "「小女孩」有大能量：今年为什么这么热",
+    author: "",
+    disciplineSlug: "geography",
+    summary:
+      "相信今年大家定对「酷暑难耐」深有体会。笔者将从中间态入手解释厄尔尼诺，再讲本次高温的背后大佬拉尼娜，阐述其对西太副高的影响机制，并对未来三拉尼娜进行展望。",
+    page: 16,
+  },
+  {
+    slug: "tonga-volcano-eruption",
+    title: "汤加火山爆发的威力到底有多大",
+    author: "",
+    disciplineSlug: "geography",
+    summary:
+      "当地时间1月14日上午开始，位于汤加的洪阿哈阿帕伊岛发生火山喷发，这次事件被认为是最近30年来最大的一次火山爆发。据有关专家估计，这一次火山爆发的威力约等于1000颗原子弹同时爆炸。",
+    page: 18,
+  },
+  {
+    slug: "ice-avalanche",
+    title: "冰崩：全球气候变暖的缩影",
+    author: "",
+    disciplineSlug: "geography",
+    summary:
+      "当今世界上几乎所有冰川几乎都在加速消融……冰崩，其实就是冰川消融的一个缩影。或许，大自然自有其残酷又美丽的规则，下至蜉蝣，上至苍穹，万事万物随着时间的绵延终究难逃消亡的命运。",
+    page: 19,
+  },
+  {
+    slug: "honeycomb-mystery",
+    title: "蜂窝的奥秘",
+    author: "",
+    disciplineSlug: "math",
+    summary:
+      "大自然是神奇的，奥秘无穷，蜂房的构造便是一个很好的例证。蜂房的底部并非正六棱柱，而是3个菱形拼成的。我们猜想：这样的翻折可以更省材料，让我们一同通过计算得到答案。",
+    page: 23,
+  },
+  {
+    slug: "yang-hui-triangle-to-stacking",
+    title: "从杨辉三角到堆垛术",
+    author: "",
+    disciplineSlug: "math",
+    summary:
+      "有杨辉三角出发，我们可以推出一些公式，由此我们就可以研究高阶等差级数的问题了，而高阶等差级数的一个重要应用就是「堆垛问题」。",
+    page: 24,
+  },
+  {
+    slug: "conic-sections-on-paper",
+    title: "白纸上的圆锥曲线",
+    author: "",
+    disciplineSlug: "math",
+    summary:
+      "可能很多人以为，折纸只能折出直线的图形，因为折痕是一条直线段。但其实，足够多的折痕，有时也能围出优美的曲线。椭圆、双曲线和抛物线均可由折纸得到。",
+    page: 25,
+  },
+  {
+    slug: "gyroscope-physics",
+    title: "转 转 转：陀螺仪的物理学原理",
+    author: "",
+    disciplineSlug: "physics",
+    summary:
+      "旋转手机，屏幕上的画面随之旋转。为什么手机能「感知」到外界环境的变化？这就不得不提到现代日常生活、科学研究乃至国防军工领域都极为重要的仪器——陀螺仪了。",
+    page: 26,
+  },
+  {
+    slug: "f1-aerodynamics",
+    title: "空气动力学及其在 F1 中的应用",
+    author: "",
+    disciplineSlug: "physics",
+    summary:
+      "2022赛季 F1 锦标赛作为规则大改的第一年，赛车空气动力学设计成为了极为热门的话题。本次规则大改就是针对赛车空气动力学部件更改以减少下压力损失，制造精彩的镜头来吸引观众。",
+    page: 31,
+  },
+  {
+    slug: "laser-fusion",
+    title: "激光核聚变：核以光之名",
+    author: "",
+    disciplineSlug: "physics",
+    summary:
+      "激光核聚变装置是一个效果绚烂、运作高效，但是耗能大、材料要求高的反应装置。它可以在实验室内模拟核武器爆炸的物理过程及爆炸效应，为中华民族的伟大复兴提供强大动力。",
+    page: 34,
+  },
+  {
+    slug: "pid-control",
+    title: "PID 控制算法入门",
+    author: "",
+    disciplineSlug: "electronic",
+    summary:
+      "计算机代替人类完成各种工作从20世纪70年代开始并一直延续至现在。现代工厂中，计算机对机械的控制算法有80%是 PID 控制算法及其变种，本文就以一个故事简单说明一下 PID 控制的原理。",
+    page: 36,
+  },
+  {
+    slug: "https-primer",
+    title: "HTTPS 技术浅析",
+    author: "",
+    disciplineSlug: "electronic",
+    summary:
+      "HTTP 并没有考虑过传输的安全相关问题，于是 HTTPS 应运而生。常见的「证书错误」产生的原因是什么？HTTPS 协议又是如何保护我们的通信不被监听与篡改的？本文就来讨论一下网址前面的那把小锁。",
+    page: 38,
+  },
+  {
+    slug: "information-theory",
+    title: "浅谈信息论",
+    author: "",
+    disciplineSlug: "electronic",
+    summary:
+      "信息论是运用概率论与数理统计的方法研究信息、信息熵、通信系统、数据传输、密码学、数据压缩等问题的应用数学学科，十分实用。希望本文能让读者对于信息论有一个初步的认识。",
+    page: 40,
+  },
+  {
+    slug: "do-you-really-understand-exercise",
+    title: "你真的了解运动吗",
+    author: "",
+    disciplineSlug: "biology",
+    summary:
+      "众所周知，生命在于运动。运动不仅让骨骼肌暴露在急性应激下增加了耐受性，还能诱导骨骼肌中的 NOX4 表达，从而促进活性氧介导的适应性反应和肌肉功能，维持氧化还原平衡。",
+    page: 42,
+  },
+  {
+    slug: "b-cell-cancer",
+    title: "免疫 B 细胞癌变后怎么办",
+    author: "",
+    disciplineSlug: "biology",
+    summary:
+      "淋巴细胞是免疫系统的基本成分，在体内分布很广。但是，当 B 细胞也罢工时会发生什么呢？弥漫大 B 细胞淋巴瘤正是 B 细胞癌变后的结果，这类淋巴瘤在临床病例中占了很大一部分。",
+    page: 43,
+  },
+] as const satisfies readonly DirectoryArticle[];
+
+const catalog2024 = [
+  {
+    slug: "beyond-the-planets",
+    title: "太阳系的行星之外",
+    author: "杨博涵",
+    disciplineSlug: "astronomy",
+    summary:
+      "太阳系的边界究竟在哪？在八大行星之外，柯伊伯带、离散盘和奥尔特云环绕着太阳，数十亿颗小冰质星球构成了太阳系的边缘。",
+    page: 1,
+  },
+  {
+    slug: "celestial-bodies-on-scratch-paper",
+    title: "写在草稿纸上的天体",
+    author: "李铭宸",
+    disciplineSlug: "astronomy",
+    summary:
+      "天文学的发展不仅需要借助望远镜，还有精密的科学计算。海王星、冥王星、小行星带的发现，揭示了天文学家们利用数学与数据追踪天体踪迹的历程。人类对宇宙的探索，始于星空，也超越星空。",
+    page: 2,
+  },
+  {
+    slug: "observing-the-universe-from-earth",
+    title: "坐地观天：我们看到的究竟是个怎样的宇宙",
+    author: "吴奕多",
+    disciplineSlug: "astronomy",
+    summary:
+      "夜空中的星星离我们有多远？天球模型是理解宇宙的重要工具。天赤道、天极、天穹等概念，描绘出一个直观的宇宙。天球无法揭示宇宙的全部真相，但它为天文观测提供了清晰的框架。",
+    page: 3,
+  },
+  {
+    slug: "rubiks-cube-formulas",
+    title: "魔方公式是怎么来的",
+    author: "林博文、严楚宸",
+    disciplineSlug: "math",
+    summary:
+      "群论、共轭和交换子的概念，揭示出魔方的旋转和变化规律。探索公式的推导，感受魔方世界的无限魅力，以及数学的深邃。",
+    page: 5,
+  },
+  {
+    slug: "english-cloze-guessing",
+    title: "英语七选五如何自飘考分",
+    author: "沈麟午",
+    disciplineSlug: "math",
+    summary:
+      "七选五不会做也能骗分！本文详细计算三种蒙题策略下从全错到全对的概率，直观展示不同策略的风险与收益。想稳妥应对考试，还是豪赌冲刺满分？概率分析助你选择最优策略。",
+    page: 8,
+  },
+  {
+    slug: "random-is-not-random",
+    title: "随机 ≠ 随机？",
+    author: "林可燚",
+    disciplineSlug: "math",
+    summary:
+      "「随机」是否真的随机？伯特兰悖论中令人困惑的随机性问题，揭示了概率论中无差别原则的局限。探究随机的本质，思考数学中的矛盾与反直觉现象，或许随机并非我们想象中的那样简单。",
+    page: 10,
+  },
+  {
+    slug: "hilberts-hotel-infinity",
+    title: "从希尔伯特的旅馆到有趣的无穷世界",
+    author: "周可桓",
+    disciplineSlug: "math",
+    summary:
+      "希尔伯特的旅馆拥有无限多的房间，来客再多也能安排。无限世界中，自然数、整数、有理数间的关系展现出奇妙的奥秘。无限集合的悖论，为数学世界带来颠覆性的思考和探索。",
+    page: 13,
+  },
+  {
+    slug: "history-of-weather-forecasting",
+    title: "天气预报小史",
+    author: "肖涵林",
+    disciplineSlug: "geography",
+    summary:
+      "天气预报的发展历程反映了科技的进步。从古人根据经验制定历法，到现代气象学引入热力学与流体力学，再到气象卫星与数值预报，天气预报不断改进，成为我们日常生活的重要工具。",
+    page: 14,
+  },
+  {
+    slug: "yantai-hill-urban-renewal",
+    title: "旧城新改，烟山再生",
+    author: "张佑嘉",
+    disciplineSlug: "geography",
+    summary:
+      "烟台山周边现代化的推进与传统风貌的保留，在城市复兴中显得尤为重要。历史街区的改造如何平衡古老城市风貌与现代发展？",
+    page: 15,
+  },
+  {
+    slug: "wildfire-response",
+    title: "山火肆虐，如何破局？",
+    author: "张佑嘉",
+    disciplineSlug: "geography",
+    summary:
+      "山火为何难以扑灭？贵州山火引发了人们对山火救灾的反思。在科技助力下，借助从电磁炮灭火系统到消防无人机，探讨科技破局山火的新型救灾体系，构建更高效的山火防控策略。",
+    page: 19,
+  },
+  {
+    slug: "falling-cat-problem",
+    title: "落猫问题：角动量守恒定律的至高运用",
+    author: "林泓",
+    disciplineSlug: "physics",
+    summary:
+      "角动量守恒在猫身上得到了完美运用。猫的两部分身体能独立协调完成姿态调整，展现自然界中存在的灵活与平衡的科学原理。",
+    page: 22,
+  },
+  {
+    slug: "describing-electricity",
+    title: "我描述电学，真的假的？",
+    author: "林泓、陈冠中",
+    disciplineSlug: "physics",
+    summary:
+      "电学问题总是令人头疼？不妨尝试将力学与电学进行类比，构建一个更直观的模型，或许能带来别样的学习体验。",
+    page: 23,
+  },
+  {
+    slug: "ac-circuits",
+    title: "交流电路",
+    author: "陈冠中",
+    disciplineSlug: "physics",
+    summary:
+      "电动势随时间周期变化，就能形成简谐交流电。如果我们用复数表示法呈现出电压、电流的频率、峰值、相位等特征，或许能感受到课本外的交流电路，深入了解电阻、复阻抗、复导纳，感受其中的科学之美。",
+    page: 26,
+  },
+  {
+    slug: "muon-imaging",
+    title: "缪子成像",
+    author: "许睿哲",
+    disciplineSlug: "physics",
+    summary:
+      "μ子成像技术近年来发展迅速，利用 μ 子穿透物质的能力，可以获取物质内部的密度分布。未来，技术装备和反演算法的改进将进一步拓展 μ 子成像的应用范围。",
+    page: 29,
+  },
+  {
+    slug: "multisensor-information-fusion",
+    title: "多传感器信息融合（MSIFS）让机器像侦探一样思考",
+    author: "许睿哲",
+    disciplineSlug: "engineering",
+    summary:
+      "多传感器信息融合技术整合多源数据，集中、分布、混合式三大结构各具优势。通过预处理与降维，简化数据复杂性，为自动驾驶、智慧家居等应用提供支持，展现智能化发展的潜力。",
+    page: 31,
+  },
+  {
+    slug: "halting-problem",
+    title: "停还是不停，这是个问题",
+    author: "陈昊",
+    disciplineSlug: "engineering",
+    summary:
+      "图灵机能预见自己的命运吗？本文以图灵机的构造为引，探究停机问题的不可判定性，揭示了人类思维中无限追问的困境。停与不停之间，正是计算机科学和哲学相交的迷人地带。",
+    page: 33,
+  },
+  {
+    slug: "mountain-bike-suspension",
+    title: "全地形山地车避震结构浅谈",
+    author: "赵若愚",
+    disciplineSlug: "engineering",
+    summary:
+      "独特的避震结构与机械连杆技术，使山地车能过滤绝大部分地面震动。探究避震器的内部设计、阻尼调节与车架结构的选择，了解全地形山地车的设计奥秘。",
+    page: 35,
+  },
+  {
+    slug: "fpv-pid-tuning",
+    title: "浅谈 PID 穿越机调参的理论",
+    author: "陈禹赫",
+    disciplineSlug: "engineering",
+    summary:
+      "“PID”是什么？在穿越机的调参中，比例、微分和积分共同构成了控制算法的基础。本文以穿越机为例，详细讲解了“PID”的原理及调参方法，揭示了在实际应用中的操作要点。",
+    page: 38,
+  },
+  {
+    slug: "coffee-and-reading",
+    title: "从科学角度看「读书万卷 咖啡千杯」",
+    author: "林子祺",
+    disciplineSlug: "biology",
+    summary:
+      "喝咖啡真能提神吗？咖啡因通过抑制腺苷，暂时提高肾上腺素水平，助力燃脂。适量摄入咖啡能发挥益处，但过量可能引发头晕、失眠等问题。健康饮用咖啡的方法，正是利用其功效的关键。",
+    page: 39,
+  },
+  {
+    slug: "blue-race-hoax",
+    title: "蓝色人种的骗局",
+    author: "苏晴",
+    disciplineSlug: "biology",
+    summary:
+      "蓝色人种是否真的存在？智利奥坎基尔族、欧洲蓝血贵族、福盖特家族的蓝皮肤之谜，到底是人为炒作，还是另有原因？蓝色人种的传说背后，隐藏着科学和医学的真实解答。",
+    page: 40,
+  },
+  {
+    slug: "internet-addiction",
+    title: "为什么我会沉迷于网络",
+    author: "王梓旭",
+    disciplineSlug: "biology",
+    summary:
+      "你是否曾经一边刷手机，一边对自己说“再刷一会儿”？多巴胺是让你沉迷网络的幕后黑手。本文揭示多巴胺的奖励机制及其导致的网络依赖，并探讨如何通过内啡肽来平衡，让生活回归健康节奏。",
+    page: 41,
+  },
+  {
+    slug: "electrons-as-anions",
+    title: "最小的「阴离子」：电子",
+    author: "曾上嘉",
+    disciplineSlug: "chemistry",
+    summary:
+      "电子盐带来了独特的化学性质，展现零维到二维电子的自由度与稳定性之间的平衡。Na₂He 等奇特化合物中的电子，以一种全新的方式存在，揭示化学世界中的非凡与未知。",
+    page: 42,
+  },
+  {
+    slug: "upper-limit-of-valence",
+    title: "化合价的上限",
+    author: "曾上嘉",
+    disciplineSlug: "chemistry",
+    summary:
+      "化合价最高能达到多少？+8 价锇、+9 价铱等元素的发现，挑战了化学常识，引发对化合价边界的深入思考。化学世界的未知领域正等待进一步探索，揭示化合价的真正极限。",
+    page: 43,
+  },
+  {
+    slug: "how-many-hydroxyl-groups-on-carbon",
+    title: "碳上能连几个羟基？",
+    author: "曾上嘉",
+    disciplineSlug: "chemistry",
+    summary:
+      "一个碳原子只能连一个羟基？事实并非如此。水合醋三酮、二水合十二羟基环己烷，以及最新制得的甲三醇，打破了传统认知。化学规律并非绝对，科学探索始终在推陈出新。",
+    page: 44,
+  },
+] as const satisfies readonly DirectoryArticle[];
+
+const catalog2023 = [
+  {
+    slug: "stellar-fireworks",
+    title: "恒星送别的「烟花秀」",
+    author: "林毅豪",
+    disciplineSlug: "astronomy",
+    summary: "恒星生命尽头的绽放",
+    page: 1,
+  },
+  {
+    slug: "what-does-space-smell-like",
+    title: "太空间起来什么味儿",
+    author: "张健熙",
+    disciplineSlug: "astronomy",
+    summary: "",
+    page: 3,
+  },
+  {
+    slug: "solar-system-origins",
+    title: "太阳系是怎么变成今天这样的",
+    author: "张其锴",
+    disciplineSlug: "astronomy",
+    summary: "太阳系的前世今生",
+    page: 4,
+  },
+  {
+    slug: "derivatives-to-taylor",
+    title: "从求导到泰勒公式",
+    author: "雷锐",
+    disciplineSlug: "math",
+    summary: "",
+    page: 6,
+  },
+  {
+    slug: "english-cloze-guessing",
+    title: "英语七选五如何自飘考分",
+    author: "刘书扬",
+    disciplineSlug: "math",
+    summary: "从概率角度出发探究考试技巧",
+    page: 7,
+  },
+  {
+    slug: "crow-and-hexagonal-packing",
+    title: "从乌鸦喝水到六方最密堆积",
+    author: "宋鸿冰",
+    disciplineSlug: "math",
+    summary: "高利用率堆积方式的理想化运用",
+    page: 9,
+  },
+  {
+    slug: "puroganga-ri-global-warming",
+    title: "全球变暖中的普若岗日",
+    author: "余悦",
+    disciplineSlug: "geography",
+    summary: "看全球变暖下的世界第三大冰川",
+    page: 10,
+  },
+  {
+    slug: "yushan-island-entrepreneurship",
+    title: "嵛山岛自主创业品质提升策略研究",
+    author: "朱植祺、黄雅茹、陈奕阳、蒋雨哲、刘力文、赵子雍",
+    disciplineSlug: "geography",
+    summary:
+      "联合团队实地探访中国十大最美岛屿之一的嵛山岛，走访调查提出产业优化升级策略",
+    page: 12,
+  },
+  {
+    slug: "particle-engine",
+    title: "超强的“粒子引擎”",
+    author: "卞宸淇",
+    disciplineSlug: "physics",
+    summary: "深入了解粒子加速器这一粒子引擎的发展、作用、结构以及应用",
+    page: 24,
+  },
+  {
+    slug: "superconductivity-principles-value",
+    title: "超导的原理与价值",
+    author: "郭鸿瑞",
+    disciplineSlug: "physics",
+    summary: "什么是超导体？超导材料要怎样才能找到？室温超导的价值又是什么？",
+    page: 28,
+  },
+  {
+    slug: "linear-regression-model",
+    title: "线性回归模型的简单演绎",
+    author: "池明锐",
+    disciplineSlug: "electronic",
+    summary: "通俗讲解入门机器学习",
+    page: 31,
+  },
+  {
+    slug: "how-memory-stores-data",
+    title: "内存是怎么存储数据的？",
+    author: "高林熙",
+    disciplineSlug: "electronic",
+    summary: "硬件角度认识内存工作原理",
+    page: 34,
+  },
+  {
+    slug: "memory-garbage-collection",
+    title: "简单谈谈内存回收原理",
+    author: "王凯诺",
+    disciplineSlug: "electronic",
+    summary: "认识内存回收机制",
+    page: 35,
+  },
+  {
+    slug: "about-cancer",
+    title: "说说“癌症”",
+    author: "王靖韬",
+    disciplineSlug: "biology",
+    summary: "癌的产生及治疗方法的发展",
+    page: 37,
+  },
+  {
+    slug: "late-night-study-research",
+    title: "关于熬夜对高中生群体学习生活质量影响的研究",
+    author: "陈祺涵",
+    disciplineSlug: "biology",
+    summary: "统计调查反应熬夜群体现状；你还在熬夜内卷吗？",
+    page: 39,
+  },
+  {
+    slug: "sturgeon-egg-crab",
+    title: "鲟卵蟹",
+    author: "姚苏杭",
+    disciplineSlug: "biology",
+    summary: "地球上最诡异的动物——癌细胞“成精”？",
+    page: 43,
+  },
+  {
+    slug: "perucetus-colossus",
+    title: "巨像秘鲁鲸",
+    author: "姚苏杭",
+    disciplineSlug: "biology",
+    summary: "今年古生物学最大发现，或将超越蓝鲸成为有史以来最大动物",
+    page: 45,
+  },
+  {
+    slug: "carbon-dioxide-fixation",
+    title: "CO2 固定：不止于淀粉",
+    author: "刘辰盾",
+    disciplineSlug: "chemistry",
+    summary: "",
+    page: 48,
+  },
+  {
+    slug: "acid-base-theory",
+    title: "酸碱理论 – 从狭义到广义",
+    author: "余抒锐",
+    disciplineSlug: "chemistry",
+    summary: "带你看人类是如何由浅到深认识酸碱的",
+    page: 49,
+  },
+  {
+    slug: "will-ai-replace-humans",
+    title: "人工智能是否会取代人类？",
+    author: "张铭宸、黄逸竹",
+    disciplineSlug: "brain-neuroscience",
+    summary: "从不同的角度看 AI 风波",
+    page: 51,
+  },
+  {
+    slug: "brief-history-of-brain-neuroscience",
+    title: "大脑神经科学简史",
+    author: "张铭宸、黄逸竹",
+    disciplineSlug: "brain-neuroscience",
+    summary: "从古至今人类研究世界最复杂的结构之一的大脑的关键节点",
+    page: 53,
+  },
+  {
+    slug: "neuroscience-and-philosophy",
+    title: "脑神经科学与哲学的不解之缘",
+    author: "张铭宸、黄逸竹",
+    disciplineSlug: "brain-neuroscience",
+    summary: "意识、脑、生命的定义与争议、自由意志、灵魂的本质，探秘哲学与科学的交融。",
+    page: 55,
+  },
+] as const satisfies readonly DirectoryArticle[];
+
 const annualCatalogs: Partial<Record<number, AnnualCatalog>> = {
-  2025: { sourceYear: 2025, entries: suppliedCatalog2025 },
+  2021: {
+    sourceYear: 2021,
+    source: catalogScanSource(2021, "5"),
+    entries: catalog2021,
+  },
+  2022: {
+    sourceYear: 2022,
+    source: catalogScanSource(2022, "4"),
+    entries: catalog2022,
+  },
+  2023: {
+    sourceYear: 2023,
+    source: catalogScanSource(2023, "2–3"),
+    entries: catalog2023,
+  },
+  2024: {
+    sourceYear: 2024,
+    source: catalogScanSource(2024, "1"),
+    entries: catalog2024,
+  },
+  2025: {
+    sourceYear: 2025,
+    source: catalog2025Source,
+    entries: suppliedCatalog2025,
+  },
 };
 
 const catalogForYear = (year: number): AnnualCatalog =>
-  annualCatalogs[year] ?? { sourceYear: 2025, entries: suppliedCatalog2025 };
+  annualCatalogs[year] ?? {
+    sourceYear: 2025,
+    source: catalog2025Source,
+    entries: suppliedCatalog2025,
+  };
 
 /**
- * Until the original annual tables of contents are available, every issue
- * intentionally reuses the supplied 2025 catalog. New annual source data can
- * replace one issue at a time without changing any page component.
+ * The original 2021–2025 annual catalogs are recorded above. The 2026 issue
+ * continues to use the confirmed 2025 catalog until its original directory is
+ * supplied; pages consume this data without requiring component changes.
  */
 export const articles = [...issues]
   .reverse()
   .flatMap((issue) => {
     const catalog = catalogForYear(issue.year);
     return catalog.entries.map((entry) =>
-      directoryArticle(entry, issue.year, issue.number, catalog.sourceYear),
+      directoryArticle(entry, issue.year, issue.number, catalog),
     );
   }) satisfies readonly Article[];

@@ -23,9 +23,11 @@ const previousIssue = issueIndex > 0 ? issues[issueIndex - 1] : undefined;
 const nextIssue = issueIndex < issues.length - 1 ? issues[issueIndex + 1] : undefined;
 const issueArticles = articles.filter((article) => article.year === issue.year);
 const catalogNotice =
-  issue.year === 2025
-    ? '本页文章目录采用已提供并确认为 2025 年的目录资料。完整全文仍需完成来源核验与公开授权确认。'
-    : `当前 ${issue.year} 年目录按编辑要求临时复用已提供的 2025 年目录；待本期原始目录提供后替换。完整全文仍需完成来源核验与公开授权确认。`;
+  issue.year >= 2021 && issue.year <= 2024
+    ? '本页文章目录依据已提供的本期扫描目录录入。全文尚未开放。'
+    : issue.year === 2025
+      ? '本页文章目录采用已提供并确认为 2025 年的目录资料。全文尚未开放。'
+      : '当前 2026 年目录暂复用已确认的 2025 年目录；待本期原始目录提供后替换。全文尚未开放。';
 ---
 
 <BaseLayout
