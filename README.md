@@ -1,10 +1,10 @@
 # 《非正式科学》2026 网站
 
-这是《非正式科学》2026 年刊（总第 6 期）的官方网站工程。网站使用 Astro 生成纯静态页面，以书籍排版工程 `Informal-Science-2026` 为编辑来源，经人工审核后发布到 GitHub Pages。
+这是《非正式科学》2026 年刊（总第 6 期）的官方网站工程。网站使用 Astro 生成纯静态页面，以书籍排版工程 `Informal-Science-2026` 为编辑来源，经人工审核后发布到 Cloudflare Pages。
 
 网站预期部署在：
 
-`https://informal-science.github.io/Informal-Science/`
+`https://informal-science.org/`
 
 > 书籍工程是编辑源，网站仓库是发布副本。网站构建不会在 CI 中读取相邻的书籍仓库，以保证任何人克隆本仓库后都能重现构建。
 
@@ -26,7 +26,7 @@
 │   ├── pages/                   # Astro 路由入口
 │   ├── styles/                  # 设计令牌、字体与全局样式
 │   └── utils/paths.ts           # 兼容 GitHub Pages 子路径的 URL 工具
-├── astro.config.mjs              # 静态输出与 `/Informal-Science` base
+├── astro.config.mjs              # 静态输出与正式站点地址
 ├── package.json
 └── pnpm-lock.yaml                # CI 可重现安装的依赖锁文件
 ```
@@ -44,7 +44,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-开发服务启动后，访问终端显示的 `/Informal-Science/` 地址。提交前至少运行：
+开发服务启动后，访问终端显示的根地址。提交前至少运行：
 
 ```bash
 pnpm check
@@ -76,7 +76,7 @@ pnpm preview
 
 取得某一年的真实目录后，应在数据层替换该年度的目录来源，并保留年份、期数、学科、来源和审核字段；脑神经科学与电子文章分别使用 `brain-neuroscience`、`electronic` 学科键。问题-答案、往期详情和“其他”页会自动收录，页面路由与组件无需改写。
 
-站内路由和资源 URL 必须兼容 GitHub Pages 的 `/Informal-Science` 子路径。在 Astro 代码中使用 `src/utils/paths.ts` 的 `withBase()` 或 `assetPath()`，不要硬编码以 `/images/...` 开头的站点根路径。
+站内路由和资源 URL 必须兼容正式站点根路径。在 Astro 代码中使用 `src/utils/paths.ts` 的 `withBase()` 或 `assetPath()`，不要硬编码以 `/images/...` 开头的站点根路径。
 
 ## 更新图片与其他资源
 
@@ -86,7 +86,7 @@ pnpm preview
 2. 裁切到正确比例，去除不需要的元数据，并优先导出 WebP/AVIF。不得将 20 MB 级的印刷原图直接作为网页图片。
 3. 公共路径按约定命名：横屏主视觉使用 `public/images/hero/hero-2026-{640,1280,1920,3840}.webp`，竖屏主视觉使用 `cover-2026-{640,1280,1920,2880}.webp`，往期封面使用 `public/images/issues/issue-YYYY.webp`，品牌标志使用 `public/images/brand/logo-{mark,lockup}.svg`。
 4. 在对应数据文件中更新引用，并在 `docs/asset-notes.md` 记录原始位置、转换方式、credit 和 license。
-5. 在宽屏、手机宽度和 `/Informal-Science` 子路径下检查图片是否正确显示。
+5. 在宽屏、手机宽度和正式站点根路径下检查图片是否正确显示。
 
 ### 2026 首页主视觉
 
