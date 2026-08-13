@@ -178,6 +178,8 @@ dist/（静态 HTML/CSS/JS/图片/字体）
 ├── docs/
 │   └── asset-notes.md               # 素材来源、转换、ICC、尺寸和许可记录
 ├── public/                           # 原样复制到 dist 的稳定公开资源
+│   ├── favicon.ico                   # 浏览器兼容回退图标
+│   ├── favicon.png                   # PNG 与 Apple Touch 图标
 │   ├── favicon.svg
 │   ├── fonts/NOTICE.txt
 │   └── images/
@@ -363,6 +365,8 @@ dist/（静态 HTML/CSS/JS/图片/字体）
 
 ```text
 /favicon.svg
+/favicon.png
+/favicon.ico
 /images/hero/hero-2026-1920.webp
 /images/issues/issue-2026.webp
 /images/brand/logo-lockup.svg
@@ -842,7 +846,17 @@ public/images/subscribe/qq-space-qr.jpg
 
 当前仓库存在 `hero-2026-{640,1280,1920}.avif`，但 `IssueHeroBackground.astro` 只输出 WebP，AVIF 目前没有被浏览器引用。如果要启用，需新增 AVIF `<source>` 并验证兼容回退和实际体积收益。
 
-### 10.4 新增或替换资源
+### 10.4 网站图标（favicon）兼容性
+
+网站图标由 `BaseLayout.astro` 同时声明以下三种格式，不能只保留 SVG：
+
+- `public/favicon.svg`：现代浏览器优先使用的矢量图标；
+- `public/favicon.png`：PNG 回退图标，也是 iOS 的 Apple Touch Icon；
+- `public/favicon.ico`：传统浏览器回退图标。
+
+这是跨 Safari、Edge 及其他浏览器的兼容组合。更新品牌图标时，应从权威源图 `Resources/Picture_Resources/logo/logo1.png` 同步更新 PNG，并重新生成包含 256×256 PNG 图层的 ICO；随后在本地构建，确认 `dist/` 中三种文件均存在后再部署。不要删除任一种格式，否则部分浏览器可能退回默认的空白/通用网页图标。
+
+### 10.5 新增或替换资源
 
 1. 从审核后的书籍工程导出，不覆盖权威原图。
 2. 确认作者、来源、网页发布许可和署名方式。
@@ -856,7 +870,7 @@ public/images/subscribe/qq-space-qr.jpg
 
 仓库目前没有可执行的图片转换或字体子集脚本，只有处理记录。后续若重做资源，必须记录实际命令，最好把可复现脚本提交到仓库。
 
-### 10.5 字体分工
+### 10.6 字体分工
 
 | 字体 | 用途 | 文件位置 |
 | --- | --- | --- |
