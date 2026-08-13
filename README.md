@@ -848,13 +848,13 @@ public/images/subscribe/qq-space-qr.jpg
 
 ### 10.4 网站图标（favicon）兼容性
 
-网站图标由 `BaseLayout.astro` 同时声明以下三种格式，不能只保留 SVG：
+标签页图标统一由 `BaseLayout.astro` 声明为 ICO，避免不同浏览器对 SVG favicon 的兼容差异：
 
-- `public/favicon.svg`：现代浏览器优先使用的矢量图标；
-- `public/favicon.png`：PNG 回退图标，也是 iOS 的 Apple Touch Icon；
-- `public/favicon.ico`：传统浏览器回退图标。
+- `public/favicon.ico`：所有浏览器标签页使用的站点图标；
+- `public/favicon.png`：iOS 的 Apple Touch Icon；
+- `public/favicon.svg`：保留的品牌矢量源，不作为标签页图标引用。
 
-这是跨 Safari、Edge 及其他浏览器的兼容组合。更新品牌图标时，应从权威源图 `Resources/Picture_Resources/logo/logo1.png` 同步更新 PNG，并重新生成包含 256×256 PNG 图层的 ICO；随后在本地构建，确认 `dist/` 中三种文件均存在后再部署。不要删除任一种格式，否则部分浏览器可能退回默认的空白/通用网页图标。
+更新品牌图标时，应从权威源图 `Resources/Picture_Resources/logo/logo1.png` 同步更新 PNG，并重新生成包含 256×256 PNG 图层的 ICO；随后在本地构建，确认 `dist/` 中 ICO 和 PNG 均存在、首页只引用 ICO 作为 `rel="icon"` 后再部署。
 
 ### 10.5 新增或替换资源
 
