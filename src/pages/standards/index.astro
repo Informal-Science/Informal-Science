@@ -4,12 +4,15 @@ import BookMarker from '../../components/BookMarker.astro';
 import PageIntro from '../../components/PageIntro.astro';
 import { colorStandards } from '../../data';
 import { shouldUseDarkText } from '../../utils/colors';
+import { withBase } from '../../utils/paths';
 
 const formatCmyk = (color: (typeof colorStandards)[number]) => {
   const { c, m, y, k } = color.cmyk;
   return `C ${Math.round(c * 100)} · M ${Math.round(m * 100)} · Y ${Math.round(y * 100)} · K ${Math.round(k * 100)}`;
 };
 const formatRgb = (color: (typeof colorStandards)[number]) => color.rgb.join(' · ');
+const articleTitlePreview = withBase('/images/hero/hero-2026-1920.webp');
+const articleBodyPreview = withBase('/images/hero/hero-2026-1920.webp');
 ---
 
 <BaseLayout
@@ -84,6 +87,216 @@ const formatRgb = (color: (typeof colorStandards)[number]) => color.rgb.join(' �
       </div>
     </div>
   </section>
+
+  <section class="layout-standard" aria-labelledby="layout-standard-title">
+    <div class="container layout-standard__heading">
+      <div>
+        <p class="eyebrow">Layout / 版式网格</p>
+        <h2 id="layout-standard-title">留出呼吸，<br />建立秩序。</h2>
+      </div>
+      <p>书刊采用 A4 双面版式，以装订侧区分内外页边距；正文在固定版心内使用双栏排列。以下尺寸直接取自 2026 书籍模板，单位均为毫米。</p>
+    </div>
+
+    <div class="container layout-standard__demos">
+      <figure class="layout-demo">
+        <figcaption>
+          <span>01 / PAGE MARGIN</span>
+          <div>
+            <h3>页边距设置</h3>
+            <p>上 14mm、下 15mm、内侧 20mm、外侧 17mm；奇偶页的内外侧随装订方向自动镜像。</p>
+          </div>
+        </figcaption>
+
+        <div
+          class="margin-spec"
+          role="img"
+          aria-label="A4 双面书刊页边距：上 14 毫米，下 15 毫米，内侧 20 毫米，外侧 17 毫米，左右页镜像排列"
+        >
+          <div class="margin-spec__spread" aria-hidden="true">
+            <div class="print-page print-page--verso">
+              <span class="print-page__top">14</span>
+              <span class="print-page__outer">17</span>
+              <span class="print-page__inner">20</span>
+              <div class="print-page__content"><b>EVEN</b><i></i></div>
+              <span class="print-page__bottom">15</span>
+            </div>
+            <div class="print-page print-page--recto">
+              <span class="print-page__top">14</span>
+              <span class="print-page__inner">20</span>
+              <span class="print-page__outer">17</span>
+              <div class="print-page__content"><b>ODD</b><i></i></div>
+              <span class="print-page__bottom">15</span>
+            </div>
+          </div>
+          <div class="margin-spec__legend" aria-hidden="true">
+            <span>OUTER · 17 MM</span>
+            <span>SPINE</span>
+            <span>INNER · 20 MM</span>
+          </div>
+        </div>
+      </figure>
+
+      <figure class="layout-demo">
+        <figcaption>
+          <span>02 / COLUMN GAP</span>
+          <div>
+            <h3>栏间距设置</h3>
+            <p>正文版心宽 173mm，分为两个 83mm 文栏，中间固定留出 7mm 栏间距。</p>
+          </div>
+        </figcaption>
+
+        <div
+          class="column-spec"
+          role="img"
+          aria-label="正文双栏网格：左右栏宽各 83 毫米，中间栏间距 7 毫米，总版心宽 173 毫米"
+        >
+          <div class="column-spec__page" aria-hidden="true">
+            <div class="column-spec__grid">
+              <span class="column-spec__column"><b>01</b><i></i><strong>83 MM</strong></span>
+              <span class="column-spec__gap"><b>GAP</b><strong>7<br />MM</strong></span>
+              <span class="column-spec__column"><b>02</b><i></i><strong>83 MM</strong></span>
+            </div>
+          </div>
+          <div class="column-spec__equation" aria-hidden="true">
+            <span>83 MM</span><i>+</i><strong>7 MM GAP</strong><i>+</i><span>83 MM</span><b>= 173 MM</b>
+          </div>
+        </div>
+      </figure>
+    </div>
+
+    <dl class="container layout-standard__rules">
+      <div><dt>PAPER</dt><dd>A4 <span>210 × 297 MM</span></dd></div>
+      <div><dt>TOP / BOTTOM</dt><dd>14 / 15 MM <span>Vertical Margin</span></dd></div>
+      <div><dt>INNER / OUTER</dt><dd>20 / 17 MM <span>Mirrored Margin</span></dd></div>
+      <div><dt>COLUMNS</dt><dd>83 / 7 / 83 MM <span>Column · Gap · Column</span></dd></div>
+    </dl>
+  </section>
+
+  <section class="article-title-standard" aria-labelledby="article-title-standard-title">
+    <div class="container article-title-standard__heading">
+      <div>
+        <p class="eyebrow">Article Title / 文章标题区</p>
+        <h2 id="article-title-standard-title">四层文字，<br />组成阅读入口。</h2>
+      </div>
+      <p>以带背景图和摘要的普通文章标题环境为例，标题区依次呈现分区、文章标题、摘要与撰文信息；字体、行距和透明度均对应 2026 书籍模板。</p>
+    </div>
+
+    <div class="container article-title-standard__content">
+      <figure class="title-preview">
+        <div class="title-preview__canvas">
+          <img src={articleTitlePreview} alt="" loading="lazy" />
+          <div class="title-preview__margin-guide" aria-hidden="true">
+            <div class="title-preview__margin-measure">
+              <span>左页边距</span>
+              <i></i>
+            </div>
+          </div>
+          <div class="title-preview__copy">
+            <p class="title-preview__area">天文 / ASTRONOMY</p>
+            <h3>天上的星星哪里来</h3>
+            <p class="title-preview__abstract">追溯恒星的起源与演化，从分子云坍缩到原恒星形成，分析小质量、中等质量和大质量恒星的不同命运，诠释宇宙元素循环的壮丽史诗。</p>
+            <p class="title-preview__credit">
+              <b>撰文</b><i>/</i><span>作者姓名</span><small>福州一中天文社</small>
+            </p>
+          </div>
+        </div>
+        <figcaption>
+          <span>背景 · 分区 · 标题 · 摘要 · 署名</span>
+        </figcaption>
+      </figure>
+
+      <div class="title-type-table-wrap" role="region" aria-label="文章标题区四层文字参数" tabindex="0">
+        <table class="title-type-table">
+          <colgroup><col class="title-type-table__label" /><col /><col /><col /><col /></colgroup>
+          <thead>
+            <tr>
+              <th scope="col">参数</th>
+              <th scope="col"><span>01</span>分区<small>AREA</small></th>
+              <th scope="col"><span>02</span>标题<small>TITLE</small></th>
+              <th scope="col"><span>03</span>摘要<small>ABSTRACT</small></th>
+              <th scope="col"><span>04</span>署名<small>BYLINE</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">字体</th><td colspan="3">HarmonyOS Sans SC</td><td>Noto Serif CJK SC</td></tr>
+            <tr><th scope="row">字重</th><td colspan="3">Medium</td><td>Black（撰文）<br />Medium（其余）</td></tr>
+            <tr><th scope="row">字号</th><td>10 PT</td><td>28 PT</td><td>10 PT</td><td>8 PT</td></tr>
+            <tr><th scope="row">行距</th><td>14 PT</td><td>34 PT</td><td>14 PT</td><td>12 PT</td></tr>
+            <tr><th scope="row">透明度</th><td>80%</td><td>100%</td><td>100%</td><td>100%<small>社团 80%</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <dl class="container article-title-standard__rules">
+      <div><dt>颜色</dt><dd>WHITE <span>四层文字统一使用纸白色</span></dd></div>
+      <div><dt>对齐方式</dt><dd>左对齐 <span>四层文字统一左对齐</span></dd></div>
+      <div><dt>层后间距</dt><dd>3.5 毫米 <span>分区、标题与摘要之后</span></dd></div>
+      <div><dt>可选阴影</dt><dd>BLACK · 75% <span>横向 / 纵向偏移 · 0.05 em</span></dd></div>
+    </dl>
+  </section>
+
+  <section class="body-text-standard" aria-labelledby="body-text-standard-title">
+    <div class="container body-text-standard__heading">
+      <div>
+        <p class="eyebrow">Body Typography / 正文排版</p>
+        <h2 id="body-text-standard-title">层层推进，<br />承接完整阅读。</h2>
+      </div>
+      <p>正文以轻字重和宽松行距维持长篇阅读的节奏，两级小标题使用学科主题色建立层级；图片编号与图注则以相同字号、不同字重组成一组居中的图例。</p>
+    </div>
+
+    <div class="container body-text-standard__content">
+      <figure class="body-preview">
+        <div class="body-preview__paper">
+          <div class="body-preview__columns">
+            <div class="body-preview__column">
+              <h3>恒星如何开始发光</h3>
+              <p>恒星诞生于寒冷而稠密的分子云。微小的密度扰动在引力作用下不断放大，使气体与尘埃逐渐向中心聚集，并释放出越来越多的能量。</p>
+              <h4>从分子云到原恒星</h4>
+              <p>坍缩核心持续升温，外围物质形成旋转的吸积盘。当核心温度足以点燃氢核聚变，向外的辐射压力与向内的引力达到平衡，一颗主序星由此诞生。</p>
+              <p>恒星最初的质量决定了它此后的亮度、寿命与最终归宿，也塑造着星系中元素循环的方式。</p>
+            </div>
+
+            <div class="body-preview__column">
+              <figure class="body-preview__figure">
+                <img src={articleBodyPreview} alt="夜空中的星轨与山脉" loading="lazy" />
+                <figcaption><b>图 1</b><span>恒星视运动形成的星轨；编号也可按上下文写作“上图”。</span></figcaption>
+              </figure>
+              <h4>质量决定恒星的命运</h4>
+              <p>小质量恒星安静地演化为白矮星；更重的恒星则可能在超新星爆发后留下中子星或黑洞。它们抛出的重元素再次进入星际介质，成为新一代恒星与行星的原料。</p>
+            </div>
+          </div>
+          <span class="body-preview__page-number" aria-hidden="true">24</span>
+        </div>
+        <figcaption class="body-preview__legend">一级小标题 · 二级小标题 · 正文 · 图片编号 · 图注</figcaption>
+      </figure>
+
+      <div class="body-type-table-wrap" role="region" aria-label="正文层级文字参数" tabindex="0">
+        <table class="body-type-table">
+          <thead>
+            <tr>
+              <th scope="col">样式</th>
+              <th scope="col">字体</th>
+              <th scope="col">字重</th>
+              <th scope="col">字号</th>
+              <th scope="col">行距</th>
+              <th scope="col">颜色与间距</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><span>01</span>一级小标题</th><td>HarmonyOS<br />Sans SC</td><td>Bold</td><td>12 PT</td><td>16 PT</td><td>学科主题色</td></tr>
+            <tr><th scope="row"><span>02</span>二级小标题</th><td>HarmonyOS<br />Sans SC</td><td>Regular</td><td>10 PT</td><td>14 PT</td><td>学科主题色</td></tr>
+            <tr><th scope="row"><span>03</span>正文内容</th><td>HarmonyOS<br />Sans SC</td><td>Light</td><td>9 PT</td><td>16 PT</td><td>BLACK<small>段后 2 MM</small></td></tr>
+            <tr><th scope="row"><span>04</span>图片编号</th><td>HarmonyOS<br />Sans SC</td><td>Bold</td><td>7 PT</td><td>9 PT</td><td>BLACK<small>图 1 / 上图</small></td></tr>
+            <tr><th scope="row"><span>05</span>图注</th><td>HarmonyOS<br />Sans SC</td><td>Light</td><td>7 PT</td><td>9 PT</td><td>BLACK<small>与编号间隔 0.5 EM</small></td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="6"><b>图片与图例间距</b><span>4 PT</span><i>图例整体居中，并与图片绑定在同一栏内。</i></td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
@@ -99,7 +312,10 @@ const formatRgb = (color: (typeof colorStandards)[number]) => color.rgb.join(' �
   }
 
   .color-overview h2,
-  .type-standard h2 {
+  .type-standard h2,
+  .layout-standard h2,
+  .article-title-standard h2,
+  .body-text-standard h2 {
     margin: 0;
     font-family: var(--font-editorial);
     font-size: clamp(2.6rem, 6vw, 6.4rem);
@@ -260,14 +476,1007 @@ const formatRgb = (color: (typeof colorStandards)[number]) => color.rgb.join(' �
     line-height: 0;
   }
 
+  .layout-standard {
+    padding: clamp(90px, 13vw, 180px) 0;
+    background: var(--paper);
+  }
+
+  .layout-standard__heading {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 0.44fr);
+    gap: clamp(40px, 8vw, 120px);
+    align-items: end;
+  }
+
+  .layout-standard__heading > p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+
+  .layout-standard__demos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: clamp(58px, 8vw, 100px);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .layout-demo {
+    min-width: 0;
+    margin: 0;
+    padding: clamp(24px, 3vw, 38px);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .layout-demo figcaption {
+    display: grid;
+    min-height: 150px;
+    grid-template-columns: 78px minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .layout-demo figcaption > span {
+    color: var(--theme);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .layout-demo h3 {
+    margin: 0;
+    font-size: clamp(1.55rem, 2.8vw, 2.4rem);
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .layout-demo figcaption p {
+    max-width: 24rem;
+    margin: 12px 0 0;
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+  }
+
+  .margin-spec,
+  .column-spec {
+    position: relative;
+    height: clamp(280px, 31vw, 360px);
+    overflow: hidden;
+  }
+
+  .margin-spec {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 17px;
+    padding: clamp(20px, 3vw, 30px);
+    color: white;
+    background: #11151b;
+  }
+
+  .margin-spec__spread {
+    display: flex;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+
+  .print-page {
+    position: relative;
+    width: min(43%, 176px);
+    aspect-ratio: 210 / 297;
+    flex: none;
+    color: var(--ink);
+    background: var(--paper);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  }
+
+  .print-page > span {
+    position: absolute;
+    z-index: 2;
+    color: var(--theme);
+    font-size: clamp(0.42rem, 0.65vw, 0.54rem);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .print-page__top,
+  .print-page__bottom {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .print-page__top {
+    top: 1.5%;
+  }
+
+  .print-page__bottom {
+    bottom: 1.8%;
+  }
+
+  .print-page__outer,
+  .print-page__inner {
+    top: 50%;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%);
+  }
+
+  .print-page--verso .print-page__outer,
+  .print-page--recto .print-page__inner {
+    left: 2.2%;
+  }
+
+  .print-page--verso .print-page__inner,
+  .print-page--recto .print-page__outer {
+    right: 2.2%;
+  }
+
+  .print-page__content {
+    position: absolute;
+    top: 4.71%;
+    bottom: 5.05%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 8px;
+    padding: clamp(7px, 1.1vw, 12px);
+    border: 1px solid rgba(58, 122, 174, 0.68);
+    background: white;
+  }
+
+  .print-page--verso .print-page__content {
+    right: 9.52%;
+    left: 8.1%;
+  }
+
+  .print-page--recto .print-page__content {
+    right: 8.1%;
+    left: 9.52%;
+  }
+
+  .print-page__content b {
+    color: var(--ink-soft);
+    font-size: clamp(0.38rem, 0.55vw, 0.48rem);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .print-page__content i {
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--line) 0,
+      var(--line) 1px,
+      transparent 1px,
+      transparent 9px
+    );
+  }
+
+  .margin-spec__legend {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 12px;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.54);
+    font-size: 0.56rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  .margin-spec__legend span:nth-child(2) {
+    color: white;
+  }
+
+  .margin-spec__legend span:last-child {
+    text-align: right;
+  }
+
+  .column-spec {
+    display: grid;
+    height: clamp(320px, 31vw, 360px);
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 18px;
+    padding: clamp(28px, 4vw, 44px);
+    color: white;
+    background: var(--theme);
+  }
+
+  .column-spec__page {
+    width: fit-content;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .column-spec__grid {
+    display: grid;
+    height: clamp(190px, 20vw, 230px);
+    min-width: 0;
+    grid-template-columns:
+      clamp(56px, 5.6vw, 68px)
+      clamp(18px, 1.6vw, 22px)
+      clamp(56px, 5.6vw, 68px);
+  }
+
+  .column-spec__column {
+    display: grid;
+    min-width: 0;
+    grid-template-rows: auto 1fr auto;
+    gap: 8px;
+    padding: clamp(7px, 1vw, 10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.68);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .column-spec__column b,
+  .column-spec__column strong {
+    font-size: 0.62rem;
+    font-weight: 500;
+  }
+
+  .column-spec__column i {
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.28) 0,
+      rgba(255, 255, 255, 0.28) 1px,
+      transparent 1px,
+      transparent 9px
+    );
+  }
+
+  .column-spec__column strong {
+    justify-self: end;
+    color: white;
+    letter-spacing: 0.08em;
+  }
+
+  .column-spec__gap {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-items: center;
+    justify-items: center;
+    padding: 20px 2px;
+    color: var(--theme);
+    background: white;
+  }
+
+  .column-spec__gap::before,
+  .column-spec__gap::after {
+    position: absolute;
+    right: 4px;
+    left: 4px;
+    height: 7px;
+    border-right: 1px solid var(--theme);
+    border-left: 1px solid var(--theme);
+    content: '';
+  }
+
+  .column-spec__gap::before {
+    top: 6px;
+    border-top: 1px solid var(--theme);
+  }
+
+  .column-spec__gap::after {
+    bottom: 6px;
+    border-bottom: 1px solid var(--theme);
+  }
+
+  .column-spec__gap b {
+    font-size: 0.42rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    writing-mode: vertical-rl;
+  }
+
+  .column-spec__gap strong {
+    align-self: center;
+    font-size: 0.52rem;
+    font-weight: 700;
+    line-height: 1.05;
+    text-align: center;
+  }
+
+  .column-spec__equation {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto 1fr;
+    align-items: center;
+    gap: 9px;
+    font-size: clamp(0.54rem, 0.8vw, 0.64rem);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .column-spec__equation i {
+    color: rgba(255, 255, 255, 0.54);
+    font-style: normal;
+  }
+
+  .column-spec__equation strong {
+    padding: 4px 7px;
+    color: var(--theme);
+    background: white;
+    font-weight: 700;
+  }
+
+  .column-spec__equation b {
+    justify-self: end;
+    font-weight: 500;
+  }
+
+  .layout-standard__rules {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-top: clamp(34px, 5vw, 54px);
+  }
+
+  .layout-standard__rules > div {
+    padding: 20px 22px;
+    border-top: 1px solid var(--line-strong);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .layout-standard__rules dt {
+    color: var(--ink-soft);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .layout-standard__rules dd {
+    display: grid;
+    margin: 12px 0 0;
+    font-size: clamp(1.15rem, 2vw, 1.65rem);
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .layout-standard__rules dd span {
+    margin-top: 5px;
+    color: var(--ink-soft);
+    font-size: 0.62rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .article-title-standard {
+    padding: clamp(90px, 13vw, 180px) 0;
+    color: white;
+    background: #11151b;
+  }
+
+  .article-title-standard__heading {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 0.44fr);
+    gap: clamp(40px, 8vw, 120px);
+    align-items: end;
+  }
+
+  .article-title-standard__heading > p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.58);
+  }
+
+  .article-title-standard__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(460px, 1fr);
+    column-gap: clamp(24px, 3vw, 52px);
+    row-gap: 0;
+    align-items: stretch;
+    margin-top: clamp(58px, 8vw, 100px);
+  }
+
+  .title-preview {
+    display: contents;
+  }
+
+  .title-preview__canvas {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    isolation: isolate;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: #080c11;
+    container-type: inline-size;
+  }
+
+  .title-preview__canvas::after {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(5, 9, 14, 0.82) 0%, rgba(5, 9, 14, 0.48) 55%, rgba(5, 9, 14, 0.08) 100%);
+    content: '';
+    pointer-events: none;
+  }
+
+  .title-preview__canvas img {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .title-preview__margin-guide {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    bottom: 0;
+    left: 9.524cqw;
+    width: 0;
+    border-left: 1px dashed rgba(255, 255, 255, 0.62);
+    pointer-events: none;
+  }
+
+  .title-preview__margin-measure {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 9.524cqw;
+    color: rgba(255, 255, 255, 0.74);
+    transform: translateY(-50%);
+  }
+
+  .title-preview__margin-measure span {
+    display: block;
+    margin-bottom: 0.58cqw;
+    font-family: var(--font-sans);
+    font-size: 0.96cqw;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .title-preview__margin-measure i {
+    position: relative;
+    display: block;
+    height: 0;
+    border-top: 1px solid currentColor;
+  }
+
+  .title-preview__margin-measure i::before,
+  .title-preview__margin-measure i::after {
+    position: absolute;
+    top: calc(-0.24cqw - 0.5px);
+    width: 0.48cqw;
+    height: 0.48cqw;
+    border: solid currentColor;
+    border-width: 0 1px 1px 0;
+    content: '';
+  }
+
+  .title-preview__margin-measure i::before {
+    left: 0.1cqw;
+    transform: rotate(135deg);
+  }
+
+  .title-preview__margin-measure i::after {
+    right: 0.1cqw;
+    transform: rotate(-45deg);
+  }
+
+  .title-preview__copy {
+    position: absolute;
+    z-index: 2;
+    bottom: 9.524cqw;
+    left: 9.524cqw;
+    width: 80cqw;
+    color: white;
+  }
+
+  .title-preview__area {
+    margin: 0 0 1.667cqw;
+    font-family: var(--font-sans);
+    font-size: 1.674cqw;
+    font-weight: 500;
+    line-height: 2.343cqw;
+    opacity: 0.8;
+  }
+
+  .title-preview__copy h3 {
+    margin: 0 0 1.667cqw;
+    font-family: var(--font-sans);
+    font-size: 4.686cqw;
+    font-weight: 500;
+    line-height: 5.69cqw;
+    white-space: nowrap;
+  }
+
+  .title-preview__abstract {
+    margin: 0 0 1.667cqw;
+    font-family: var(--font-sans);
+    font-size: 1.674cqw;
+    font-weight: 500;
+    line-height: 2.343cqw;
+  }
+
+  .title-preview__credit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.42em;
+    align-items: baseline;
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-size: 1.339cqw;
+    line-height: 2.008cqw;
+  }
+
+  .title-preview__credit b {
+    font-weight: 900;
+  }
+
+  .title-preview__credit i {
+    font-style: normal;
+  }
+
+  .title-preview__credit span,
+  .title-preview__credit small {
+    font-size: inherit;
+    font-weight: 500;
+  }
+
+  .title-preview__credit small {
+    margin-left: 0.3em;
+    opacity: 0.8;
+  }
+
+  .title-preview figcaption {
+    display: flex;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .title-preview figcaption span,
+  .title-preview figcaption p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+  }
+
+  .title-type-table-wrap {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    height: 100%;
+    overflow-x: auto;
+    scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
+  }
+
+  .title-type-table {
+    width: 100%;
+    height: 100%;
+    min-width: 460px;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .title-type-table__label {
+    width: 19%;
+  }
+
+  .title-type-table th,
+  .title-type-table td {
+    padding: 11px 9px;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    vertical-align: middle;
+    text-align: left;
+  }
+
+  .title-type-table th:last-child,
+  .title-type-table td:last-child {
+    border-right: 0;
+  }
+
+  .title-type-table thead th {
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 0.68rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .title-type-table thead th:first-child {
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+  }
+
+  .title-type-table thead span {
+    display: block;
+    margin-bottom: 5px;
+    color: #75b7e6;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  .title-type-table thead small {
+    display: block;
+    margin-top: 3px;
+    color: rgba(255, 255, 255, 0.36);
+    font-size: 0.48rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .title-type-table tbody th {
+    color: rgba(255, 255, 255, 0.44);
+    background: rgba(255, 255, 255, 0.025);
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .title-type-table tbody td {
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 0.61rem;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .title-type-table tbody td small {
+    display: block;
+    margin-top: 2px;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.5rem;
+    font-weight: 400;
+  }
+
+  .article-title-standard__rules {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: clamp(38px, 6vw, 70px);
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .article-title-standard__rules > div {
+    padding: 20px 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.42);
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .article-title-standard__rules dt {
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .article-title-standard__rules dd {
+    display: grid;
+    margin: 12px 0 0;
+    font-size: clamp(1rem, 1.7vw, 1.45rem);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .article-title-standard__rules dd span {
+    margin-top: 6px;
+    color: rgba(255, 255, 255, 0.46);
+    font-size: 0.62rem;
+    font-weight: 400;
+  }
+
+  .body-text-standard {
+    padding: clamp(90px, 13vw, 180px) 0;
+    background: #eceeea;
+  }
+
+  .body-text-standard__heading {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 0.44fr);
+    gap: clamp(40px, 8vw, 120px);
+    align-items: end;
+  }
+
+  .body-text-standard__heading > p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+
+  .body-text-standard__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(500px, 1fr);
+    column-gap: clamp(24px, 3vw, 52px);
+    row-gap: 0;
+    align-items: stretch;
+    margin-top: clamp(58px, 8vw, 100px);
+  }
+
+  .body-preview {
+    display: contents;
+  }
+
+  .body-preview__paper {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    aspect-ratio: 210 / 145;
+    overflow: hidden;
+    color: #17191c;
+    background: white;
+    box-shadow: 0 22px 60px rgba(17, 18, 20, 0.1);
+    container-type: inline-size;
+  }
+
+  .body-preview__columns {
+    position: absolute;
+    top: 6.667cqw;
+    right: 8.095cqw;
+    bottom: 6.667cqw;
+    left: 9.524cqw;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3.333cqw;
+  }
+
+  .body-preview__column {
+    min-width: 0;
+  }
+
+  .body-preview__column h3,
+  .body-preview__column h4,
+  .body-preview__column p {
+    font-family: var(--font-sans);
+  }
+
+  .body-preview__column h3 {
+    margin: 0 0 1.2cqw;
+    color: var(--astronomy);
+    font-size: 2.016cqw;
+    font-weight: 700;
+    line-height: 2.688cqw;
+  }
+
+  .body-preview__column h4 {
+    margin: 1.75cqw 0 0.9cqw;
+    color: var(--astronomy);
+    font-size: 1.68cqw;
+    font-weight: 400;
+    line-height: 2.352cqw;
+  }
+
+  .body-preview__column > p {
+    margin: 0 0 0.952cqw;
+    font-size: 1.512cqw;
+    font-weight: 300;
+    line-height: 2.688cqw;
+    text-align: justify;
+    text-justify: inter-ideograph;
+  }
+
+  .body-preview__figure {
+    margin: 0 0 1.8cqw;
+  }
+
+  .body-preview__figure img {
+    width: 100%;
+    height: 22cqw;
+    object-fit: cover;
+  }
+
+  .body-preview__figure figcaption {
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+    margin-top: 0.672cqw;
+    font-family: var(--font-sans);
+    font-size: 1.176cqw;
+    line-height: 1.512cqw;
+    text-align: center;
+  }
+
+  .body-preview__figure figcaption b {
+    flex: none;
+    font-weight: 700;
+  }
+
+  .body-preview__figure figcaption span {
+    font-weight: 300;
+  }
+
+  .body-preview__page-number {
+    position: absolute;
+    right: 3.8cqw;
+    bottom: 2.2cqw;
+    color: rgba(17, 18, 20, 0.48);
+    font-size: 1.2cqw;
+    font-weight: 400;
+  }
+
+  .body-preview__legend {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--line-strong);
+    color: var(--ink-soft);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+  }
+
+  .body-type-table-wrap {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    height: 100%;
+    overflow-x: auto;
+    background: #f7f7f5;
+    scrollbar-color: rgba(17, 18, 20, 0.28) transparent;
+  }
+
+  .body-type-table {
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .body-type-table th,
+  .body-type-table td {
+    padding: 10px 8px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+    text-align: left;
+  }
+
+  .body-type-table tr > :last-child {
+    border-right: 0;
+  }
+
+  .body-type-table thead th {
+    color: var(--ink-soft);
+    background: rgba(17, 18, 20, 0.045);
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .body-type-table thead th:first-child {
+    width: 21%;
+  }
+
+  .body-type-table thead th:nth-child(2) {
+    width: 19%;
+  }
+
+  .body-type-table tbody th {
+    font-size: 0.6rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .body-type-table tbody th span {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--theme);
+    font-size: 0.48rem;
+    letter-spacing: 0.08em;
+  }
+
+  .body-type-table tbody td {
+    color: #303338;
+    font-size: 0.54rem;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .body-type-table tbody td small {
+    display: block;
+    margin-top: 3px;
+    color: var(--ink-soft);
+    font-size: 0.47rem;
+    font-weight: 400;
+  }
+
+  .body-type-table tfoot td {
+    padding: 12px 10px;
+    border-bottom: 0;
+    background: rgba(58, 122, 174, 0.07);
+    font-size: 0.54rem;
+  }
+
+  .body-type-table tfoot b,
+  .body-type-table tfoot span,
+  .body-type-table tfoot i {
+    display: inline-block;
+  }
+
+  .body-type-table tfoot b {
+    margin-right: 10px;
+    font-weight: 500;
+  }
+
+  .body-type-table tfoot span {
+    margin-right: 14px;
+    color: var(--theme);
+    font-weight: 700;
+  }
+
+  .body-type-table tfoot i {
+    color: var(--ink-soft);
+    font-style: normal;
+  }
+
   @media (max-width: 840px) {
     .swatch-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .color-overview__grid,
-    .type-standard__grid {
+    .type-standard__grid,
+    .layout-standard__heading,
+    .layout-standard__demos,
+    .article-title-standard__heading,
+    .article-title-standard__content,
+    .body-text-standard__heading,
+    .body-text-standard__content {
       grid-template-columns: 1fr;
+    }
+
+    .layout-standard__rules,
+    .article-title-standard__rules {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .title-preview__canvas {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .title-preview figcaption {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .title-type-table-wrap {
+      grid-column: 1;
+      grid-row: 3;
+      height: auto;
+      margin-top: 34px;
+    }
+
+    .title-type-table {
+      height: auto;
+    }
+
+    .body-preview__paper {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .body-preview__legend {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .body-type-table-wrap {
+      grid-column: 1;
+      grid-row: 3;
+      height: auto;
+      margin-top: 34px;
+    }
+
+    .body-type-table {
+      height: auto;
     }
   }
 
@@ -275,5 +1484,30 @@ const formatRgb = (color: (typeof colorStandards)[number]) => color.rgb.join(' �
     .swatch-grid {
       grid-template-columns: 1fr;
     }
+
+    .layout-demo figcaption,
+    .layout-standard__rules,
+    .article-title-standard__rules {
+      grid-template-columns: 1fr;
+    }
+
+    .layout-demo figcaption {
+      min-height: 178px;
+    }
+
+    .column-spec {
+      padding-inline: 22px;
+    }
+
+    .column-spec__equation {
+      grid-template-columns: auto auto auto auto auto;
+      justify-content: center;
+    }
+
+    .column-spec__equation b {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+
   }
 </style>

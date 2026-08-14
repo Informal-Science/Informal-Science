@@ -6,448 +6,268 @@ import { withBase } from '../utils/paths';
 
 <BaseLayout
   title="订阅"
-  description="订阅《非正式科学》，获取新刊发布、历年文章回看与后续动态。"
+  description="通过《非正式科学》官方 QQ 联系我们办理订阅，或扫描 QQ 空间二维码浏览已发布动态。"
 >
-  <section class="subscribe-hero" aria-labelledby="subscribe-title">
-    <div class="container subscribe-hero__grid">
-      <div class="subscribe-hero__copy">
-        <p class="subscribe-kicker">Subscribe / 订阅</p>
-        <h1 id="subscribe-title">
-          <span>订阅各期</span>
-          <span>《非正式科学》</span>
-        </h1>
-        <p class="subscribe-hero__lede">关注我们的 QQ 空间，在新一期发布时收到消息，也不错过历年文章回看与后续动态。</p>
-        <div class="subscribe-hero__actions">
-          <a class="subscribe-action subscribe-action--primary" href="#qq-space">查看订阅方式 <span aria-hidden="true">↓</span></a>
-          <a class="subscribe-action" href={withBase('/images/subscribe/qq-space-qr.jpg')} download>保存二维码 <span aria-hidden="true">↓</span></a>
+  <section class="hero" aria-labelledby="subscribe-title">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="kicker">Subscribe / 订阅</p>
+        <h1 id="subscribe-title">联系官方，<br /><span>办理各期订阅。</span></h1>
+        <p class="hero__lede">
+          扫描二维码添加官方 QQ 好友，再在聊天中说明订阅需求。<br />
+          添加好友本身不等于订阅成功，请以官方回复确认为准。
+        </p>
+        <div class="hero__actions">
+          <a class="action action--primary" href="#qq-account">联系官方办理订阅 <span aria-hidden="true">↓</span></a>
+          <a class="action" href="#qq-space">前往空间看动态 <span aria-hidden="true">↘</span></a>
         </div>
       </div>
 
-      <figure class="channel-card" id="qq-space">
-        <div class="channel-card__meta">
-          <span>01 / QQ SPACE</span>
-          <span>当前渠道</span>
+      <aside class="logic" aria-label="订阅与浏览的区别">
+        <p class="logic__label">Two Ways / 两个入口</p>
+        <div class="logic__item logic__item--active">
+          <span>01</span>
+          <div><strong>添加 QQ 并联系官方</strong><p>说明订阅需求，按官方回复办理</p></div>
+          <em>联系</em>
         </div>
-        <div class="channel-card__qr">
-          <img
-            src={withBase('/images/subscribe/qq-space-qr.jpg')}
-            alt="《非正式科学》QQ 空间二维码"
-            width="500"
-            height="500"
-          />
+        <div class="logic__line" aria-hidden="true"></div>
+        <div class="logic__item">
+          <span>02</span>
+          <div><strong>浏览官方 QQ 空间</strong><p>用于回看：浏览已经发布的动态</p></div>
+          <em>浏览</em>
         </div>
-        <figcaption>
-          <div>
-            <strong>QQ 空间</strong>
-            <p>使用 QQ 扫描二维码后关注</p>
-          </div>
-          <span class="channel-card__status">已开通</span>
-        </figcaption>
-      </figure>
+        <p class="logic__note">想订阅，请添加好友后主动发送消息。</p>
+      </aside>
     </div>
-
-    <p class="subscribe-hero__number" aria-hidden="true">01</p>
+    <p class="hero__word" aria-hidden="true">SUBSCRIBE</p>
   </section>
 
-  <section class="subscribe-guide" aria-labelledby="guide-title">
-    <div class="container subscribe-guide__heading">
-      <p class="eyebrow">How to Subscribe / 订阅步骤</p>
-      <h2 id="guide-title">三步关注，<br />等待下一个问题。</h2>
+  <section class="channels" aria-labelledby="channel-title">
+    <div class="container channels__heading">
+      <div>
+        <p class="eyebrow">Subscribe or Browse / 订阅或浏览</p>
+        <h2 id="channel-title">前往官方QQ<br />联系我们/浏览动态</h2>
+      </div>
+      <p>办理订阅需要通过官方 QQ 沟通；只想查看动态，可以直接进入 QQ 空间。</p>
     </div>
 
-    <ol class="container subscribe-steps">
-      <li>
-        <span>01</span>
-        <div>
-          <h3>打开 QQ</h3>
-          <p>进入 QQ 的扫一扫功能。</p>
+    <div class="container channel-grid">
+      <article class="qr-card qr-card--primary" id="qq-account">
+        <header class="qr-card__header">
+          <div><p>01 / CONTACT</p><h3>添加官方 QQ，联系订阅</h3></div>
+          <span>订阅咨询</span>
+        </header>
+        <div class="qr-card__body">
+          <figure class="qr-card__image qr-card__image--account">
+            <img
+              src={withBase('/images/subscribe/qq-account-qr.jpg')}
+              alt="《非正式科学》官方 QQ 好友二维码，QQ 号 2911691480"
+              width="979"
+              height="1775"
+            />
+          </figure>
+          <div class="qr-card__copy">
+            <p class="qr-card__instruction">打开 QQ 扫一扫，扫描左侧二维码并发送好友申请。添加成功后，请主动联系官方并说明订阅需求。</p>
+            <div class="qr-card__notice">
+              <span aria-hidden="true">!</span>
+              <p><strong>请注意：</strong>添加好友不等于完成订阅；请按照官方回复办理后续流程。</p>
+            </div>
+            <dl class="qr-card__facts">
+              <div><dt>官方 QQ 号</dt><dd>2911691480</dd></div>
+              <div><dt>主要用途</dt><dd>订阅咨询与官方联系</dd></div>
+            </dl>
+            <a class="qr-card__download" href={withBase('/images/subscribe/qq-account-qr.jpg')} download>
+              保存官方 QQ 二维码 <span aria-hidden="true">↓</span>
+            </a>
+            <p class="qr-card__fallback">二维码无法识别？请在 QQ 中搜索 2911691480。</p>
+          </div>
         </div>
-      </li>
-      <li>
-        <span>02</span>
-        <div>
-          <h3>扫描二维码</h3>
-          <p>对准页面上方的二维码，进入我们的 QQ 空间。</p>
+      </article>
+
+      <article class="qr-card qr-card--secondary" id="qq-space">
+        <header class="qr-card__header">
+          <div><p>02 / BROWSE</p><h3>进入 QQ 空间，浏览动态</h3></div>
+          <span>浏览入口</span>
+        </header>
+        <div class="qr-card__body">
+          <figure class="qr-card__image qr-card__image--space">
+            <img
+              src={withBase('/images/subscribe/qq-space-qr.jpg')}
+              alt="《非正式科学》官方 QQ 空间二维码"
+              width="500"
+              height="500"
+              loading="lazy"
+            />
+          </figure>
+          <div class="qr-card__copy">
+            <p class="qr-card__instruction">扫描左侧二维码进入官方 QQ 空间，查看已发布的新刊介绍、文章推荐和编辑动态。</p>
+            <div class="qr-card__notice">
+              <span aria-hidden="true">!</span>
+              <p><strong>请注意：</strong>QQ 空间只用于浏览动态。如需订阅，请通过官方 QQ 联系办理。</p>
+            </div>
+            <a class="qr-card__download" href={withBase('/images/subscribe/qq-space-qr.jpg')} download>
+              保存空间二维码 <span aria-hidden="true">↓</span>
+            </a>
+          </div>
         </div>
-      </li>
-      <li>
-        <span>03</span>
-        <div>
-          <h3>点击关注</h3>
-          <p>关注后即可持续获取新刊与文章动态。</p>
-        </div>
-      </li>
+      </article>
+    </div>
+  </section>
+
+  <section class="guide" aria-labelledby="guide-title">
+    <div class="container guide__heading">
+      <p class="eyebrow">How to Subscribe / 订阅步骤</p>
+      <div>
+        <h2 id="guide-title">联系官方，三步开始办理。</h2>
+        <p>请扫描 01 联系码，而不是 02 空间码。</p>
+      </div>
+    </div>
+    <ol class="container steps">
+      <li><span>01</span><div><h3>打开扫一扫</h3><p>打开 QQ 的“扫一扫”功能。</p></div></li>
+      <li><span>02</span><div><h3>添加官方 QQ</h3><p>扫描页面上方标有“01 / CONTACT”的二维码并添加好友。</p></div></li>
+      <li><span>03</span><div><h3>说明订阅需求</h3><p>添加成功后主动发送消息，并按官方回复完成后续流程。</p></div></li>
     </ol>
   </section>
 
-  <section class="subscribe-details">
-    <div class="container subscribe-details__grid">
-      <div class="subscribe-details__mark" aria-hidden="true">
+  <section class="details" aria-labelledby="receive-title">
+    <div class="container details__grid">
+      <div class="details__mark" aria-hidden="true">
         <BookMarker kind="logo" value="iS" size="clamp(8rem, 17vw, 14rem)" foreground="var(--theme)" background="white" decorative />
       </div>
-
-      <div class="subscribe-details__copy">
-        <p class="eyebrow">What You Receive / 订阅内容</p>
-        <h2>继续阅读，<br />继续追问。</h2>
+      <div class="details__copy">
+        <p class="eyebrow">Message Guide / 联系话术</p>
+        <h2 id="receive-title">不知道怎么开口？<br />可以这样问。</h2>
         <ul>
-          <li><span>01</span><strong>新一期《非正式科学》发布提醒</strong></li>
-          <li><span>02</span><strong>历年文章与学科内容回看</strong></li>
-          <li><span>03</span><strong>编辑进度与后续动态</strong></li>
+          <li><span>01</span><strong>“你好，我想订阅《非正式科学》。”</strong></li>
+          <li><span>02</span><strong>“请问目前可以订阅哪些期次？”</strong></li>
+          <li><span>03</span><strong>“后续需要提供哪些信息或完成哪些步骤？”</strong></li>
         </ul>
       </div>
-
-      <aside class="subscribe-details__aside">
-        <p>02 / MORE SOON</p>
-        <strong>其他订阅渠道<br />正在筹备</strong>
-        <span>新渠道开通后，将在本页统一更新。</span>
+      <aside class="details__aside">
+        <p>ONE MORE STEP / 还差一步</p>
+        <strong>只添加 QQ 好友，<br />算订阅吗？</strong>
+        <span>不算。添加成功后还需主动发送消息、说明订阅需求，并按官方回复办理。</span>
+        <a href="#qq-account">联系官方订阅 <span aria-hidden="true">↑</span></a>
       </aside>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .subscribe-hero {
+  .hero {
     position: relative;
     min-height: calc(100svh - var(--nav-height));
-    padding: clamp(74px, 9vw, 126px) 0 clamp(78px, 10vw, 138px);
+    padding: clamp(80px, 10vw, 138px) 0 clamp(100px, 13vw, 172px);
     color: white;
     background: var(--theme);
     overflow: hidden;
   }
+  .hero::before { position: absolute; inset: 22px; border: 1px solid rgba(255,255,255,.3); content: ''; pointer-events: none; }
+  .hero__grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1.15fr) minmax(360px,.65fr); gap: clamp(56px,10vw,148px); align-items: center; }
+  .kicker { margin: 0 0 20px; color: rgba(255,255,255,.68); font-size: .72rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
+  .hero h1, .channels h2, .guide h2, .details__copy h2 { margin: 0; font-family: var(--font-editorial); font-weight: 900; line-height: 1.06; letter-spacing: -.055em; }
+  .hero h1 { max-width: 760px; font-size: clamp(3.35rem,6.8vw,7.5rem); }
+  .hero h1 span { color: rgba(255,255,255,.78); }
+  .hero__lede { max-width: 44rem; margin: 34px 0 0; color: rgba(255,255,255,.78); font-size: clamp(1rem,1.35vw,1.16rem); line-height: 1.9; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
+  .action { display: inline-flex; min-height: 50px; align-items: center; justify-content: space-between; gap: 34px; padding: 0 21px; border: 1px solid rgba(255,255,255,.58); border-radius: 999px; font-size: .84rem; font-weight: 500; transition: 180ms ease; }
+  .action--primary, .action:hover { color: var(--theme); background: white; }
+  .action:hover { transform: translateY(-2px); }
 
-  .subscribe-hero::before {
-    position: absolute;
-    inset: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.34);
-    content: '';
-    pointer-events: none;
+  .logic { display: grid; gap: 22px; margin: 0; padding: clamp(24px,3.2vw,38px); color: var(--ink); background: rgba(255,255,255,.96); box-shadow: 0 30px 80px rgba(17,18,20,.2); }
+  .logic__label { margin: 0 0 4px; color: var(--ink-soft); font-size: .64rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+  .logic__item { display: grid; grid-template-columns: 28px 1fr auto; gap: 16px; align-items: start; }
+  .logic__item > span { color: var(--ink-soft); font-size: .67rem; font-weight: 500; line-height: 1.7; }
+  .logic__item strong { display: block; font-size: 1rem; font-weight: 500; }
+  .logic__item p { margin: 4px 0 0; color: var(--ink-soft); font-size: .76rem; }
+  .logic__item em { padding: 4px 8px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: .64rem; font-style: normal; line-height: 1; }
+  .logic__item--active strong { color: var(--theme); }
+  .logic__item--active em { color: white; border-color: var(--theme); background: var(--theme); }
+  .logic__line { height: 1px; margin-left: 44px; background: var(--line); }
+  .logic__note { margin: 2px 0 0 44px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--theme); font-size: .78rem; font-weight: 500; }
+  .hero__word { position: absolute; right: -.02em; bottom: -.24em; margin: 0; color: rgba(255,255,255,.055); font-size: clamp(7rem,19vw,18rem); font-weight: 300; line-height: 1; letter-spacing: -.075em; pointer-events: none; }
+
+  .channels { padding: clamp(90px,13vw,180px) 0; background: var(--paper); }
+  .channels__heading { display: grid; grid-template-columns: minmax(0,1fr) minmax(240px,.34fr); gap: clamp(40px,8vw,116px); align-items: end; margin-bottom: clamp(58px,8vw,106px); }
+  .channels h2, .guide h2, .details__copy h2 { font-size: clamp(2.65rem,5.6vw,6rem); }
+  .channels__heading h2 { line-height: 1.15; }
+  .channels__heading > p { margin: 0 0 0 auto; color: var(--ink-soft); font-size: .9rem; }
+  .channel-grid { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(330px,.8fr); gap: 20px; align-items: start; }
+  .qr-card { padding: clamp(22px,3vw,38px); border: 1px solid var(--line); background: var(--surface); }
+  .qr-card--primary { border-top: 6px solid var(--theme); box-shadow: var(--shadow-soft); }
+  .qr-card--secondary { margin-top: clamp(70px,9vw,126px); background: transparent; }
+  .qr-card__header { display: flex; min-height: 82px; align-items: start; justify-content: space-between; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+  .qr-card__header p { margin: 0 0 7px; color: var(--theme); font-size: .68rem; font-weight: 500; letter-spacing: .13em; }
+  .qr-card__header h3 { margin: 0; font-size: clamp(1.35rem,2.1vw,2rem); font-weight: 500; line-height: 1.25; }
+  .qr-card__header > span { flex: none; padding: 6px 10px; color: white; border-radius: 999px; background: var(--theme); font-size: .65rem; font-weight: 500; }
+  .qr-card--secondary .qr-card__header > span { color: var(--ink-soft); border: 1px solid var(--line-strong); background: transparent; }
+  .qr-card__body { display: grid; grid-template-columns: minmax(240px,.82fr) minmax(220px,.68fr); gap: clamp(26px,4vw,54px); align-items: center; padding-top: 28px; }
+  .qr-card--secondary .qr-card__body { grid-template-columns: 1fr; }
+  .qr-card__image { display: grid; margin: 0; padding: 12px; border: 1px solid var(--line); background: white; }
+  .qr-card__image img { width: 100%; height: auto; }
+  .qr-card__instruction { margin: 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.9; }
+  .qr-card__facts { display: grid; margin: 28px 0 0; border-top: 1px solid var(--line); }
+  .qr-card__facts div { display: grid; grid-template-columns: 82px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .qr-card__facts dt { color: var(--ink-soft); font-size: .68rem; }
+  .qr-card__facts dd { margin: 0; font-size: .78rem; font-weight: 500; }
+  .qr-card__download { display: flex; width: 100%; min-height: 48px; align-items: center; justify-content: space-between; margin-top: 24px; padding: 0 18px; color: white; border: 1px solid var(--theme); border-radius: 999px; background: var(--theme); font-size: .8rem; font-weight: 500; transition: 180ms ease; }
+  .qr-card--secondary .qr-card__download { color: var(--ink); border-color: var(--line-strong); background: transparent; }
+  .qr-card__download:hover { color: var(--theme); background: white; transform: translateY(-2px); }
+  .qr-card__fallback { margin: 13px 0 0; color: var(--ink-soft); font-size: .7rem; }
+  .qr-card__notice { display: grid; grid-template-columns: 24px 1fr; gap: 12px; margin-top: 24px; padding: 15px; border: 1px solid var(--line); }
+  .qr-card__notice > span { display: grid; width: 22px; height: 22px; place-items: center; color: white; border-radius: 50%; background: var(--ink); font-size: .7rem; font-weight: 500; }
+  .qr-card__notice p { margin: 0; color: var(--ink-soft); font-size: .75rem; }
+  .qr-card__notice strong { color: var(--ink); font-weight: 500; }
+
+  .guide { padding: clamp(90px,13vw,180px) 0; background: #edf3f7; }
+  .guide__heading { display: grid; grid-template-columns: .34fr 1fr; gap: clamp(34px,7vw,100px); align-items: start; margin-bottom: clamp(66px,9vw,118px); }
+  .guide__heading > div > p { margin: 18px 0 0; color: var(--ink-soft); font-size: .84rem; }
+  .steps { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); margin-top: 0; margin-bottom: 0; padding: 0; border-top: 1px solid var(--line-strong); list-style: none; }
+  .steps li { display: grid; min-height: 280px; align-content: space-between; padding: clamp(24px,3.2vw,40px); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .steps li:first-child { border-left: 1px solid var(--line); }
+  .steps > li > span { color: var(--theme); font-size: .75rem; font-weight: 500; }
+  .steps h3 { margin: 0; font-size: clamp(1.55rem,2.6vw,2.6rem); font-weight: 500; line-height: 1.15; }
+  .steps p { max-width: 18rem; margin: 12px 0 0; color: var(--ink-soft); font-size: .85rem; }
+
+  .details { padding: clamp(90px,13vw,180px) 0; color: white; background: #11151b; }
+  .details__grid { display: grid; grid-template-columns: .3fr 1fr minmax(240px,.36fr); gap: clamp(42px,7vw,100px); align-items: start; }
+  .details__mark { width: fit-content; }
+  .details .eyebrow { color: rgba(255,255,255,.48); }
+  .details__copy ul { margin: clamp(42px,6vw,72px) 0 0; padding: 0; border-top: 1px solid rgba(255,255,255,.38); list-style: none; }
+  .details__copy li { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.16); }
+  .details__copy li span { color: rgba(255,255,255,.46); font-size: .7rem; }
+  .details__copy li strong { font-size: clamp(1rem,1.5vw,1.25rem); font-weight: 400; }
+  .details__aside { display: grid; min-height: 330px; align-content: space-between; padding: 24px; border: 1px solid rgba(255,255,255,.28); }
+  .details__aside p, .details__aside span { margin: 0; color: rgba(255,255,255,.5); font-size: .68rem; letter-spacing: .1em; }
+  .details__aside strong { font-family: var(--font-editorial); font-size: 1.6rem; font-weight: 600; line-height: 1.35; }
+  .details__aside > span { line-height: 1.75; letter-spacing: 0; }
+  .details__aside a { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.28); font-size: .76rem; font-weight: 500; }
+
+  @media (max-width: 1020px) {
+    .hero__grid, .details__grid { grid-template-columns: 1fr; }
+    .logic { width: min(100%,540px); }
+    .channel-grid { grid-template-columns: 1fr; }
+    .qr-card--secondary { margin-top: 0; }
+    .qr-card--secondary .qr-card__body { grid-template-columns: minmax(240px,.72fr) minmax(260px,1fr); }
+    .details__mark { display: none; }
   }
-
-  .subscribe-hero__grid {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(310px, 0.48fr);
-    gap: clamp(56px, 10vw, 148px);
-    align-items: center;
-  }
-
-  .subscribe-kicker {
-    margin: 0 0 20px;
-    color: rgba(255, 255, 255, 0.68);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
-  .subscribe-hero h1,
-  .subscribe-guide h2,
-  .subscribe-details__copy h2 {
-    margin: 0;
-    font-family: var(--font-editorial);
-    font-weight: 900;
-    line-height: 1.1;
-    letter-spacing: -0.055em;
-  }
-
-  .subscribe-hero h1 {
-    display: grid;
-    width: max-content;
-    max-width: 100%;
-    justify-items: start;
-    font-size: clamp(3.6rem, 7.6vw, 8.2rem);
-  }
-
-  .subscribe-hero h1 span {
-    white-space: nowrap;
-  }
-
-  .subscribe-hero__lede {
-    max-width: 43rem;
-    margin: 34px 0 0;
-    color: rgba(255, 255, 255, 0.76);
-    font-size: clamp(1rem, 1.4vw, 1.16rem);
-  }
-
-  .subscribe-hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 38px;
-  }
-
-  .subscribe-action {
-    display: inline-flex;
-    min-height: 48px;
-    align-items: center;
-    justify-content: space-between;
-    gap: 26px;
-    padding: 0 20px;
-    border: 1px solid rgba(255, 255, 255, 0.58);
-    border-radius: 999px;
-    font-size: 0.82rem;
-    font-weight: 500;
-    transition: color 180ms ease, background 180ms ease, transform 180ms ease;
-  }
-
-  .subscribe-action--primary,
-  .subscribe-action:hover {
-    color: var(--theme);
-    background: white;
-  }
-
-  .subscribe-action:hover {
-    transform: translateY(-2px);
-  }
-
-  .channel-card {
-    position: relative;
-    display: grid;
-    gap: 18px;
-    margin: 0;
-    padding: clamp(18px, 2.4vw, 28px);
-    color: var(--ink);
-    background: var(--surface);
-    box-shadow: 0 30px 80px rgba(17, 18, 20, 0.22);
-  }
-
-  .channel-card__meta,
-  .channel-card figcaption {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .channel-card__meta {
-    color: var(--ink-soft);
-    font-size: 0.64rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .channel-card__qr {
-    padding: clamp(8px, 1.2vw, 14px);
-    border: 1px solid var(--line);
-    background: white;
-  }
-
-  .channel-card__qr img {
-    width: 100%;
-    height: auto;
-  }
-
-  .channel-card figcaption strong {
-    font-size: 1.35rem;
-    font-weight: 500;
-  }
-
-  .channel-card figcaption p {
-    margin: 3px 0 0;
-    color: var(--ink-soft);
-    font-size: 0.75rem;
-  }
-
-  .channel-card__status {
-    flex: none;
-    padding: 5px 9px;
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
-    font-size: 0.65rem;
-    font-weight: 500;
-  }
-
-  .subscribe-hero__number {
-    position: absolute;
-    right: -0.06em;
-    bottom: -0.32em;
-    margin: 0;
-    color: rgba(255, 255, 255, 0.07);
-    font-size: clamp(12rem, 32vw, 34rem);
-    font-weight: 300;
-    line-height: 1;
-    letter-spacing: -0.08em;
-    pointer-events: none;
-  }
-
-  .subscribe-guide {
-    padding: clamp(90px, 13vw, 180px) 0;
-    background: var(--paper);
-  }
-
-  .subscribe-guide__heading {
-    display: grid;
-    grid-template-columns: 0.34fr 1fr;
-    gap: clamp(34px, 7vw, 100px);
-    align-items: start;
-    margin-bottom: clamp(66px, 9vw, 118px);
-  }
-
-  .subscribe-guide h2,
-  .subscribe-details__copy h2 {
-    font-size: clamp(2.8rem, 6vw, 6.5rem);
-  }
-
-  .subscribe-steps {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid var(--line-strong);
-  }
-
-  .subscribe-steps li {
-    display: grid;
-    min-height: 280px;
-    align-content: space-between;
-    padding: clamp(24px, 3.2vw, 40px);
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .subscribe-steps > li > span {
-    color: var(--theme);
-    font-size: 0.75rem;
-    font-weight: 500;
-  }
-
-  .subscribe-steps h3 {
-    margin: 0;
-    font-size: clamp(1.55rem, 2.6vw, 2.6rem);
-    font-weight: 500;
-    line-height: 1.15;
-  }
-
-  .subscribe-steps p {
-    max-width: 18rem;
-    margin: 12px 0 0;
-    color: var(--ink-soft);
-    font-size: 0.85rem;
-  }
-
-  .subscribe-details {
-    padding: clamp(90px, 13vw, 180px) 0;
-    color: white;
-    background: #11151b;
-  }
-
-  .subscribe-details__grid {
-    display: grid;
-    grid-template-columns: 0.3fr 1fr minmax(230px, 0.34fr);
-    gap: clamp(42px, 7vw, 100px);
-    align-items: start;
-  }
-
-  .subscribe-details__mark {
-    width: fit-content;
-  }
-
-  .subscribe-details .eyebrow {
-    color: rgba(255, 255, 255, 0.48);
-  }
-
-  .subscribe-details__copy ul {
-    margin: clamp(42px, 6vw, 72px) 0 0;
-    padding: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.38);
-    list-style: none;
-  }
-
-  .subscribe-details__copy li {
-    display: grid;
-    grid-template-columns: 44px 1fr;
-    gap: 18px;
-    padding: 18px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-  }
-
-  .subscribe-details__copy li span {
-    color: rgba(255, 255, 255, 0.46);
-    font-size: 0.7rem;
-  }
-
-  .subscribe-details__copy li strong {
-    font-size: clamp(1rem, 1.5vw, 1.25rem);
-    font-weight: 400;
-  }
-
-  .subscribe-details__aside {
-    display: grid;
-    min-height: 270px;
-    align-content: space-between;
-    padding: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-  }
-
-  .subscribe-details__aside p,
-  .subscribe-details__aside span {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.48);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-  }
-
-  .subscribe-details__aside strong {
-    font-family: var(--font-editorial);
-    font-size: 1.6rem;
-    font-weight: 600;
-    line-height: 1.35;
-  }
-
-  .subscribe-details__aside span {
-    line-height: 1.7;
-    letter-spacing: 0;
-  }
-
-  @media (max-width: 960px) {
-    .subscribe-hero__grid,
-    .subscribe-details__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .channel-card {
-      width: min(100%, 460px);
-    }
-
-    .subscribe-details__mark {
-      display: none;
-    }
-  }
-
   @media (max-width: 720px) {
-    .subscribe-hero h1 {
-      font-size: clamp(2.65rem, 13vw, 4.2rem);
-    }
-
-    .subscribe-hero h1 span {
-      white-space: normal;
-    }
-
-    .subscribe-guide__heading,
-    .subscribe-steps {
-      grid-template-columns: 1fr;
-    }
-
-    .subscribe-steps li {
-      min-height: 220px;
-    }
+    .hero h1 { font-size: clamp(2.65rem,13vw,4.2rem); }
+    .channels__heading, .guide__heading, .steps, .qr-card__body, .qr-card--secondary .qr-card__body { grid-template-columns: 1fr; }
+    .channels__heading > p { margin: 0; }
+    .qr-card__image--account { width: min(100%,430px); margin-inline: auto; }
+    .steps li { min-height: 220px; border-left: 1px solid var(--line); }
   }
-
   @media (max-width: 460px) {
-    .subscribe-hero::before {
-      inset: 12px;
-    }
-
-    .subscribe-hero__actions {
-      display: grid;
-    }
-
-    .subscribe-action {
-      width: 100%;
-    }
-
-    .channel-card__meta span:last-child {
-      display: none;
-    }
+    .hero::before { inset: 12px; }
+    .hero__actions { display: grid; }
+    .action { width: 100%; }
+    .logic { padding: 22px 18px; }
+    .logic__item { grid-template-columns: 22px 1fr; gap: 10px; }
+    .logic__item em { grid-column: 2; width: fit-content; }
+    .logic__line, .logic__note { margin-left: 32px; }
+    .qr-card__header { display: grid; }
+    .qr-card__header > span { width: fit-content; }
+    .qr-card__facts div { grid-template-columns: 1fr; gap: 4px; }
   }
 </style>
