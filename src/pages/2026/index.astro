@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import IssueHeroBackground from '../../components/IssueHeroBackground.astro';
-import SubscriptionPanel from '../../components/SubscriptionPanel.astro';
 import { articles, disciplines, issues, siteMeta } from '../../data';
 import { disciplineUiColor } from '../../utils/colors';
 import { withBase } from '../../utils/paths';
@@ -20,43 +19,71 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
   description="《非正式科学》2026 年刊：封面焦点、封面故事与本期文章入口。"
   image="/images/hero/hero-2026-1920.webp"
 >
-  <section class="annual-hero" aria-labelledby="annual-title">
-    <IssueHeroBackground eager />
-    <div class="annual-hero__veil"></div>
-
-    <div class="container annual-hero__content">
-      <div class="annual-hero__copy">
-        <p class="annual-hero__eyebrow">Annual Edition / Issue No. 06</p>
-        <h1 id="annual-title">
-          <span class="annual-hero__title">非正式科学</span>
-          <span class="annual-hero__edition">2026年刊&nbsp;总第6期</span>
-        </h1>
-        <p class="annual-hero__tagline">
-          <span>解&nbsp;所未曾释</span>
-          <span lang="en">{siteMeta.tagline.en}</span>
-        </p>
-      </div>
-
-      <p class="annual-hero__issue" aria-label="总第六期">06</p>
-
-      <div class="annual-hero__actions">
-        <a class="button-link button-link--hero annual-hero__subscribe" href="#subscribe">立即订阅</a>
-      </div>
-
-      <div class="annual-hero__bottom">
-        <dl>
-          <div><dt>7</dt><dd>学科板块</dd></div>
-          <div><dt>24</dt><dd>目录导读</dd></div>
-          <div><dt>06</dt><dd>总期数</dd></div>
-        </dl>
-        <nav aria-label="2026 年刊快捷入口">
-          <a href={withBase('/history/2026#directory')}>查看本期文章</a>
-          <a href={withBase('/history')}>查看往期精彩</a>
-          <a href={withBase('/questions-answers')}>检索历年文章</a>
-        </nav>
-      </div>
+  <div class="annual-intro">
+    <div class="annual-intro__backdrop">
+      <IssueHeroBackground eager />
+      <div class="annual-intro__veil" aria-hidden="true"></div>
     </div>
-  </section>
+
+    <div class="annual-intro__foreground">
+      <section class="annual-hero" aria-labelledby="annual-title">
+        <div class="container annual-hero__content">
+          <div class="annual-hero__copy">
+            <p class="annual-hero__eyebrow">Annual Edition / Issue No. 06</p>
+            <h1 id="annual-title">
+              <span class="annual-hero__title">非正式科学</span>
+              <span class="annual-hero__edition">2026年刊&nbsp;总第6期</span>
+            </h1>
+            <p class="annual-hero__tagline" aria-label={`${siteMeta.tagline.zh} · ${siteMeta.tagline.en}`}>
+              <span class="annual-hero__tagline-group" aria-hidden="true">
+                <span>解</span><span class="annual-hero__tagline-soft">所未曾释</span>
+              </span>
+              <span class="annual-hero__tagline-soft" aria-hidden="true">·</span>
+              <span class="annual-hero__tagline-group" lang="en" aria-hidden="true">
+                <span>Solve</span><span class="annual-hero__tagline-soft">the Unsolved</span>
+              </span>
+            </p>
+          </div>
+
+          <p class="annual-hero__issue" aria-label="总第六期">06</p>
+
+          <div class="annual-hero__actions">
+            <a class="button-link button-link--hero annual-hero__subscribe" href={withBase('/subscribe')}>立即订阅</a>
+          </div>
+
+          <div class="annual-hero__bottom">
+            <dl>
+              <div><dt>7</dt><dd>学科板块</dd></div>
+              <div><dt>24</dt><dd>目录导读</dd></div>
+              <div><dt>06</dt><dd>总期数</dd></div>
+            </dl>
+            <nav aria-label="2026 年刊快捷入口">
+              <a href={withBase('/history/2026#directory')}>查看本期文章</a>
+              <a href={withBase('/history')}>查看往期精彩</a>
+              <a href={withBase('/questions-answers')}>检索历年文章</a>
+            </nav>
+          </div>
+        </div>
+      </section>
+
+      <section class="cover-story" id="cover-story" aria-labelledby="cover-story-title">
+        <div class="container cover-story__grid">
+          <div class="cover-story__label">
+            <p class="eyebrow">封面故事 / Cover Story</p>
+            <span>{currentIssue.year} · Issue {String(currentIssue.number).padStart(2, '0')}</span>
+          </div>
+
+          <div class="cover-story__body">
+            <h2 id="cover-story-title">{siteMeta.coverStory.title}</h2>
+            <blockquote>“{siteMeta.coverStory.quote}”</blockquote>
+            <cite>——{siteMeta.coverStory.attribution}</cite>
+          </div>
+
+          <p class="cover-story__mark" aria-hidden="true">STORY</p>
+        </div>
+      </section>
+    </div>
+  </div>
 
   <section class="cover-focus" id="cover-focus" aria-labelledby="cover-focus-title">
     <div class="container cover-focus__grid">
@@ -86,36 +113,47 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
     </div>
   </section>
 
-  <section class="cover-story" id="cover-story" aria-labelledby="cover-story-title">
-    <div class="container cover-story__grid">
-      <div class="cover-story__label">
-        <p class="eyebrow">封面故事 / Cover Story</p>
-        <span>{currentIssue.year} · Issue {String(currentIssue.number).padStart(2, '0')}</span>
-      </div>
-
-      <div class="cover-story__body">
-        <h2 id="cover-story-title">{siteMeta.coverStory.title}</h2>
-        <blockquote>“{siteMeta.coverStory.quote}”</blockquote>
-        <cite>——{siteMeta.coverStory.attribution}</cite>
-      </div>
-
-      <p class="cover-story__mark" aria-hidden="true">STORY</p>
-    </div>
-  </section>
-
-  <SubscriptionPanel />
 </BaseLayout>
 
 <style>
+  .annual-intro {
+    position: relative;
+    display: grid;
+    isolation: isolate;
+    color: white;
+    background: #101722;
+  }
+
+  .annual-intro__backdrop,
+  .annual-intro__foreground {
+    min-width: 0;
+    grid-area: 1 / 1;
+  }
+
+  .annual-intro__backdrop {
+    position: sticky;
+    z-index: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    align-self: start;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .annual-intro__foreground {
+    position: relative;
+    z-index: 1;
+  }
+
   .annual-hero {
     position: relative;
     min-height: calc(100svh - var(--nav-height));
-    color: white;
-    background: #101722;
     overflow: hidden;
   }
 
-  .annual-hero__veil {
+  .annual-intro__veil {
     position: absolute;
     inset: 0;
     background:
@@ -181,18 +219,27 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
   .annual-hero__tagline {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 24px;
+    align-items: baseline;
+    gap: 0 0.247em;
     margin: clamp(28px, 4vw, 48px) 0 0;
     font-family: var(--font-editorial);
     font-size: clamp(1.1rem, 2vw, 1.7rem);
     font-weight: 900;
+    line-height: 1.2857;
+    letter-spacing: 0.142em;
   }
 
-  .annual-hero__tagline span:last-child {
-    opacity: 0.76;
+  .annual-hero__tagline-soft {
+    opacity: 0.8;
+  }
+
+  .annual-hero__tagline-group {
+    display: inline-flex;
+    gap: 0 0.247em;
   }
 
   .annual-hero__tagline span {
+    flex: none;
     white-space: nowrap;
   }
 
@@ -276,7 +323,7 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
   .cover-focus {
     padding: clamp(88px, 13vw, 180px) 0;
     color: rgba(255, 255, 255, 0.9);
-    background: #101216;
+    background: #11151b;
   }
 
   .cover-focus__grid {
@@ -300,7 +347,7 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
     font-family: var(--font-editorial);
     font-size: clamp(2.75rem, 6.2vw, 5.4rem);
     font-weight: 900;
-    line-height: 1.02;
+    line-height: 1.1;
     letter-spacing: 0.01em;
   }
 
@@ -376,8 +423,10 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
 
   .cover-story {
     position: relative;
+    display: grid;
+    min-height: 100svh;
+    align-items: center;
     padding: clamp(100px, 15vw, 210px) 0;
-    background: var(--paper);
     overflow: hidden;
   }
 
@@ -390,9 +439,13 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
   }
 
   .cover-story__label span {
-    color: var(--ink-soft);
+    color: rgba(255, 255, 255, 0.58);
     font-size: 0.72rem;
     letter-spacing: 0.08em;
+  }
+
+  .cover-story .eyebrow {
+    color: rgba(255, 255, 255, 0.68);
   }
 
   .cover-story__body {
@@ -414,7 +467,7 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
     max-width: 760px;
     margin: clamp(54px, 8vw, 100px) 0 18px;
     padding-top: 28px;
-    border-top: 1px solid var(--line-strong);
+    border-top: 1px solid rgba(255, 255, 255, 0.48);
     font-family: var(--font-editorial);
     font-size: clamp(1.35rem, 2.6vw, 2.6rem);
     font-weight: 600;
@@ -422,7 +475,7 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
   }
 
   .cover-story cite {
-    color: var(--ink-soft);
+    color: rgba(255, 255, 255, 0.62);
     font-size: 0.8rem;
     font-style: normal;
   }
@@ -432,7 +485,7 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
     right: -0.05em;
     bottom: -0.3em;
     margin: 0;
-    color: rgba(17, 18, 20, 0.035);
+    color: rgba(255, 255, 255, 0.045);
     font-size: clamp(8rem, 24vw, 25rem);
     font-weight: 700;
     line-height: 1;
@@ -481,8 +534,8 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
     }
 
     .annual-hero__tagline {
-      flex-wrap: nowrap;
-      gap: clamp(12px, 4vw, 20px);
+      flex-wrap: wrap;
+      gap: 0 0.247em;
       font-size: clamp(0.95rem, 4.5vw, 1.1rem);
     }
 

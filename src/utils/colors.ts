@@ -1,20 +1,17 @@
-/**
- * 书籍中的 CMYK/sRGB 近似值保存在 data 中；界面大色块使用经过对比度调整的 CSS token。
- * 这样既不改写印刷标准，也能让白色正文在学科色背景上保持可读。
- */
+/** 页面学科色直接引用 Resources/color-parameter.md 的 RGB 标准 token。 */
 export const disciplineUiColor = (colorKey: string) => `var(--${colorKey})`;
 
-// 与 tokens.css 中的屏幕界面色保持一致；印刷权威值仍只保存在 data/colors.ts。
+// 与 tokens.css 中的 RGB 标准保持一致，仅用于计算前景文字对比度。
 const disciplineUiHex = {
-  astronomy: '#183b78',
-  math: '#ad2e36',
-  geography: '#467822',
-  physics: '#0d709e',
-  engineering: '#752d7a',
-  biology: '#217943',
-  chemistry: '#916000',
-  'brain-neuroscience': '#9c176f',
-  electronic: '#08727d',
+  astronomy: '#00336F',
+  math: '#C53E29',
+  geography: '#9FC138',
+  physics: '#1578BF',
+  engineering: '#882E87',
+  biology: '#53A54F',
+  chemistry: '#E5B514',
+  'brain-neuroscience': '#AA1159',
+  electronic: '#0098DE',
 } as const;
 
 const relativeLuminance = (hex: string) => {

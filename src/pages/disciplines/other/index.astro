@@ -10,6 +10,7 @@ const formatCmyk = (field: (typeof historicalDisciplines)[number]) => {
   const { c, m, y, k } = field.cmyk;
   return `C ${Math.round(c * 100)} · M ${Math.round(m * 100)} · Y ${Math.round(y * 100)} · K ${Math.round(k * 100)}`;
 };
+const formatRgb = (field: (typeof historicalDisciplines)[number]) => field.rgb.join(' · ');
 const historicalSlugs = new Set<string>(historicalDisciplines.map((field) => field.slug));
 const historicalArticles = articles.filter((article) => historicalSlugs.has(article.disciplineSlug));
 ---
@@ -34,7 +35,7 @@ const historicalArticles = articles.filter((article) => historicalSlugs.has(arti
     <div class="container historical-fields__heading">
       <p class="eyebrow">Former Sections / Color Archive</p>
       <h2>退出历史舞台，<br />但仍被记住。</h2>
-      <p>以下 CMYK 数值由编辑方提供，是历史板块的印刷颜色记录；HEX 仅为网页显示近似值。</p>
+      <p>以下 CMYK、RGB 与 HEX 均来自统一颜色参数表，分别用于历史板块的印刷与数字界面。</p>
     </div>
 
     <div class="container historical-fields__grid">
@@ -53,7 +54,8 @@ const historicalArticles = articles.filter((article) => historicalSlugs.has(arti
             <p>{field.summary}</p>
             <dl>
               <div><dt>PRINT</dt><dd>{formatCmyk(field)}</dd></div>
-              <div><dt>SCREEN</dt><dd>{field.webHex}</dd></div>
+              <div><dt>RGB</dt><dd>{formatRgb(field)}</dd></div>
+              <div><dt>HEX</dt><dd>{field.webHex}</dd></div>
             </dl>
           </div>
         </article>

@@ -13,7 +13,7 @@ export type ReviewStatus = "verified-from-source" | "review-needed";
 
 export interface SourceReference {
   /** Logical repository name. Do not expose a contributor's local file path. */
-  repository: "Informal-Science-2026";
+  repository: "Informal-Science-2026" | "Web-of-Informal-Science";
   /** Repository-relative path to the editorial source. */
   path: string;
   /** Human-readable description of the source fragment. */
@@ -81,6 +81,7 @@ export interface Discipline {
 
 export interface HistoricalDiscipline extends Omit<Discipline, "source"> {
   cmyk: CmykColor;
+  rgb: readonly [number, number, number];
   webHex: string;
 }
 
@@ -164,7 +165,9 @@ export interface ColorStandard extends Reviewable {
   key: string;
   name: string;
   cmyk: CmykColor;
-  /** Approximate sRGB value for screen use; the CMYK tuple remains authoritative. */
+  /** Approved sRGB tuple for screen use. */
+  rgb: readonly [number, number, number];
+  /** Approved hexadecimal representation of the sRGB tuple. */
   webHex: string;
   usage: string;
   source: SourceReference;

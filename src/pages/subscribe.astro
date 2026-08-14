@@ -1,0 +1,453 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookMarker from '../components/BookMarker.astro';
+import { withBase } from '../utils/paths';
+---
+
+<BaseLayout
+  title="订阅"
+  description="订阅《非正式科学》，获取新刊发布、历年文章回看与后续动态。"
+>
+  <section class="subscribe-hero" aria-labelledby="subscribe-title">
+    <div class="container subscribe-hero__grid">
+      <div class="subscribe-hero__copy">
+        <p class="subscribe-kicker">Subscribe / 订阅</p>
+        <h1 id="subscribe-title">
+          <span>订阅各期</span>
+          <span>《非正式科学》</span>
+        </h1>
+        <p class="subscribe-hero__lede">关注我们的 QQ 空间，在新一期发布时收到消息，也不错过历年文章回看与后续动态。</p>
+        <div class="subscribe-hero__actions">
+          <a class="subscribe-action subscribe-action--primary" href="#qq-space">查看订阅方式 <span aria-hidden="true">↓</span></a>
+          <a class="subscribe-action" href={withBase('/images/subscribe/qq-space-qr.jpg')} download>保存二维码 <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+
+      <figure class="channel-card" id="qq-space">
+        <div class="channel-card__meta">
+          <span>01 / QQ SPACE</span>
+          <span>当前渠道</span>
+        </div>
+        <div class="channel-card__qr">
+          <img
+            src={withBase('/images/subscribe/qq-space-qr.jpg')}
+            alt="《非正式科学》QQ 空间二维码"
+            width="500"
+            height="500"
+          />
+        </div>
+        <figcaption>
+          <div>
+            <strong>QQ 空间</strong>
+            <p>使用 QQ 扫描二维码后关注</p>
+          </div>
+          <span class="channel-card__status">已开通</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="subscribe-hero__number" aria-hidden="true">01</p>
+  </section>
+
+  <section class="subscribe-guide" aria-labelledby="guide-title">
+    <div class="container subscribe-guide__heading">
+      <p class="eyebrow">How to Subscribe / 订阅步骤</p>
+      <h2 id="guide-title">三步关注，<br />等待下一个问题。</h2>
+    </div>
+
+    <ol class="container subscribe-steps">
+      <li>
+        <span>01</span>
+        <div>
+          <h3>打开 QQ</h3>
+          <p>进入 QQ 的扫一扫功能。</p>
+        </div>
+      </li>
+      <li>
+        <span>02</span>
+        <div>
+          <h3>扫描二维码</h3>
+          <p>对准页面上方的二维码，进入我们的 QQ 空间。</p>
+        </div>
+      </li>
+      <li>
+        <span>03</span>
+        <div>
+          <h3>点击关注</h3>
+          <p>关注后即可持续获取新刊与文章动态。</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="subscribe-details">
+    <div class="container subscribe-details__grid">
+      <div class="subscribe-details__mark" aria-hidden="true">
+        <BookMarker kind="logo" value="iS" size="clamp(8rem, 17vw, 14rem)" foreground="var(--theme)" background="white" decorative />
+      </div>
+
+      <div class="subscribe-details__copy">
+        <p class="eyebrow">What You Receive / 订阅内容</p>
+        <h2>继续阅读，<br />继续追问。</h2>
+        <ul>
+          <li><span>01</span><strong>新一期《非正式科学》发布提醒</strong></li>
+          <li><span>02</span><strong>历年文章与学科内容回看</strong></li>
+          <li><span>03</span><strong>编辑进度与后续动态</strong></li>
+        </ul>
+      </div>
+
+      <aside class="subscribe-details__aside">
+        <p>02 / MORE SOON</p>
+        <strong>其他订阅渠道<br />正在筹备</strong>
+        <span>新渠道开通后，将在本页统一更新。</span>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .subscribe-hero {
+    position: relative;
+    min-height: calc(100svh - var(--nav-height));
+    padding: clamp(74px, 9vw, 126px) 0 clamp(78px, 10vw, 138px);
+    color: white;
+    background: var(--theme);
+    overflow: hidden;
+  }
+
+  .subscribe-hero::before {
+    position: absolute;
+    inset: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    content: '';
+    pointer-events: none;
+  }
+
+  .subscribe-hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(310px, 0.48fr);
+    gap: clamp(56px, 10vw, 148px);
+    align-items: center;
+  }
+
+  .subscribe-kicker {
+    margin: 0 0 20px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .subscribe-hero h1,
+  .subscribe-guide h2,
+  .subscribe-details__copy h2 {
+    margin: 0;
+    font-family: var(--font-editorial);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.055em;
+  }
+
+  .subscribe-hero h1 {
+    display: grid;
+    width: max-content;
+    max-width: 100%;
+    justify-items: start;
+    font-size: clamp(3.6rem, 7.6vw, 8.2rem);
+  }
+
+  .subscribe-hero h1 span {
+    white-space: nowrap;
+  }
+
+  .subscribe-hero__lede {
+    max-width: 43rem;
+    margin: 34px 0 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: clamp(1rem, 1.4vw, 1.16rem);
+  }
+
+  .subscribe-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 38px;
+  }
+
+  .subscribe-action {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 26px;
+    padding: 0 20px;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .subscribe-action--primary,
+  .subscribe-action:hover {
+    color: var(--theme);
+    background: white;
+  }
+
+  .subscribe-action:hover {
+    transform: translateY(-2px);
+  }
+
+  .channel-card {
+    position: relative;
+    display: grid;
+    gap: 18px;
+    margin: 0;
+    padding: clamp(18px, 2.4vw, 28px);
+    color: var(--ink);
+    background: var(--surface);
+    box-shadow: 0 30px 80px rgba(17, 18, 20, 0.22);
+  }
+
+  .channel-card__meta,
+  .channel-card figcaption {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .channel-card__meta {
+    color: var(--ink-soft);
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .channel-card__qr {
+    padding: clamp(8px, 1.2vw, 14px);
+    border: 1px solid var(--line);
+    background: white;
+  }
+
+  .channel-card__qr img {
+    width: 100%;
+    height: auto;
+  }
+
+  .channel-card figcaption strong {
+    font-size: 1.35rem;
+    font-weight: 500;
+  }
+
+  .channel-card figcaption p {
+    margin: 3px 0 0;
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+  }
+
+  .channel-card__status {
+    flex: none;
+    padding: 5px 9px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 500;
+  }
+
+  .subscribe-hero__number {
+    position: absolute;
+    right: -0.06em;
+    bottom: -0.32em;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.07);
+    font-size: clamp(12rem, 32vw, 34rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.08em;
+    pointer-events: none;
+  }
+
+  .subscribe-guide {
+    padding: clamp(90px, 13vw, 180px) 0;
+    background: var(--paper);
+  }
+
+  .subscribe-guide__heading {
+    display: grid;
+    grid-template-columns: 0.34fr 1fr;
+    gap: clamp(34px, 7vw, 100px);
+    align-items: start;
+    margin-bottom: clamp(66px, 9vw, 118px);
+  }
+
+  .subscribe-guide h2,
+  .subscribe-details__copy h2 {
+    font-size: clamp(2.8rem, 6vw, 6.5rem);
+  }
+
+  .subscribe-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .subscribe-steps li {
+    display: grid;
+    min-height: 280px;
+    align-content: space-between;
+    padding: clamp(24px, 3.2vw, 40px);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .subscribe-steps > li > span {
+    color: var(--theme);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .subscribe-steps h3 {
+    margin: 0;
+    font-size: clamp(1.55rem, 2.6vw, 2.6rem);
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .subscribe-steps p {
+    max-width: 18rem;
+    margin: 12px 0 0;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+
+  .subscribe-details {
+    padding: clamp(90px, 13vw, 180px) 0;
+    color: white;
+    background: #11151b;
+  }
+
+  .subscribe-details__grid {
+    display: grid;
+    grid-template-columns: 0.3fr 1fr minmax(230px, 0.34fr);
+    gap: clamp(42px, 7vw, 100px);
+    align-items: start;
+  }
+
+  .subscribe-details__mark {
+    width: fit-content;
+  }
+
+  .subscribe-details .eyebrow {
+    color: rgba(255, 255, 255, 0.48);
+  }
+
+  .subscribe-details__copy ul {
+    margin: clamp(42px, 6vw, 72px) 0 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.38);
+    list-style: none;
+  }
+
+  .subscribe-details__copy li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .subscribe-details__copy li span {
+    color: rgba(255, 255, 255, 0.46);
+    font-size: 0.7rem;
+  }
+
+  .subscribe-details__copy li strong {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-weight: 400;
+  }
+
+  .subscribe-details__aside {
+    display: grid;
+    min-height: 270px;
+    align-content: space-between;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+  }
+
+  .subscribe-details__aside p,
+  .subscribe-details__aside span {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+
+  .subscribe-details__aside strong {
+    font-family: var(--font-editorial);
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .subscribe-details__aside span {
+    line-height: 1.7;
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 960px) {
+    .subscribe-hero__grid,
+    .subscribe-details__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .channel-card {
+      width: min(100%, 460px);
+    }
+
+    .subscribe-details__mark {
+      display: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .subscribe-hero h1 {
+      font-size: clamp(2.65rem, 13vw, 4.2rem);
+    }
+
+    .subscribe-hero h1 span {
+      white-space: normal;
+    }
+
+    .subscribe-guide__heading,
+    .subscribe-steps {
+      grid-template-columns: 1fr;
+    }
+
+    .subscribe-steps li {
+      min-height: 220px;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .subscribe-hero::before {
+      inset: 12px;
+    }
+
+    .subscribe-hero__actions {
+      display: grid;
+    }
+
+    .subscribe-action {
+      width: 100%;
+    }
+
+    .channel-card__meta span:last-child {
+      display: none;
+    }
+  }
+</style>

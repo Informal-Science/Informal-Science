@@ -11,16 +11,17 @@
   --line: rgba(17, 18, 20, 0.15);
   --line-strong: rgba(17, 18, 20, 0.42);
   --glass: rgba(250, 250, 250, 0.82);
-  --theme: #1886b7;
-  --astronomy: #183b78;
-  --math: #ad2e36;
-  --geography: #467822;
-  --physics: #0d709e;
-  --engineering: #752d7a;
-  --biology: #217943;
-  --chemistry: #916000;
-  --brain-neuroscience: #9c176f;
-  --electronic: #08727d;
+  /* Brand and discipline colors: Resources/color-parameter.md */
+  --theme: #3a7aae;
+  --astronomy: #00336f;
+  --math: #c53e29;
+  --geography: #9fc138;
+  --physics: #1578bf;
+  --engineering: #882e87;
+  --biology: #53a54f;
+  --chemistry: #e5b514;
+  --brain-neuroscience: #aa1159;
+  --electronic: #0098de;
 
   --content: min(1180px, calc(100vw - 48px));
   --reading: min(760px, calc(100vw - 48px));

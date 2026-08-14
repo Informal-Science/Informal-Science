@@ -9,6 +9,7 @@ const formatCmyk = (color: (typeof colorStandards)[number]) => {
   const { c, m, y, k } = color.cmyk;
   return `C ${Math.round(c * 100)} · M ${Math.round(m * 100)} · Y ${Math.round(y * 100)} · K ${Math.round(k * 100)}`;
 };
+const formatRgb = (color: (typeof colorStandards)[number]) => color.rgb.join(' · ');
 ---
 
 <BaseLayout
@@ -19,7 +20,8 @@ const formatCmyk = (color: (typeof colorStandards)[number]) => {
     eyebrow="Visual Design Standards"
     title="视觉设计规范"
     description="从印刷书刊到数字网站，以统一的颜色系统、字体分工与界面原则延续《非正式科学》的视觉语言。"
-    aside="CMYK 数值来自 2026 书籍模板，是印刷侧的权威定义；网页色用于屏幕近似呈现。字体则按正文、编辑性标题与数学公式明确分工。"
+    aside="CMYK、RGB 与 HEX 统一以《color-parameter.md》为准；网站直接使用表内 RGB 色，不再自动换算或为界面另行改色。"
+    editorial
   />
 
   <section class="color-overview">
@@ -28,7 +30,7 @@ const formatCmyk = (color: (typeof colorStandards)[number]) => {
         <p class="eyebrow">System Logic</p>
         <h2>一色一学科，<br />一眼找到方向。</h2>
       </div>
-      <p>书籍采用 CMYK 输出；网站在保留色相识别的前提下，使用适合屏幕的 sRGB 近似值。两者承担的功能一致，但不应将网页 HEX 反向作为印刷标准。</p>
+      <p>印刷物使用列明的 CMYK，数字界面使用列明的 RGB / HEX。学科色用于建立导航和内容识别；大色块上的文字会根据对比度自动选择深色或白色，但基础色值始终不变。</p>
     </div>
   </section>
 
@@ -47,7 +49,8 @@ const formatCmyk = (color: (typeof colorStandards)[number]) => {
             <h2>{color.name}</h2>
             <dl>
               <div><dt>PRINT</dt><dd>{formatCmyk(color)}</dd></div>
-              <div><dt>SCREEN</dt><dd>{color.webHex}</dd></div>
+              <div><dt>RGB</dt><dd>{formatRgb(color)}</dd></div>
+              <div><dt>HEX</dt><dd>{color.webHex}</dd></div>
             </dl>
             <p class="swatch__usage">{color.usage}</p>
           </div>
@@ -75,7 +78,7 @@ const formatCmyk = (color: (typeof colorStandards)[number]) => {
         </article>
         <article class="type-sample type-sample--math">
           <span>03 · MATH</span>
-          <h3>∫₀¹ x² dx = ⅓</h3>
+          <h3 aria-label="e 的 i theta 次方等于 cos theta 加 i sin theta">e<sup>iθ</sup> = cos θ + i sin θ</h3>
           <p>STIX Two Math 只用于数学公式、变量、运算符、上下标和公式编号，不进入普通正文。</p>
         </article>
       </div>
@@ -98,10 +101,11 @@ const formatCmyk = (color: (typeof colorStandards)[number]) => {
   .color-overview h2,
   .type-standard h2 {
     margin: 0;
+    font-family: var(--font-editorial);
     font-size: clamp(2.6rem, 6vw, 6.4rem);
-    font-weight: 400;
+    font-weight: 900;
     line-height: 1.1;
-    letter-spacing: -0.065em;
+    letter-spacing: -0.055em;
   }
 
   .color-overview__grid > p {
@@ -249,6 +253,11 @@ const formatCmyk = (color: (typeof colorStandards)[number]) => {
   .type-sample--math h3 {
     font-family: var(--font-math);
     font-weight: 400;
+  }
+
+  .type-sample--math sup {
+    font-size: 0.6em;
+    line-height: 0;
   }
 
   @media (max-width: 840px) {
