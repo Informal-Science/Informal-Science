@@ -276,22 +276,45 @@ const articleBodyPreview = withBase('/images/hero/hero-2026-1920.webp');
           <thead>
             <tr>
               <th scope="col">样式</th>
-              <th scope="col">字体</th>
-              <th scope="col">字重</th>
-              <th scope="col">字号</th>
-              <th scope="col">行距</th>
-              <th scope="col">颜色与间距</th>
+              <th scope="col">字体与字重</th>
+              <th scope="col">尺寸参数</th>
+              <th scope="col">颜色与规则</th>
             </tr>
           </thead>
           <tbody>
-            <tr><th scope="row"><span>01</span>一级小标题</th><td>HarmonyOS<br />Sans SC</td><td>Bold</td><td>12 PT</td><td>16 PT</td><td>学科主题色</td></tr>
-            <tr><th scope="row"><span>02</span>二级小标题</th><td>HarmonyOS<br />Sans SC</td><td>Regular</td><td>10 PT</td><td>14 PT</td><td>学科主题色</td></tr>
-            <tr><th scope="row"><span>03</span>正文内容</th><td>HarmonyOS<br />Sans SC</td><td>Light</td><td>9 PT</td><td>16 PT</td><td>BLACK<small>段后 2 MM</small></td></tr>
-            <tr><th scope="row"><span>04</span>图片编号</th><td>HarmonyOS<br />Sans SC</td><td>Bold</td><td>7 PT</td><td>9 PT</td><td>BLACK<small>图 1 / 上图</small></td></tr>
-            <tr><th scope="row"><span>05</span>图注</th><td>HarmonyOS<br />Sans SC</td><td>Light</td><td>7 PT</td><td>9 PT</td><td>BLACK<small>与编号间隔 0.5 EM</small></td></tr>
+            <tr>
+              <th scope="row"><span>01</span>一级小标题</th>
+              <td>HarmonyOS Sans SC<small>Bold</small></td>
+              <td><dl><div><dt>字号</dt><dd>12 PT</dd></div><div><dt>行距</dt><dd>16 PT</dd></div><div><dt>段后</dt><dd>2 MM</dd></div></dl></td>
+              <td>学科主题色</td>
+            </tr>
+            <tr>
+              <th scope="row"><span>02</span>二级小标题</th>
+              <td>HarmonyOS Sans SC<small>Regular</small></td>
+              <td><dl><div><dt>字号</dt><dd>10 PT</dd></div><div><dt>行距</dt><dd>14 PT</dd></div><div><dt>段后</dt><dd>2 MM</dd></div></dl></td>
+              <td>学科主题色</td>
+            </tr>
+            <tr>
+              <th scope="row"><span>03</span>正文内容</th>
+              <td>HarmonyOS Sans SC<small>Light</small></td>
+              <td><dl><div><dt>字号</dt><dd>9 PT</dd></div><div><dt>行距</dt><dd>16 PT</dd></div><div><dt>段后</dt><dd>2 MM</dd></div></dl></td>
+              <td>BLACK</td>
+            </tr>
+            <tr>
+              <th scope="row"><span>04</span>图片编号</th>
+              <td>HarmonyOS Sans SC<small>Bold</small></td>
+              <td><dl><div><dt>字号</dt><dd>7 PT</dd></div><div><dt>行距</dt><dd>9 PT</dd></div><div><dt>段后</dt><dd>—</dd></div></dl></td>
+              <td>BLACK<small>图 1 / 上图</small></td>
+            </tr>
+            <tr>
+              <th scope="row"><span>05</span>图注</th>
+              <td>HarmonyOS Sans SC<small>Light</small></td>
+              <td><dl><div><dt>字号</dt><dd>7 PT</dd></div><div><dt>行距</dt><dd>9 PT</dd></div><div><dt>段后</dt><dd>—</dd></div></dl></td>
+              <td>BLACK<small>与编号间隔 0.5 EM</small></td>
+            </tr>
           </tbody>
           <tfoot>
-            <tr><td colspan="6"><b>图片与图例间距</b><span>4 PT</span><i>图例整体居中，并与图片绑定在同一栏内。</i></td></tr>
+            <tr><td colspan="4"><b>图片与图例间距</b><span>4 PT</span><i>图例整体居中，并与图片绑定在同一栏内。</i></td></tr>
           </tfoot>
         </table>
       </div>
@@ -1316,7 +1339,7 @@ const articleBodyPreview = withBase('/images/hero/hero-2026-1920.webp');
     grid-row: 1;
     min-width: 0;
     height: 100%;
-    overflow-x: auto;
+    overflow: hidden;
     background: #f7f7f5;
     scrollbar-color: rgba(17, 18, 20, 0.28) transparent;
   }
@@ -1324,7 +1347,6 @@ const articleBodyPreview = withBase('/images/hero/hero-2026-1920.webp');
   .body-type-table {
     width: 100%;
     height: 100%;
-    min-width: 600px;
     border-collapse: collapse;
     table-layout: fixed;
   }
@@ -1351,11 +1373,15 @@ const articleBodyPreview = withBase('/images/hero/hero-2026-1920.webp');
   }
 
   .body-type-table thead th:first-child {
-    width: 21%;
+    width: 20%;
   }
 
   .body-type-table thead th:nth-child(2) {
-    width: 19%;
+    width: 25%;
+  }
+
+  .body-type-table thead th:nth-child(3) {
+    width: 35%;
   }
 
   .body-type-table tbody th {
@@ -1385,6 +1411,37 @@ const articleBodyPreview = withBase('/images/hero/hero-2026-1920.webp');
     color: var(--ink-soft);
     font-size: 0.47rem;
     font-weight: 400;
+  }
+
+  .body-type-table tbody td dl {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+  }
+
+  .body-type-table tbody td dl div {
+    min-width: 0;
+    padding-right: 5px;
+  }
+
+  .body-type-table tbody td dl div + div {
+    padding-left: 7px;
+    border-left: 1px solid var(--line);
+  }
+
+  .body-type-table tbody td dl dt {
+    color: var(--ink-soft);
+    font-size: 0.44rem;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .body-type-table tbody td dl dd {
+    margin: 3px 0 0;
+    color: var(--ink);
+    font-size: 0.52rem;
+    font-weight: 500;
+    white-space: nowrap;
   }
 
   .body-type-table tfoot td {
