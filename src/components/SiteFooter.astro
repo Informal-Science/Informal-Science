@@ -15,7 +15,7 @@ const footerLinks = [
 
 <footer class="site-footer">
   <div class="container footer-grid">
-    <div>
+    <div class="footer-brand-wrap">
       <a class="footer-brand" href={withBase('/')} aria-label="非正式科学首页">
         <img src={withBase('/images/brand/logo-mark.svg')} alt="" width="160" height="160" />
       </a>
@@ -34,7 +34,7 @@ const footerLinks = [
 
 <style>
   .site-footer {
-    padding: clamp(64px, 9vw, 120px) 0 34px;
+    padding: clamp(32px, 3vw, 44px) 0;
     color: rgba(255, 255, 255, 0.82);
     background: #101216;
   }
@@ -43,12 +43,22 @@ const footerLinks = [
     display: grid;
     grid-template-columns: 1.1fr 0.75fr 1fr;
     gap: 48px;
+    align-items: center;
   }
 
   .footer-brand {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 10px;
+  }
+
+  .footer-brand-wrap,
+  .footer-nav {
+    align-self: center;
+  }
+
+  .footer-brand-wrap {
+    display: flex;
   }
 
   .footer-brand img {
