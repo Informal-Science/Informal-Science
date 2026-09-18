@@ -24,17 +24,9 @@ const visiblePeople = people.filter((item) => ['chief-editor', 'visual-designer'
     eyebrow="About Informal Science"
     title="关于我们"
     description="《非正式科学》是一份由学生共同撰写、编辑、设计与传承的科学年刊。我们从未把「非正式」理解为不严谨，而是把它视为一种敢于发问的姿态。"
-    aside="网站当前以已提供的年刊工程和目录资料为来源；2021 至 2025 年目录已整理，2026 年目录待本期原始资料补齐。团队名单仍在最终校对中，仅展示目前明确的信息。"
+    aside="2026 年刊目录与制作团队依据 Beta-B-2 版本更新；本期目录页码暂填 1，待最终确定后更新。"
     editorial
   />
-
-  <section class="about-manifesto">
-    <div class="container manifesto-grid">
-      <p class="eyebrow">Our Approach</p>
-      <blockquote>把复杂的问题讲得清楚，<br />把尚未解决的问题继续留下。</blockquote>
-      <p>从选题、写作与审稿，到版式、封面与印刷，一本年刊的形成是一项跨社团、跨学科的协作工程。网站延续这套结构，让内容能够被持续整理、修订与更新。</p>
-    </div>
-  </section>
 
   <section class="timeline-section">
     <div class="container">
@@ -74,7 +66,7 @@ const visiblePeople = people.filter((item) => ['chief-editor', 'visual-designer'
             {item.affiliation && <p>{item.affiliation}</p>}
           </article>
         ))}
-        <p class="credits-review">完整作者与贡献者名单将在书籍工程完成最终校对后同步更新。</p>
+        <p class="credits-review">以上单位与制作人员依据 2026 年刊 Beta-B-2 版权页整理；各篇作者见本期目录。</p>
       </div>
     </div>
   </section>
@@ -91,31 +83,6 @@ const visiblePeople = people.filter((item) => ['chief-editor', 'visual-designer'
 </BaseLayout>
 
 <style>
-  .about-manifesto {
-    padding: clamp(90px, 13vw, 180px) 0;
-  }
-
-  .manifesto-grid {
-    display: grid;
-    grid-template-columns: 0.3fr 1fr;
-    gap: clamp(32px, 8vw, 120px);
-  }
-
-  .manifesto-grid blockquote {
-    margin: 0;
-    font-size: clamp(2.5rem, 6.8vw, 7.2rem);
-    font-weight: 400;
-    line-height: 1.12;
-    letter-spacing: -0.065em;
-  }
-
-  .manifesto-grid > p:last-child {
-    grid-column: 2;
-    max-width: 650px;
-    margin: 10px 0 0;
-    color: var(--ink-soft);
-  }
-
   .timeline-section {
     padding: clamp(70px, 10vw, 130px) 0;
     background: var(--surface);
@@ -233,13 +200,8 @@ const visiblePeople = people.filter((item) => ['chief-editor', 'visual-designer'
   }
 
   @media (max-width: 800px) {
-    .manifesto-grid,
     .credits-grid {
       grid-template-columns: 1fr;
-    }
-
-    .manifesto-grid > p:last-child {
-      grid-column: 1;
     }
 
     .timeline {

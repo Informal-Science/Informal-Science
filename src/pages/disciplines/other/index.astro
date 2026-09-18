@@ -2,7 +2,8 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleDirectory from '../../../components/ArticleDirectory.astro';
 import DisciplineHero from '../../../components/DisciplineHero.astro';
-import { articles, contentDisciplines, historicalDisciplines } from '../../../data';
+import DisciplinePagination from '../../../components/DisciplinePagination.astro';
+import { articles, contentDisciplines, disciplines, historicalDisciplines } from '../../../data';
 import { disciplineUiColor, disciplineUiTextColor, shouldUseDarkText } from '../../../utils/colors';
 import { withBase } from '../../../utils/paths';
 
@@ -13,6 +14,20 @@ const formatCmyk = (field: (typeof historicalDisciplines)[number]) => {
 const formatRgb = (field: (typeof historicalDisciplines)[number]) => field.rgb.join(' · ');
 const historicalSlugs = new Set<string>(historicalDisciplines.map((field) => field.slug));
 const historicalArticles = articles.filter((article) => historicalSlugs.has(article.disciplineSlug));
+const firstDiscipline = disciplines[0];
+const lastDiscipline = disciplines.at(-1)!;
+const previousTarget = {
+  href: `/disciplines/${lastDiscipline.routeSlug}`,
+  name: lastDiscipline.name,
+  color: disciplineUiColor(lastDiscipline.colorKey),
+  ink: disciplineUiTextColor(lastDiscipline.colorKey),
+};
+const nextTarget = {
+  href: `/disciplines/${firstDiscipline.routeSlug}`,
+  name: firstDiscipline.name,
+  color: disciplineUiColor(firstDiscipline.colorKey),
+  ink: disciplineUiTextColor(firstDiscipline.colorKey),
+};
 ---
 
 <BaseLayout
@@ -69,7 +84,7 @@ const historicalArticles = articles.filter((article) => historicalSlugs.has(arti
         <p class="eyebrow">Contents / Historical Fields</p>
         <h2 class="section-title">历年文章</h2>
       </div>
-      <p>汇总脑神经科学与电子两个历史板块的历年文章。它们也会进入各期“往期精彩”和<a href={withBase('/questions-answers')}>“问题-答案”</a>检索。</p>
+      <p>汇总脑神经科学与电子两个历史板块的历年文章。它们也会进入各期“往期精彩”和<a href={withBase('/questions-answers')}>“文章检索”</a>检索。</p>
     </div>
     <div class="container">
       <ArticleDirectory
@@ -80,17 +95,7 @@ const historicalArticles = articles.filter((article) => historicalSlugs.has(arti
     </div>
   </section>
 
-  <a
-    class="next-discipline"
-    href={withBase('/disciplines/astronomy')}
-    style={`--next-color: ${disciplineUiColor('astronomy')}; --next-ink: ${disciplineUiTextColor('astronomy')}`}
-  >
-    <div class="container next-discipline__inner">
-      <span>回到第一个板块 / NEXT</span>
-      <strong>天文</strong>
-      <em>查看 ↗</em>
-    </div>
-  </a>
+  <DisciplinePagination previous={previousTarget} next={nextTarget} />
 </BaseLayout>
 
 <style>
@@ -235,39 +240,9 @@ const historicalArticles = articles.filter((article) => historicalSlugs.has(arti
     text-underline-offset: 0.2em;
   }
 
-  .next-discipline {
-    display: block;
-    padding: clamp(54px, 8vw, 100px) 0;
-    color: var(--next-ink);
-    background: var(--next-color);
-  }
-
-  .next-discipline__inner {
-    display: grid;
-    grid-template-columns: 0.35fr 1fr auto;
-    gap: 30px;
-    align-items: end;
-  }
-
-  .next-discipline span,
-  .next-discipline em {
-    font-size: 0.72rem;
-    font-style: normal;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-  }
-
-  .next-discipline strong {
-    font-size: clamp(3rem, 8vw, 8rem);
-    font-weight: 500;
-    line-height: 0.9;
-    letter-spacing: -0.08em;
-  }
-
   @media (max-width: 820px) {
     .historical-fields__heading,
-    .discipline-directory__heading,
-    .next-discipline__inner {
+    .discipline-directory__heading {
       grid-template-columns: 1fr;
     }
   }

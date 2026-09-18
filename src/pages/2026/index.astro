@@ -5,6 +5,7 @@ import { articles, disciplines, issues, siteMeta } from '../../data';
 import { disciplineUiColor } from '../../utils/colors';
 import { withBase } from '../../utils/paths';
 
+const currentArticles = articles.filter((article) => article.year === 2026);
 const currentIssue = issues.find((issue) => issue.year === 2026)!;
 const focusArticles = siteMeta.coverFocusArticleSlugs
   .map((slug) => articles.find((article) => article.year === 2026 && article.catalogSlug === slug))
@@ -53,8 +54,8 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
 
           <div class="annual-hero__bottom">
             <dl>
-              <div><dt>7</dt><dd>学科板块</dd></div>
-              <div><dt>24</dt><dd>目录导读</dd></div>
+              <div><dt>{disciplines.length}</dt><dd>学科板块</dd></div>
+              <div><dt>{currentArticles.length}</dt><dd>目录导读</dd></div>
               <div><dt>06</dt><dd>总期数</dd></div>
             </dl>
             <nav aria-label="2026 年刊快捷入口">
@@ -75,8 +76,7 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
 
           <div class="cover-story__body">
             <h2 id="cover-story-title">{siteMeta.coverStory.title}</h2>
-            <blockquote>“{siteMeta.coverStory.quote}”</blockquote>
-            <cite>——{siteMeta.coverStory.attribution}</cite>
+            <p class="cover-story__description">{siteMeta.coverStory.description}</p>
           </div>
 
           <p class="cover-story__mark" aria-hidden="true">STORY</p>
@@ -463,22 +463,17 @@ const disciplineMap = new Map<string, (typeof disciplines)[number]>(
     letter-spacing: -0.07em;
   }
 
-  .cover-story blockquote {
+  .cover-story__description {
     max-width: 760px;
     margin: clamp(54px, 8vw, 100px) 0 18px;
     padding-top: 28px;
     border-top: 1px solid rgba(255, 255, 255, 0.48);
     font-family: var(--font-editorial);
-    font-size: clamp(1.35rem, 2.6vw, 2.6rem);
+    font-size: clamp(1.05rem, 1.5vw, 1.4rem);
     font-weight: 600;
     line-height: 1.65;
   }
 
-  .cover-story cite {
-    color: rgba(255, 255, 255, 0.62);
-    font-size: 0.8rem;
-    font-style: normal;
-  }
 
   .cover-story__mark {
     position: absolute;

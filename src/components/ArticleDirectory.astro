@@ -102,7 +102,6 @@ const availableIssues = [
             <div class="article-row__author">
               <span>撰文</span>
               <strong>{article.author}</strong>
-              <em>目录导读</em>
             </div>
           )}
         </article>
@@ -294,8 +293,7 @@ const availableIssues = [
     text-align: right;
   }
 
-  .article-row__author span,
-  .article-row__author em {
+  .article-row__author span {
     color: var(--ink-soft);
     font-size: 0.65rem;
     font-style: normal;
@@ -333,14 +331,10 @@ const availableIssues = [
 
     .article-row__author {
       grid-column: 2;
-      grid-template-columns: auto auto 1fr;
+      grid-template-columns: auto auto;
       gap: 8px;
       padding: 0;
       text-align: left;
-    }
-
-    .article-row__author em {
-      text-align: right;
     }
   }
 </style>

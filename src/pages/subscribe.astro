@@ -6,7 +6,7 @@ import { withBase } from '../utils/paths';
 
 <BaseLayout
   title="订阅"
-  description="通过《非正式科学》官方 QQ 联系我们办理订阅，或扫描 QQ 空间二维码浏览已发布动态。"
+  description="扫描二维码添加《非正式科学》官方 QQ，联系办理订阅，也可从好友资料进入 QQ 空间浏览动态。"
 >
   <section class="hero" aria-labelledby="subscribe-title">
     <div class="container hero__grid">
@@ -19,12 +19,11 @@ import { withBase } from '../utils/paths';
         </p>
         <div class="hero__actions">
           <a class="action action--primary" href="#qq-account">联系官方办理订阅 <span aria-hidden="true">↓</span></a>
-          <a class="action" href="#qq-space">前往空间看动态 <span aria-hidden="true">↘</span></a>
         </div>
       </div>
 
-      <aside class="logic" aria-label="订阅与浏览的区别">
-        <p class="logic__label">Two Ways / 两个入口</p>
+      <aside class="logic" aria-label="添加好友后的订阅与浏览方式">
+        <p class="logic__label">One QR Code / 一个二维码</p>
         <div class="logic__item logic__item--active">
           <span>01</span>
           <div><strong>添加 QQ 并联系官方</strong><p>说明订阅需求，按官方回复办理</p></div>
@@ -33,7 +32,7 @@ import { withBase } from '../utils/paths';
         <div class="logic__line" aria-hidden="true"></div>
         <div class="logic__item">
           <span>02</span>
-          <div><strong>浏览官方 QQ 空间</strong><p>用于回看：浏览已经发布的动态</p></div>
+          <div><strong>浏览官方 QQ 空间</strong><p>从好友资料进入空间，查看已发布动态</p></div>
           <em>浏览</em>
         </div>
         <p class="logic__note">想订阅，请添加好友后主动发送消息。</p>
@@ -48,13 +47,13 @@ import { withBase } from '../utils/paths';
         <p class="eyebrow">Subscribe or Browse / 订阅或浏览</p>
         <h2 id="channel-title">前往官方QQ<br />联系我们/浏览动态</h2>
       </div>
-      <p>办理订阅需要通过官方 QQ 沟通；只想查看动态，可以直接进入 QQ 空间。</p>
+      <p>扫描下方二维码添加官方 QQ，联系办理订阅，也可从好友资料进入 QQ 空间查看动态。</p>
     </div>
 
     <div class="container channel-grid">
       <article class="qr-card qr-card--primary" id="qq-account">
         <header class="qr-card__header">
-          <div><p>01 / CONTACT</p><h3>添加官方 QQ，联系订阅</h3></div>
+          <div><p>OFFICIAL QQ / 官方联系</p><h3>添加官方 QQ，联系订阅</h3></div>
           <span>订阅咨询</span>
         </header>
         <div class="qr-card__body">
@@ -67,14 +66,14 @@ import { withBase } from '../utils/paths';
             />
           </figure>
           <div class="qr-card__copy">
-            <p class="qr-card__instruction">打开 QQ 扫一扫，扫描左侧二维码并发送好友申请。添加成功后，请主动联系官方并说明订阅需求。</p>
+            <p class="qr-card__instruction">打开 QQ 扫一扫，扫描二维码并发送好友申请。添加成功后，请主动联系官方并说明订阅需求；也可从好友资料进入 QQ 空间，浏览新刊介绍、文章推荐和编辑动态。</p>
             <div class="qr-card__notice">
               <span aria-hidden="true">!</span>
               <p><strong>请注意：</strong>添加好友不等于完成订阅；请按照官方回复办理后续流程。</p>
             </div>
             <dl class="qr-card__facts">
               <div><dt>官方 QQ 号</dt><dd>2911691480</dd></div>
-              <div><dt>主要用途</dt><dd>订阅咨询与官方联系</dd></div>
+              <div><dt>主要用途</dt><dd>订阅咨询、官方联系与空间动态浏览</dd></div>
             </dl>
             <a class="qr-card__download" href={withBase('/images/subscribe/qq-account-qr.jpg')} download>
               保存官方 QQ 二维码 <span aria-hidden="true">↓</span>
@@ -84,33 +83,6 @@ import { withBase } from '../utils/paths';
         </div>
       </article>
 
-      <article class="qr-card qr-card--secondary" id="qq-space">
-        <header class="qr-card__header">
-          <div><p>02 / BROWSE</p><h3>进入 QQ 空间，浏览动态</h3></div>
-          <span>浏览入口</span>
-        </header>
-        <div class="qr-card__body">
-          <figure class="qr-card__image qr-card__image--space">
-            <img
-              src={withBase('/images/subscribe/qq-space-qr.jpg')}
-              alt="《非正式科学》官方 QQ 空间二维码"
-              width="500"
-              height="500"
-              loading="lazy"
-            />
-          </figure>
-          <div class="qr-card__copy">
-            <p class="qr-card__instruction">扫描左侧二维码进入官方 QQ 空间，查看已发布的新刊介绍、文章推荐和编辑动态。</p>
-            <div class="qr-card__notice">
-              <span aria-hidden="true">!</span>
-              <p><strong>请注意：</strong>QQ 空间只用于浏览动态。如需订阅，请通过官方 QQ 联系办理。</p>
-            </div>
-            <a class="qr-card__download" href={withBase('/images/subscribe/qq-space-qr.jpg')} download>
-              保存空间二维码 <span aria-hidden="true">↓</span>
-            </a>
-          </div>
-        </div>
-      </article>
     </div>
   </section>
 
@@ -119,12 +91,12 @@ import { withBase } from '../utils/paths';
       <p class="eyebrow">How to Subscribe / 订阅步骤</p>
       <div>
         <h2 id="guide-title">联系官方，三步开始办理。</h2>
-        <p>请扫描 01 联系码，而不是 02 空间码。</p>
+        <p>扫描上方官方 QQ 好友二维码，添加后联系办理。</p>
       </div>
     </div>
     <ol class="container steps">
       <li><span>01</span><div><h3>打开扫一扫</h3><p>打开 QQ 的“扫一扫”功能。</p></div></li>
-      <li><span>02</span><div><h3>添加官方 QQ</h3><p>扫描页面上方标有“01 / CONTACT”的二维码并添加好友。</p></div></li>
+      <li><span>02</span><div><h3>添加官方 QQ</h3><p>扫描页面上方的官方 QQ 好友二维码并添加好友。</p></div></li>
       <li><span>03</span><div><h3>说明订阅需求</h3><p>添加成功后主动发送消息，并按官方回复完成后续流程。</p></div></li>
     </ol>
   </section>
@@ -192,17 +164,14 @@ import { withBase } from '../utils/paths';
   .channels h2, .guide h2, .details__copy h2 { font-size: clamp(2.65rem,5.6vw,6rem); }
   .channels__heading h2 { line-height: 1.15; }
   .channels__heading > p { margin: 0 0 0 auto; color: var(--ink-soft); font-size: .9rem; }
-  .channel-grid { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(330px,.8fr); gap: 20px; align-items: start; }
+  .channel-grid { display: grid; grid-template-columns: minmax(0,1fr); }
   .qr-card { padding: clamp(22px,3vw,38px); border: 1px solid var(--line); background: var(--surface); }
   .qr-card--primary { border-top: 6px solid var(--theme); box-shadow: var(--shadow-soft); }
-  .qr-card--secondary { margin-top: clamp(70px,9vw,126px); background: transparent; }
   .qr-card__header { display: flex; min-height: 82px; align-items: start; justify-content: space-between; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
   .qr-card__header p { margin: 0 0 7px; color: var(--theme); font-size: .68rem; font-weight: 500; letter-spacing: .13em; }
   .qr-card__header h3 { margin: 0; font-size: clamp(1.35rem,2.1vw,2rem); font-weight: 500; line-height: 1.25; }
   .qr-card__header > span { flex: none; padding: 6px 10px; color: white; border-radius: 999px; background: var(--theme); font-size: .65rem; font-weight: 500; }
-  .qr-card--secondary .qr-card__header > span { color: var(--ink-soft); border: 1px solid var(--line-strong); background: transparent; }
-  .qr-card__body { display: grid; grid-template-columns: minmax(240px,.82fr) minmax(220px,.68fr); gap: clamp(26px,4vw,54px); align-items: center; padding-top: 28px; }
-  .qr-card--secondary .qr-card__body { grid-template-columns: 1fr; }
+  .qr-card__body { display: grid; grid-template-columns: minmax(240px,360px) minmax(0,1fr); gap: clamp(26px,4vw,54px); align-items: center; padding-top: 28px; }
   .qr-card__image { display: grid; margin: 0; padding: 12px; border: 1px solid var(--line); background: white; }
   .qr-card__image img { width: 100%; height: auto; }
   .qr-card__instruction { margin: 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.9; }
@@ -211,7 +180,6 @@ import { withBase } from '../utils/paths';
   .qr-card__facts dt { color: var(--ink-soft); font-size: .68rem; }
   .qr-card__facts dd { margin: 0; font-size: .78rem; font-weight: 500; }
   .qr-card__download { display: flex; width: 100%; min-height: 48px; align-items: center; justify-content: space-between; margin-top: 24px; padding: 0 18px; color: white; border: 1px solid var(--theme); border-radius: 999px; background: var(--theme); font-size: .8rem; font-weight: 500; transition: 180ms ease; }
-  .qr-card--secondary .qr-card__download { color: var(--ink); border-color: var(--line-strong); background: transparent; }
   .qr-card__download:hover { color: var(--theme); background: white; transform: translateY(-2px); }
   .qr-card__fallback { margin: 13px 0 0; color: var(--ink-soft); font-size: .7rem; }
   .qr-card__notice { display: grid; grid-template-columns: 24px 1fr; gap: 12px; margin-top: 24px; padding: 15px; border: 1px solid var(--line); }
@@ -246,14 +214,11 @@ import { withBase } from '../utils/paths';
   @media (max-width: 1020px) {
     .hero__grid, .details__grid { grid-template-columns: 1fr; }
     .logic { width: min(100%,540px); }
-    .channel-grid { grid-template-columns: 1fr; }
-    .qr-card--secondary { margin-top: 0; }
-    .qr-card--secondary .qr-card__body { grid-template-columns: minmax(240px,.72fr) minmax(260px,1fr); }
     .details__mark { display: none; }
   }
   @media (max-width: 720px) {
     .hero h1 { font-size: clamp(2.65rem,13vw,4.2rem); }
-    .channels__heading, .guide__heading, .steps, .qr-card__body, .qr-card--secondary .qr-card__body { grid-template-columns: 1fr; }
+    .channels__heading, .guide__heading, .steps, .qr-card__body { grid-template-columns: 1fr; }
     .channels__heading > p { margin: 0; }
     .qr-card__image--account { width: min(100%,430px); margin-inline: auto; }
     .steps li { min-height: 220px; border-left: 1px solid var(--line); }

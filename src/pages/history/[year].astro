@@ -27,7 +27,7 @@ const catalogNotice =
     ? '本页文章目录依据已提供的本期扫描目录录入。全文尚未开放。'
     : issue.year === 2025
       ? '本页文章目录采用已提供并确认为 2025 年的目录资料。全文尚未开放。'
-      : '当前 2026 年目录暂复用已确认的 2025 年目录；待本期原始目录提供后替换。全文尚未开放。';
+      : '2026 年目录依据 Beta-B-2 版本录入，页码暂填 1，待最终排版确定后更新。全文尚未开放。';
 ---
 
 <BaseLayout
@@ -75,7 +75,7 @@ const catalogNotice =
         <p class="eyebrow">Contents / {issue.year}</p>
         <h2 class="section-title">本期文章</h2>
       </div>
-      <p>本页仅展示 {issue.year} 年·总第 {issue.number} 期的文章导读。如需跨年份、跨学科检索，请前往<a href={withBase('/questions-answers')}>“问题-答案”</a>。</p>
+      <p>本页仅展示 {issue.year} 年·总第 {issue.number} 期的文章导读。如需跨年份、跨学科检索，请前往<a href={withBase('/questions-answers')}>“文章检索”</a>。</p>
     </div>
     <div class="container">
       <ArticleDirectory entries={issueArticles} disciplines={contentDisciplines} />

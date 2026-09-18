@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleDirectory from '../../components/ArticleDirectory.astro';
 import DisciplineHero from '../../components/DisciplineHero.astro';
+import DisciplinePagination from '../../components/DisciplinePagination.astro';
 import { disciplines, contentDisciplines, articles } from '../../data';
 import { disciplineUiColor, disciplineUiTextColor } from '../../utils/colors';
 import { withBase } from '../../utils/paths';
@@ -22,15 +23,17 @@ interface Props {
 const { discipline } = Astro.props;
 const disciplineArticles = articles.filter((article) => article.disciplineSlug === discipline.slug);
 const currentIndex = disciplines.findIndex((item) => item.slug === discipline.slug);
+const otherTarget = { href: '/disciplines/other', name: '其他', color: '#666666', ink: '#ffffff' };
+const targetFromDiscipline = (item: (typeof disciplines)[number]) => ({
+  href: `/disciplines/${item.routeSlug}`,
+  name: item.name,
+  color: disciplineUiColor(item.colorKey),
+  ink: disciplineUiTextColor(item.colorKey),
+});
+const previousDiscipline = disciplines[currentIndex - 1];
 const nextDiscipline = disciplines[currentIndex + 1];
-const nextTarget = nextDiscipline
-  ? {
-      href: `/disciplines/${nextDiscipline.routeSlug}`,
-      name: nextDiscipline.name,
-      color: disciplineUiColor(nextDiscipline.colorKey),
-      ink: disciplineUiTextColor(nextDiscipline.colorKey),
-    }
-  : { href: '/disciplines/other', name: '其他', color: '#666666', ink: '#ffffff' };
+const previousTarget = previousDiscipline ? targetFromDiscipline(previousDiscipline) : otherTarget;
+const nextTarget = nextDiscipline ? targetFromDiscipline(nextDiscipline) : otherTarget;
 ---
 
 <BaseLayout
@@ -54,24 +57,14 @@ const nextTarget = nextDiscipline
         <p class="eyebrow">Contents / 2021—2026</p>
         <h2 class="section-title">历年文章</h2>
       </div>
-      <p>汇总 2021 至 2026 六期中的本学科文章，并标明年份与期数。如需跨学科组合检索，请前往<a href={withBase('/questions-answers')}>“问题-答案”</a>。</p>
+      <p>汇总 2021 至 2026 六期中的本学科文章，并标明年份与期数。如需跨学科组合检索，请前往<a href={withBase('/questions-answers')}>“文章检索”</a>。</p>
     </div>
     <div class="container">
       <ArticleDirectory entries={disciplineArticles} disciplines={contentDisciplines} />
     </div>
   </section>
 
-  <a
-    class="next-discipline"
-    href={withBase(nextTarget.href)}
-    style={`--next-color: ${nextTarget.color}; --next-ink: ${nextTarget.ink}`}
-  >
-    <div class="container next-discipline__inner">
-      <span>下一个板块 / NEXT</span>
-      <strong>{nextTarget.name}</strong>
-      <em>查看 ↗</em>
-    </div>
-  </a>
+  <DisciplinePagination previous={previousTarget} next={nextTarget} />
 </BaseLayout>
 
 <style>
@@ -100,43 +93,9 @@ const nextTarget = nextDiscipline
     text-underline-offset: 0.2em;
   }
 
-  .next-discipline {
-    display: block;
-    padding: clamp(54px, 8vw, 100px) 0;
-    color: var(--next-ink);
-    background: var(--next-color);
-  }
-
-  .next-discipline__inner {
-    display: grid;
-    grid-template-columns: 0.35fr 1fr auto;
-    gap: 30px;
-    align-items: end;
-  }
-
-  .next-discipline span,
-  .next-discipline em {
-    font-size: 0.72rem;
-    font-style: normal;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-  }
-
-  .next-discipline strong {
-    font-size: clamp(3rem, 8vw, 8rem);
-    font-weight: 500;
-    line-height: 0.9;
-    letter-spacing: -0.08em;
-  }
-
   @media (max-width: 800px) {
-    .discipline-directory__heading,
-    .next-discipline__inner {
+    .discipline-directory__heading {
       grid-template-columns: 1fr;
-    }
-
-    .next-discipline em {
-      justify-self: start;
     }
   }
 </style>

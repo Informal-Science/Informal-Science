@@ -1,10 +1,8 @@
 import type { Discipline } from "./types";
 
-const tocSource = {
-  repository: "Informal-Science-2026",
-  path: "Resources/TOC/TOC.tex",
-  locator: "discipline headings and article summaries",
-} as const;
+import { catalog2026Source } from "./catalog2026";
+
+const tocSource = catalog2026Source;
 
 export const disciplines = [
   {
@@ -14,7 +12,7 @@ export const disciplines = [
     en: "Astronomy",
     color: "#00336F",
     colorKey: "astronomy",
-    summary: "从太阳与恒星演化到原初引力波观测，关注宇宙的起源、演化与探测。",
+    summary: "从暗物质探测、黑洞到行星逆行与北斗七星，理解宇宙中的观测与运动。",
     order: 1,
     source: tocSource,
   },
@@ -22,10 +20,10 @@ export const disciplines = [
     slug: "math",
     routeSlug: "math",
     name: "数学",
-    en: "Math",
+    en: "Mathematics",
     color: "#C53E29",
     colorKey: "math",
-    summary: "从条件概率、拓扑与娱乐数学出发，探索反直觉问题与数学思想的发展。",
+    summary: "从披萨定理、挂谷猜想到魔方群论与差分隐私，探索几何直觉、代数结构与信息保护。",
     order: 2,
     source: tocSource,
   },
@@ -36,7 +34,7 @@ export const disciplines = [
     en: "Geography",
     color: "#9FC138",
     colorKey: "geography",
-    summary: "从福州的城市与火山地质，延伸至街景判读和地铁站区位分析。",
+    summary: "从南极冰穹与厄尔尼诺到撒哈拉降雨和古都区位，观察气候、地形与人类活动的联系。",
     order: 3,
     source: tocSource,
   },
@@ -47,7 +45,7 @@ export const disciplines = [
     en: "Physics",
     color: "#1578BF",
     colorKey: "physics",
-    summary: "从光和水流的日常现象到诺特定理与 CPT 对称，观察自然律的数学结构。",
+    summary: "从相对论时空到吸管弯折与分析力学，探究自然现象背后的物理原理。",
     order: 4,
     source: tocSource,
   },
@@ -58,7 +56,7 @@ export const disciplines = [
     en: "Engineering",
     color: "#882E87",
     colorKey: "engineering",
-    summary: "拆解 VT 引信、直升机斜盘和民航机型，从机械与电子系统理解飞行。",
+    summary: "从 C++ 反汇编到大语言模型与生成式 AI，理解计算机底层与人工智能的运行机制。",
     order: 5,
     source: tocSource,
   },
@@ -69,7 +67,7 @@ export const disciplines = [
     en: "Biology",
     color: "#53A54F",
     colorKey: "biology",
-    summary: "从共生体、神经奖励机制到城市鸟类，观察生命与环境的双向影响。",
+    summary: "从空间微生物、闪电生态到杂交水稻、毒素与内共生，探索生命的适应、演化与命名。",
     order: 6,
     source: tocSource,
   },
@@ -80,7 +78,7 @@ export const disciplines = [
     en: "Chemistry",
     color: "#E5B514",
     colorKey: "chemistry",
-    summary: "围绕多配位碳、溶解性和复盐，从成键、晶格与酸碱理论重新认识物质。",
+    summary: "从孤对电子与杂化轨道到链状和三角形结构，认识教科书之外的分子与晶体形态。",
     order: 7,
     source: tocSource,
   },

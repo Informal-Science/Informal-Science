@@ -49,8 +49,7 @@ export interface SiteMeta extends Reviewable {
   description: string;
   coverStory: {
     title: string;
-    quote: string;
-    attribution: string;
+    description: string;
     reviewNeeded: boolean;
   };
   coverFocusArticleSlugs: readonly string[];

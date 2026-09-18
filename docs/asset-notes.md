@@ -25,16 +25,16 @@
 
 ## 历年封面与历史纹理
 
-稳定访问路径为 `/images/issues/issue-YYYY.webp`。2021–2025 来自网站仓库 `Resources/Picture_Resources/History/Cover_Issue-{1..5}`；未使用重复的 `Cover_Issue-6.png`。2026 封面直接取自书籍工程 2026-08-12 重新编译的 `main.pdf` 第一页；该版本已在 `main.tex` 中关闭 `\showpagemarginlines` 与 `\showboxdebuglines`，网站封面因此不含页边距或 TikZ 节点参考线。
+稳定访问路径为 `/images/issues/issue-YYYY.webp`。2021–2026 封面来自网站仓库 `Resources/Picture_Resources/History/Cover_Issue-{1..6}`，并已于 2026-09-18 依据当前源文件重新输出。
 
 | 文件 | 像素 | 大小 | 色彩处理 |
 | --- | ---: | ---: | --- |
-| `issue-2021.webp` | 720 × 1017 | 56 KB | sRGB |
-| `issue-2022.webp` | 720 × 1018 | 118 KB | sRGB |
-| `issue-2023.webp` | 720 × 989 | 55 KB | CMYK/Japan Color 2001 Coated → sRGB |
-| `issue-2024.webp` | 595 × 842 | 98 KB | Adobe RGB (1998) → sRGB；不放大原图 |
-| `issue-2025.webp` | 720 × 1018 | 85 KB | sRGB |
-| `issue-2026.webp` | 1200 × 1698 | 300 KB | 最新 `main.pdf` 第 1 页 → sRGB |
+| `issue-2021.webp` | 720 × 1018 | 113 KB | Adobe RGB (1998) → sRGB |
+| `issue-2022.webp` | 720 × 1018 | 96 KB | sRGB IEC61966-2.1 → sRGB |
+| `issue-2023.webp` | 720 × 988 | 46 KB | CMYK/Japan Color 2001 Coated → sRGB |
+| `issue-2024.webp` | 595 × 842 | 89 KB | Adobe RGB (1998) → sRGB；不放大原图 |
+| `issue-2025.webp` | 720 × 1018 | 75 KB | Adobe RGB (1998) → sRGB |
+| `issue-2026.webp` | 1200 × 1697 | 296 KB | Adobe RGB (1998) → sRGB |
 | `textures/history-collage.webp` | 794 × 1123 | 90 KB | sRGB；来自 `History_Background.png` |
 
 封面 WebP 使用质量 82；2026 完整封面因含较多小字号文字以 1200 像素宽、质量 90 输出。历史封面、拼贴图与 2026 封面的照片/版面目前没有单独的网页发布许可文件，上线前需要补齐来源、作者、许可与署名记录。
@@ -78,5 +78,4 @@ HarmonyOS 原始字体位于 `Resources/Font_Resources/HarmonyOS_Sans_SC/`，其
 ## 未交付素材
 
 - `History/QR-code.jpg`：编辑方确认为 QQ 空间订阅二维码，原样复制到 `public/images/subscribe/qq-space-qr.jpg`；二维码图像不重采样，避免影响识别。
-- `History/Cover_Issue-6.png`：与第五期文件逐字节相同，且图面标注“2025 年刊 总第 5 期”，因此没有作为第六期封面使用。
 - `.ai` 源、整套字体、投稿文件和整本 PDF：网页不需要，未复制。

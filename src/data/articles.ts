@@ -1,5 +1,6 @@
 import type { Article, SourceReference } from "./types";
 import { issues } from "./issues";
+import { catalog2026, catalog2026Source } from "./catalog2026";
 
 type DirectoryArticle = Pick<
   Article,
@@ -14,6 +15,7 @@ interface AnnualCatalog {
 
 const directoryReviewNotes = (year: number, catalog: AnnualCatalog) => [
   "当前网站仅发布目录信息，全文尚未开放。",
+  ...(year === 2026 ? ["依据 Beta-B-2 目录录入；页码暂填 1，待最终排版确定后更新。"] : []),
   ...(year === catalog.sourceYear
     ? ["目录已依据本期提供的原始资料逐项录入。"]
     : [`当前 ${year} 年目录临时复用已确认的 ${catalog.sourceYear} 年目录，待本年原始目录提供后替换。`]),
@@ -47,6 +49,12 @@ const catalogScanSource = (year: number, page: string): SourceReference => ({
   path: "Resources/2024-2021年 目录.pdf",
   locator: `第 ${page} 页：${year} 年刊目录`,
 });
+
+const catalog2022Source: SourceReference = {
+  repository: "Informal-Science-2026",
+  path: "Resources/2024-2021年 目录.pdf",
+  locator: "第 4 页：2022 年刊目录；作者依据用户提供的《[四稿] 非正式科学 2022年.pdf》各篇首页核对",
+};
 
 const catalog2025Source: SourceReference = {
   repository: "Informal-Science-2026",
@@ -464,7 +472,7 @@ const catalog2022 = [
   {
     slug: "star-colors",
     title: "为什么恒星有不同的颜色",
-    author: "",
+    author: "潘朵",
     disciplineSlug: "astronomy",
     summary:
       "天狼星是白色的，心宿二是红色的，老人星是黄色的……为什么恒星有不同的颜色？人们对夜空中闪烁着的不同颜色的恒星的认识，经历了一个漫长而深刻的过程。",
@@ -473,7 +481,7 @@ const catalog2022 = [
   {
     slug: "deep-space-asteroid-defense",
     title: "深空探测助力小行星防御",
-    author: "",
+    author: "潘朵",
     disciplineSlug: "astronomy",
     summary:
       "很多新闻很可能存在夸大和误传，往往还造成了不必要的恐慌。我们还是应该相信靠谱的新闻媒体，通过翔实、准确的数据去了解小行星撞击地球的风险。",
@@ -482,7 +490,7 @@ const catalog2022 = [
   {
     slug: "why-is-space-black",
     title: "为什么太空是黑的",
-    author: "",
+    author: "潘朵",
     disciplineSlug: "astronomy",
     summary:
       "太空的黑暗与宇宙的结构有什么关系呢？这要从牛顿的宇宙模型谈起。太空的黑暗说明牛顿的宇宙学说并不成立，而大爆炸宇宙学是更加合理的。",
@@ -491,7 +499,7 @@ const catalog2022 = [
   {
     slug: "iron-wire-oxygen-products",
     title: "为什么铁丝在充满氧气的广口瓶里燃烧的产物是 Fe₃O₄ 而不是 Fe₂O₃ 或 FeO?",
-    author: "",
+    author: "吴懿洋",
     disciplineSlug: "chemistry",
     summary:
       "初中化学一开始有一实验——铁丝在充满氧气的广口瓶里燃烧，火花四溅，激动人心。本文是利用大一化学水平的化学热力学基础知识对同时存在几个反应的系统进行分析的典型例子，具普遍意义。",
@@ -500,7 +508,7 @@ const catalog2022 = [
   {
     slug: "synthetic-starch",
     title: "人类终于开始和植物「抢生意」了",
-    author: "",
+    author: "黄洪悦、卢天宇",
     disciplineSlug: "chemistry",
     summary:
       "一条消息引爆了社交网络：中国科学家首次实现了用二氧化碳人工合成淀粉的重大实验成果。该成果目前尚处于实验室阶段，离实际应用还有相当长的距离。",
@@ -509,7 +517,7 @@ const catalog2022 = [
   {
     slug: "chemistry-behind-memes",
     title: "表情包背后的化学知识",
-    author: "",
+    author: "陈涵绅",
     disciplineSlug: "chemistry",
     summary:
       "学术表情包千千万，化学表情包独树一帜。怀着科普的精神，笔者就和大家聊聊化学表情包背后的化学原理。毕竟能从表情包里获得知识，多是一件美事啊。",
@@ -518,7 +526,7 @@ const catalog2022 = [
   {
     slug: "lucid-dream",
     title: "意识到自己在做梦",
-    author: "",
+    author: "林贲缘",
     disciplineSlug: "brain-neuroscience",
     summary:
       "事实表明，有许多人在他们一生中至少经历过一次意识到自己在做梦，我们称它为「清醒梦」。研究仍在继续，有些方法可以在家里尝试，但要小心，它们不一定有科学依据支撑。",
@@ -527,7 +535,7 @@ const catalog2022 = [
   {
     slug: "chronic-sleep-deprivation",
     title: "长期睡眠不足可不是一件小事",
-    author: "",
+    author: "林贲缘",
     disciplineSlug: "brain-neuroscience",
     summary:
       "如今的学生在繁重学业的压力下，熬夜成为常态，难以保证充足的睡眠。熬夜可能让时间充裕了，但长期压缩睡眠时间，对身体有极大的影响，其中对大脑的影响更是不可忽视的。",
@@ -536,7 +544,7 @@ const catalog2022 = [
   {
     slug: "exercise-your-brain",
     title: "你的大脑需要你锻炼一下",
-    author: "",
+    author: "林贲缘",
     disciplineSlug: "brain-neuroscience",
     summary:
       "研究人员宣布了一系列颠覆神经科学原则的发现。锻炼对人类的大脑有一定的积极影响，特别是随着年龄的增长，锻炼甚至可能有助于降低阿尔茨海默氏症和其他退行性疾病的风险。",
@@ -545,7 +553,7 @@ const catalog2022 = [
   {
     slug: "fuzhou-teacher-residence-distribution",
     title: "探究福州一中教师住址分布及其影响因素",
-    author: "",
+    author: "肖涵林、卢晨宁",
     disciplineSlug: "geography",
     summary:
       "本世纪初以来，不少中学、大学建设新校区，教师的居住问题成了新校区建设不可避免的问题。对于当今福州市「东进南扩」的发展战略，加强新区的基础设施建设，发展第三产业是必要之举。",
@@ -554,7 +562,7 @@ const catalog2022 = [
   {
     slug: "little-girl-big-energy",
     title: "「小女孩」有大能量：今年为什么这么热",
-    author: "",
+    author: "郭妍霏",
     disciplineSlug: "geography",
     summary:
       "相信今年大家定对「酷暑难耐」深有体会。笔者将从中间态入手解释厄尔尼诺，再讲本次高温的背后大佬拉尼娜，阐述其对西太副高的影响机制，并对未来三拉尼娜进行展望。",
@@ -563,7 +571,7 @@ const catalog2022 = [
   {
     slug: "tonga-volcano-eruption",
     title: "汤加火山爆发的威力到底有多大",
-    author: "",
+    author: "郭可豪",
     disciplineSlug: "geography",
     summary:
       "当地时间1月14日上午开始，位于汤加的洪阿哈阿帕伊岛发生火山喷发，这次事件被认为是最近30年来最大的一次火山爆发。据有关专家估计，这一次火山爆发的威力约等于1000颗原子弹同时爆炸。",
@@ -572,7 +580,7 @@ const catalog2022 = [
   {
     slug: "ice-avalanche",
     title: "冰崩：全球气候变暖的缩影",
-    author: "",
+    author: "卢晨宁",
     disciplineSlug: "geography",
     summary:
       "当今世界上几乎所有冰川几乎都在加速消融……冰崩，其实就是冰川消融的一个缩影。或许，大自然自有其残酷又美丽的规则，下至蜉蝣，上至苍穹，万事万物随着时间的绵延终究难逃消亡的命运。",
@@ -581,7 +589,7 @@ const catalog2022 = [
   {
     slug: "honeycomb-mystery",
     title: "蜂窝的奥秘",
-    author: "",
+    author: "唐琪越",
     disciplineSlug: "math",
     summary:
       "大自然是神奇的，奥秘无穷，蜂房的构造便是一个很好的例证。蜂房的底部并非正六棱柱，而是3个菱形拼成的。我们猜想：这样的翻折可以更省材料，让我们一同通过计算得到答案。",
@@ -590,7 +598,7 @@ const catalog2022 = [
   {
     slug: "yang-hui-triangle-to-stacking",
     title: "从杨辉三角到堆垛术",
-    author: "",
+    author: "唐琪越",
     disciplineSlug: "math",
     summary:
       "有杨辉三角出发，我们可以推出一些公式，由此我们就可以研究高阶等差级数的问题了，而高阶等差级数的一个重要应用就是「堆垛问题」。",
@@ -599,7 +607,7 @@ const catalog2022 = [
   {
     slug: "conic-sections-on-paper",
     title: "白纸上的圆锥曲线",
-    author: "",
+    author: "唐琪越",
     disciplineSlug: "math",
     summary:
       "可能很多人以为，折纸只能折出直线的图形，因为折痕是一条直线段。但其实，足够多的折痕，有时也能围出优美的曲线。椭圆、双曲线和抛物线均可由折纸得到。",
@@ -608,7 +616,7 @@ const catalog2022 = [
   {
     slug: "gyroscope-physics",
     title: "转 转 转：陀螺仪的物理学原理",
-    author: "",
+    author: "方心琳",
     disciplineSlug: "physics",
     summary:
       "旋转手机，屏幕上的画面随之旋转。为什么手机能「感知」到外界环境的变化？这就不得不提到现代日常生活、科学研究乃至国防军工领域都极为重要的仪器——陀螺仪了。",
@@ -617,7 +625,7 @@ const catalog2022 = [
   {
     slug: "f1-aerodynamics",
     title: "空气动力学及其在 F1 中的应用",
-    author: "",
+    author: "董彦涵",
     disciplineSlug: "physics",
     summary:
       "2022赛季 F1 锦标赛作为规则大改的第一年，赛车空气动力学设计成为了极为热门的话题。本次规则大改就是针对赛车空气动力学部件更改以减少下压力损失，制造精彩的镜头来吸引观众。",
@@ -626,7 +634,7 @@ const catalog2022 = [
   {
     slug: "laser-fusion",
     title: "激光核聚变：核以光之名",
-    author: "",
+    author: "林睿菲",
     disciplineSlug: "physics",
     summary:
       "激光核聚变装置是一个效果绚烂、运作高效，但是耗能大、材料要求高的反应装置。它可以在实验室内模拟核武器爆炸的物理过程及爆炸效应，为中华民族的伟大复兴提供强大动力。",
@@ -635,7 +643,7 @@ const catalog2022 = [
   {
     slug: "pid-control",
     title: "PID 控制算法入门",
-    author: "",
+    author: "黄天睿",
     disciplineSlug: "electronic",
     summary:
       "计算机代替人类完成各种工作从20世纪70年代开始并一直延续至现在。现代工厂中，计算机对机械的控制算法有80%是 PID 控制算法及其变种，本文就以一个故事简单说明一下 PID 控制的原理。",
@@ -644,7 +652,7 @@ const catalog2022 = [
   {
     slug: "https-primer",
     title: "HTTPS 技术浅析",
-    author: "",
+    author: "张舒腾",
     disciplineSlug: "electronic",
     summary:
       "HTTP 并没有考虑过传输的安全相关问题，于是 HTTPS 应运而生。常见的「证书错误」产生的原因是什么？HTTPS 协议又是如何保护我们的通信不被监听与篡改的？本文就来讨论一下网址前面的那把小锁。",
@@ -653,7 +661,7 @@ const catalog2022 = [
   {
     slug: "information-theory",
     title: "浅谈信息论",
-    author: "",
+    author: "郭志翔",
     disciplineSlug: "electronic",
     summary:
       "信息论是运用概率论与数理统计的方法研究信息、信息熵、通信系统、数据传输、密码学、数据压缩等问题的应用数学学科，十分实用。希望本文能让读者对于信息论有一个初步的认识。",
@@ -662,7 +670,7 @@ const catalog2022 = [
   {
     slug: "do-you-really-understand-exercise",
     title: "你真的了解运动吗",
-    author: "",
+    author: "林哲同",
     disciplineSlug: "biology",
     summary:
       "众所周知，生命在于运动。运动不仅让骨骼肌暴露在急性应激下增加了耐受性，还能诱导骨骼肌中的 NOX4 表达，从而促进活性氧介导的适应性反应和肌肉功能，维持氧化还原平衡。",
@@ -671,7 +679,7 @@ const catalog2022 = [
   {
     slug: "b-cell-cancer",
     title: "免疫 B 细胞癌变后怎么办",
-    author: "",
+    author: "周聿萱",
     disciplineSlug: "biology",
     summary:
       "淋巴细胞是免疫系统的基本成分，在体内分布很广。但是，当 B 细胞也罢工时会发生什么呢？弥漫大 B 细胞淋巴瘤正是 B 细胞癌变后的结果，这类淋巴瘤在临床病例中占了很大一部分。",
@@ -1086,7 +1094,7 @@ const annualCatalogs: Partial<Record<number, AnnualCatalog>> = {
   },
   2022: {
     sourceYear: 2022,
-    source: catalogScanSource(2022, "4"),
+    source: catalog2022Source,
     entries: catalog2022,
   },
   2023: {
@@ -1099,6 +1107,11 @@ const annualCatalogs: Partial<Record<number, AnnualCatalog>> = {
     source: catalogScanSource(2024, "1"),
     entries: catalog2024,
   },
+  2026: {
+    sourceYear: 2026,
+    source: catalog2026Source,
+    entries: catalog2026,
+  },
   2025: {
     sourceYear: 2025,
     source: catalog2025Source,
@@ -1106,18 +1119,13 @@ const annualCatalogs: Partial<Record<number, AnnualCatalog>> = {
   },
 };
 
-const catalogForYear = (year: number): AnnualCatalog =>
-  annualCatalogs[year] ?? {
-    sourceYear: 2025,
-    source: catalog2025Source,
-    entries: suppliedCatalog2025,
-  };
+const catalogForYear = (year: number): AnnualCatalog => {
+  const catalog = annualCatalogs[year];
+  if (!catalog) throw new Error(`Missing annual catalog for ${year}`);
+  return catalog;
+};
 
-/**
- * The original 2021–2025 annual catalogs are recorded above. The 2026 issue
- * continues to use the confirmed 2025 catalog until its original directory is
- * supplied; pages consume this data without requiring component changes.
- */
+/** Each annual issue uses its own source catalog; 2026 pagination is provisional. */
 export const articles = [...issues]
   .reverse()
   .flatMap((issue) => {

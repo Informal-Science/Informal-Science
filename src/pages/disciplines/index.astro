@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageIntro from '../../components/PageIntro.astro';
 import DisciplineGrid from '../../components/DisciplineGrid.astro';
-import { withBase } from '../../utils/paths';
 ---
 
 <BaseLayout
@@ -19,51 +18,10 @@ import { withBase } from '../../utils/paths';
   <section class="disciplines-list">
     <DisciplineGrid />
   </section>
-
-  <section class="standards-callout">
-    <div class="container standards-callout__inner">
-      <p class="eyebrow">Visual System</p>
-      <h2>颜色不是装饰，<br />而是内容的索引。</h2>
-      <a class="button-link" href={withBase('/standards')}>查看视觉设计规范</a>
-    </div>
-  </section>
 </BaseLayout>
 
 <style>
   .disciplines-list {
     background: var(--surface);
-  }
-
-  .standards-callout {
-    padding: clamp(90px, 13vw, 180px) 0;
-    color: white;
-    background: #101216;
-  }
-
-  .standards-callout__inner {
-    display: grid;
-    grid-template-columns: 0.3fr 1fr auto;
-    gap: clamp(32px, 7vw, 100px);
-    align-items: end;
-  }
-
-  .standards-callout h2 {
-    margin: 0;
-    font-family: var(--font-editorial);
-    font-size: clamp(2.4rem, 5.8vw, 6.2rem);
-    font-weight: 900;
-    line-height: 1.12;
-    letter-spacing: -0.06em;
-  }
-
-  .standards-callout .button-link:hover {
-    color: var(--ink);
-    background: white;
-  }
-
-  @media (max-width: 820px) {
-    .standards-callout__inner {
-      grid-template-columns: 1fr;
-    }
   }
 </style>
